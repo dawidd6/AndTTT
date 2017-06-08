@@ -1,4 +1,4 @@
-package com.example.dawidd6.hellothere;
+package com.dawidd6.andttt;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

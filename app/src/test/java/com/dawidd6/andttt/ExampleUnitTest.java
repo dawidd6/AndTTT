@@ -1,4 +1,4 @@
-package com.example.dawidd6.hellothere;
+package com.dawidd6.andttt;
 
 import org.junit.Test;
 

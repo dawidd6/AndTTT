@@ -1,19 +1,17 @@
 package com.dawidd6.andttt;
 
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.view.View;
 
 public class MainActivity extends AppCompatActivity
 {
     private TextView text1;
-    private Resources res;
     private Drawable drawable_x;
     private Drawable drawable_o;
     private boolean xnow;
@@ -25,9 +23,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         text1 = (TextView)findViewById(R.id.text1);
-        res = getResources();
-        drawable_o = res.getDrawable(R.drawable.o);
-        drawable_x = res.getDrawable(R.drawable.x);
+        drawable_o = ResourcesCompat.getDrawable(getResources(), R.drawable.o, null);
+        drawable_x = ResourcesCompat.getDrawable(getResources(), R.drawable.x, null);
         xnow = true;
         clicks = 0;
         buttons = new ImageButton[9];

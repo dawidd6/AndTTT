@@ -9,19 +9,17 @@
     tools:layout_editor_absoluteY="81dp">
 
     <ImageButton
-        android:id="@+id/b7"
+        android:id="@+id/b0"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="16dp"
         android:background="@android:color/darker_gray"
-        android:contentDescription="@string/b7"
+        android:contentDescription="@string/b0"
         android:onClick="onClick"
         android:scaleType="fitCenter"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintRight_toLeftOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/b1"
@@ -42,6 +40,32 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
+        android:id="@+id/b2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/darker_gray"
+        android:contentDescription="@string/b2"
+        android:onClick="onClick"
+        android:scaleType="fitCenter"
+        app:layout_constraintLeft_toRightOf="@+id/textView7"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/b3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="118dp"
+        android:background="@android:color/darker_gray"
+        android:contentDescription="@string/b3"
+        android:onClick="onClick"
+        android:scaleType="fitCenter"
+        app:layout_constraintRight_toLeftOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
         android:id="@+id/b4"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -55,6 +79,60 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/b5"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="118dp"
+        android:background="@android:color/darker_gray"
+        android:contentDescription="@string/b5"
+        android:onClick="onClick"
+        android:scaleType="fitCenter"
+        app:layout_constraintLeft_toRightOf="@+id/textView7"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/b6"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        android:background="@android:color/darker_gray"
+        android:contentDescription="@string/b6"
+        android:onClick="onClick"
+        android:scaleType="fitCenter"
+        app:layout_constraintRight_toLeftOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <ImageButton
+        android:id="@+id/b7"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="0dp"
+        android:background="@android:color/darker_gray"
+        android:contentDescription="@string/b7"
+        android:onClick="onClick"
+        android:scaleType="fitCenter"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <ImageButton
+        android:id="@+id/b8"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@android:color/darker_gray"
+        android:contentDescription="@string/b8"
+        android:onClick="onClick"
+        android:scaleType="fitCenter"
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintLeft_toRightOf="@+id/textView7"
+        android:layout_marginLeft="0dp" />
 
     <TextView
         android:id="@+id/text1"

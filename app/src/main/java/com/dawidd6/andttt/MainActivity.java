@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity
         xnow = true;
         clicks = 0;
         buttons = new ImageButton[9];
-        int btn_ids[] = {R.id.bt1, R.id.bt2, R.id.bt3, R.id.bt4, R.id.bt5, R.id.bt6, R.id.bt7, R.id.bt8, R.id.bt9};
+        int btn_ids[] = {R.id.b0, R.id.b1, R.id.b2, R.id.b3, R.id.b4, R.id.b5, R.id.b6, R.id.b7, R.id.b8};
         for(int i = 0; i < 9; i++)
             buttons[i] = (ImageButton)findViewById(btn_ids[i]);
     }
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity
     {
         String str = view.getContentDescription().toString();
         ImageButton btn = (ImageButton)findViewById(view.getId());
-        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
         if(xnow)
         {
             btn.setImageDrawable(drawable_x);

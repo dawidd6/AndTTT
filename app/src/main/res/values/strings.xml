@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">AndTTT</string>
+    <string name="app_name" translatable="false">AndTTT</string>
+    <string name="restart" translatable="false">Restart</string>
+    <string name="b1" translatable="false">b1</string>
+    <string name="b2" translatable="false">b2</string>
+    <string name="b3" translatable="false">b3</string>
+    <string name="b4" translatable="false">b4</string>
+    <string name="b5" translatable="false">b5</string>
+    <string name="b6" translatable="false">b6</string>
+    <string name="b7" translatable="false">b7</string>
+    <string name="b8" translatable="false">b8</string>
+    <string name="b0" translatable="false">b0</string>
+    <string name="debug" translatable="false">init</string>
 </resources>

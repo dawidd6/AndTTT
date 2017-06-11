@@ -1,13 +1,12 @@
 package com.dawidd6.andttt;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -17,7 +16,7 @@ import android.widget.Toast;
 
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends Activity
 {
     private boolean isMyTurn;
     private boolean isThereAWinner;
@@ -32,6 +31,7 @@ public class MainActivity extends AppCompatActivity
     private Bitmap bitmap_my;
     private Bitmap bitmap_comp;
     private ImageView board;
+    private ImageView current;
     private Paint paint;
     private Canvas canvas;
     private Random rand;
@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity
 
         board = (ImageView)findViewById(R.id.board);
         txt = (TextView)findViewById(R.id.txt);
+        current = (ImageView)findViewById(R.id.current);
 
         rand = new Random();
         smb = new char[] {'x', 'o'};
@@ -126,7 +127,6 @@ public class MainActivity extends AppCompatActivity
             bitmap_comp = bitmap_o;
             char_my = 'x';
             char_comp = 'o';
-            txt.setText("x");
         }
         else
         {
@@ -134,7 +134,6 @@ public class MainActivity extends AppCompatActivity
             bitmap_comp = bitmap_x;
             char_my = 'o';
             char_comp = 'x';
-            txt.setText("o");
         }
     }
 
@@ -150,6 +149,7 @@ public class MainActivity extends AppCompatActivity
         randomSymbol();
         markEnabledAll();
         board.setImageBitmap(null);
+        current.setImageBitmap(bitmap_my);
         if(!isMyTurn)
             compMove();
     }
@@ -409,6 +409,14 @@ public class MainActivity extends AppCompatActivity
         checkConditions();
     }
 
+    public boolean yallGotAnymoreOfThemButtons()
+    {
+        for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
+            if(button_str[x][y] == '0')
+                return true;
+        return false;
+    }
+
     public void myMove(View view)
     {
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
@@ -419,7 +427,9 @@ public class MainActivity extends AppCompatActivity
                 isMyTurn = false;
                 button[x][y].setClickable(false);
                 checkConditions();
-                if(!isThereAWinner) compMove();
+                if(yallGotAnymoreOfThemButtons())
+                    if(!isThereAWinner)
+                        compMove();
                 break;
             }
     }

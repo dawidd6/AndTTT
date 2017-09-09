@@ -1,13 +1,14 @@
 package com.dawidd6.andttt;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.util.Log;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -16,7 +17,7 @@ import android.widget.Toast;
 
 import java.util.Random;
 
-public class MainActivity extends Activity
+public class ActivitySingle extends Activity
 {
     private boolean isMyTurn;
     private boolean isThereAWinner;
@@ -40,7 +41,7 @@ public class MainActivity extends Activity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_single);
 
         board = (ImageView)findViewById(R.id.board);
         txt = (TextView)findViewById(R.id.txt);
@@ -89,7 +90,7 @@ public class MainActivity extends Activity
     public void setPaint()
     {
         paint = new Paint();
-        paint.setColor(Color.BLACK);
+        paint.setColor(Color.WHITE);
         paint.setStrokeWidth(6);
         paint.setStrokeCap(Paint.Cap.SQUARE);
         paint.setAntiAlias(true);
@@ -432,5 +433,11 @@ public class MainActivity extends Activity
                         compMove();
                 break;
             }
+    }
+
+    public void onClickReturn(View view)
+    {
+        Intent intent = new Intent(this, ActivityMenu.class);
+        startActivity(intent);
     }
 }

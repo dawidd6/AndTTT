@@ -1,31 +1,17 @@
-language: android
 jdk: oraclejdk8
-sudo: required
+language: android
+android:
+  components:
+    - tools
+    - platform-tools
+    - tools # Bug with Travis - ensure BT 25 is installed (https://github.com/travis-ci/docs-travis-ci-com/issues/779)
+    - build-tools-26.0.2
+    - android-25
+    - extra-android-m2repository
+    - extra-google-m2repository
 
 notifications:
  email: false
-
-env:
- global:
-  - GRADLE_USER_HOME="${TRAVIS_BUILD_DIR}/gradle"
-  - ANDROID_HOME=/usr/local/android-sdk-24.0.2
-  - TOOLS=${ANDROID_HOME}/tools
-  - PATH=${ANDROID_HOME}:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
-
-android:
- components:
-  - tools
-  - build-tools-25.0.3
-  - platform-tools
-  - tools
-
-install:
- - echo yes | sdkmanager "tools"
- - echo yes | sdkmanager "platforms;android-25"
- - echo yes | sdkmanager "extras;android;m2repository"
- - echo yes | sdkmanager "extras;google;m2repository"
- - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
- - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
 
 script:
  - ./gradlew build

@@ -3,11 +3,13 @@ package com.dawidd6.andttt;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageButton;
@@ -39,7 +41,12 @@ public class ActivitySingle extends Activity
     private TextView txt;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        boolean night_mode = prefs.getBoolean("night_mode", false);
+        setTheme(night_mode ? R.style.theme_dark : R.style.theme_light);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single);
 
@@ -55,7 +62,7 @@ public class ActivitySingle extends Activity
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
             button[x][y] = (ImageButton)findViewById(btn_ids[x][y]);
 
-        setPaint();
+        setPaint(night_mode);
         drawCross();
         drawCircle();
         restartGame(null);
@@ -87,10 +94,10 @@ public class ActivitySingle extends Activity
         board.setImageBitmap(bitmap_board);
     }
 
-    public void setPaint()
+    public void setPaint(boolean mode)
     {
         paint = new Paint();
-        paint.setColor(Color.WHITE);
+        paint.setColor(mode ? Color.WHITE : Color.BLACK);
         paint.setStrokeWidth(6);
         paint.setStrokeCap(Paint.Cap.SQUARE);
         paint.setAntiAlias(true);

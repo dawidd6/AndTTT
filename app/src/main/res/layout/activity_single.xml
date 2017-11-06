@@ -138,11 +138,9 @@
         android:id="@+id/frame_horizon_1"
         android:layout_width="304dp"
         android:layout_height="2dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:background="@android:color/white"
+        android:background="?android:attr/colorForeground"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/b4"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -152,11 +150,9 @@
         android:id="@+id/frame_horizon_2"
         android:layout_width="304dp"
         android:layout_height="2dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:background="@android:color/white"
+        android:background="?android:attr/colorForeground"
         android:textAlignment="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -166,9 +162,8 @@
         android:id="@+id/frame_vertical_1"
         android:layout_width="2dp"
         android:layout_height="304dp"
-        android:layout_marginEnd="0dp"
         android:layout_marginTop="32dp"
-        android:background="@android:color/white"
+        android:background="?android:attr/colorForeground"
         app:layout_constraintRight_toLeftOf="@+id/b4"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -176,9 +171,8 @@
         android:id="@+id/frame_vertical_2"
         android:layout_width="2dp"
         android:layout_height="304dp"
-        android:layout_marginStart="0dp"
         android:layout_marginTop="32dp"
-        android:background="@android:color/white"
+        android:background="?android:attr/colorForeground"
         app:layout_constraintLeft_toRightOf="@+id/b4"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -194,57 +188,38 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button_restart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="29dp"
-        android:layout_marginStart="8dp"
-        android:background="@android:color/transparent"
-        android:onClick="restartGame"
-        android:text="@string/restart"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
     <TextView
         android:id="@+id/txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:layout_marginStart="24dp"
         android:text="@string/your_symbol"
         android:textAlignment="center"
-        android:textColor="@android:color/white"
+        android:textColor="?android:attr/colorForeground"
         android:textSize="18sp"
-        app:layout_constraintRight_toLeftOf="@+id/current"
-        android:layout_marginRight="24dp"
-        app:layout_constraintTop_toTopOf="@+id/current"
-        android:layout_marginTop="15dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/current"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@android:color/transparent"
-        android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/board" />
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txt"
+        app:srcCompat="@android:color/transparent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_restart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:layout_marginLeft="32dp"
-        android:background="@android:color/transparent"
-        android:onClick="onClickReturn"
-        android:text="@string/return_to_menu"
-        android:textColor="@android:color/white"
+        android:layout_marginEnd="24dp"
+        android:onClick="restartGame"
+        android:text="@string/restart"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

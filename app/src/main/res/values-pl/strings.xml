@@ -6,4 +6,6 @@
     <string name="play_2v2">Zagraj na dwóch</string>
     <string name="exit">Wyjście</string>
     <string name="return_to_menu">Powrót do menu</string>
+    <string name="settings">Opcje</string>
+    <string name="night_mode">Tryb nocny</string>
 </resources>

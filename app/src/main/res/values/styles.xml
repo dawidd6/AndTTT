@@ -1,14 +1,19 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.DeviceDefault.NoActionBar.Fullscreen">
+    <style name="theme_dark" parent="android:Theme.Material">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@android:color/black</item>
         <item name="colorPrimaryDark">@android:color/black</item>
-        <item name="colorAccent">@android:color/holo_red_dark</item>
+        <item name="colorAccent">@android:color/black</item>
         <item name="android:colorBackground">@android:color/black</item>
         <item name="android:colorForeground">@android:color/white</item>
         <item name="android:windowBackground">@android:color/black</item>
         <item name="android:textColorSecondary">@android:color/black</item>
+        <item name="android:colorPrimary">@android:color/black</item>
+        <item name="android:statusBarColor">@android:color/black</item>
+    </style>
+
+    <style name="theme_light" parent="android:Theme.Material.Light" >
     </style>
 </resources>

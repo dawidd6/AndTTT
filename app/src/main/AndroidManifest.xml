@@ -4,16 +4,15 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/icon"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:supportsRtl="false"
+        android:fullBackupContent="@xml/backup_descriptor"
+        android:icon="@mipmap/ic_launcher">
         <activity
-            android:name=".ActivityMenu">
+            android:name=".ActivityMenu"
+            android:theme="@style/theme_light">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -21,11 +20,15 @@
         <activity
             android:name=".ActivitySingle"
             android:label=""
+            android:theme="@style/theme_light"
             android:parentActivityName="com.dawidd6.andttt.ActivityMenu">
         </activity>
 
         <activity
-            android:name=".ActivitySettings">
+            android:name=".ActivitySettings"
+            android:label="@string/settings"
+            android:theme="@style/theme_light"
+            android:parentActivityName="com.dawidd6.andttt.ActivityMenu">
         </activity>
     </application>
 

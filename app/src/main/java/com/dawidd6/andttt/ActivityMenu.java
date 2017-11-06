@@ -17,27 +17,31 @@ import static java.lang.Boolean.getBoolean;
 
 public class ActivityMenu extends Activity
 {
+    private boolean isNightModeEnabled;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        boolean night_mode = prefs.getBoolean("night_mode", false);
-        setTheme(night_mode ? R.style.theme_dark : R.style.theme_light);
+
+        isNightModeEnabled = prefs.getBoolean("night_mode", false);
+        setTheme(isNightModeEnabled ? R.style.theme_dark : R.style.theme_light);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        //Log.d("dddd", "menu created");
     }
 
     public void onClickPlaySingle(View view)
     {
         Intent intent = new Intent(this, ActivitySingle.class);
+        intent.putExtra("night_mode" , isNightModeEnabled);
         startActivity(intent);
     }
 
     public void onClickSettings(View view)
     {
         Intent intent = new Intent(this, ActivitySettings.class);
+        intent.putExtra("night_mode" , isNightModeEnabled);
         startActivity(intent);
     }
 

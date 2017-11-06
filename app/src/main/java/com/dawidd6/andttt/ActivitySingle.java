@@ -23,6 +23,7 @@ public class ActivitySingle extends Activity
 {
     private boolean isMyTurn;
     private boolean isThereAWinner;
+    private boolean isNightModeEnabled;
     private ImageButton button[][];
     private char button_str[][];
     private char smb[];
@@ -43,9 +44,8 @@ public class ActivitySingle extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        boolean night_mode = prefs.getBoolean("night_mode", false);
-        setTheme(night_mode ? R.style.theme_dark : R.style.theme_light);
+        isNightModeEnabled = getIntent().getBooleanExtra("night_mode", false);
+        setTheme(isNightModeEnabled ? R.style.theme_dark : R.style.theme_light);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single);
@@ -62,7 +62,7 @@ public class ActivitySingle extends Activity
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
             button[x][y] = (ImageButton)findViewById(btn_ids[x][y]);
 
-        setPaint(night_mode);
+        setPaint(isNightModeEnabled);
         drawCross();
         drawCircle();
         restartGame(null);

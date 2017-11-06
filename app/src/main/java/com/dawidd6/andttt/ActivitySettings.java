@@ -1,7 +1,9 @@
 package com.dawidd6.andttt;
 
+import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.Preference;
@@ -12,19 +14,17 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
-
 public class ActivitySettings extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener
 {
+    private boolean isNightModeEnabled;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        boolean night_mode = prefs.getBoolean("night_mode", false);
-        setTheme(night_mode ? R.style.theme_dark : R.style.theme_light);
+        isNightModeEnabled = getIntent().getBooleanExtra("night_mode", false);
+        setTheme(isNightModeEnabled ? R.style.theme_dark : R.style.theme_light);
 
         super.onCreate(savedInstanceState);
-
-        // Display the fragment as the main content.
         getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
     }
@@ -37,6 +37,7 @@ public class ActivitySettings extends PreferenceActivity implements SharedPrefer
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.settings);
         }
+
     }
 
     @Override
@@ -45,7 +46,7 @@ public class ActivitySettings extends PreferenceActivity implements SharedPrefer
         switch(key)
         {
             case "night_mode":
-                //if (sharedPreferences.getBoolean(key, false)) //second argument is default value
+                getIntent().putExtra("night_mode", sharedPreferences.getBoolean("night_mode", false));
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable()
                 {
@@ -53,11 +54,14 @@ public class ActivitySettings extends PreferenceActivity implements SharedPrefer
                     {
                         recreate();
                     }
-                }, 500);
+                }, 200);
             break;
-
         }
-        //Log.d("dddd", key);
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        onNavigateUp();
+    }
 }

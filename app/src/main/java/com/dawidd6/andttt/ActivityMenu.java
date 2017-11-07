@@ -1,19 +1,11 @@
 package com.dawidd6.andttt;
 
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
-
-import static java.lang.Boolean.getBoolean;
 
 public class ActivityMenu extends Activity
 {

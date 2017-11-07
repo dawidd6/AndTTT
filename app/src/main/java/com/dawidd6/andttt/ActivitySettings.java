@@ -1,18 +1,11 @@
 package com.dawidd6.andttt;
 
-import android.app.Application;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
-import android.app.Activity;
 import android.preference.PreferenceManager;
-import android.util.Log;
-import android.widget.Toast;
 
 public class ActivitySettings extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener
 {

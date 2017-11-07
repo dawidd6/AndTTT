@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="theme_dark" parent="android:Theme.Material">
+    <style name="theme_dark" parent="android:Theme.DeviceDefault.NoActionBar.Fullscreen">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@android:color/black</item>
         <item name="colorPrimaryDark">@android:color/black</item>
@@ -14,6 +14,6 @@
         <item name="android:statusBarColor">@android:color/black</item>
     </style>
 
-    <style name="theme_light" parent="android:Theme.Material.Light" >
+    <style name="theme_light" parent="android:Theme.DeviceDefault.Light.NoActionBar.Fullscreen" >
     </style>
 </resources>

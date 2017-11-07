@@ -8,4 +8,6 @@
     <string name="return_to_menu">Powrót do menu</string>
     <string name="settings">Opcje</string>
     <string name="night_mode">Tryb nocny</string>
+    <string name="you">Ty</string>
+    <string name="android">Android</string>
 </resources>

@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Random;
 
@@ -20,6 +19,8 @@ public class ActivitySingle extends Activity
     private boolean isMyTurn;
     private boolean isThereAWinner;
     private boolean isNightModeEnabled;
+    private int numberOfHumanWins = 0;
+    private int numberOfAndroidWins = 0;
     private ImageButton button[][];
     private char button_str[][];
     private char smb[];
@@ -35,7 +36,7 @@ public class ActivitySingle extends Activity
     private Paint paint;
     private Canvas canvas;
     private Random rand;
-    private TextView txt;
+    private TextView score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -47,7 +48,7 @@ public class ActivitySingle extends Activity
         setContentView(R.layout.activity_single);
 
         board = (ImageView)findViewById(R.id.board);
-        txt = (TextView)findViewById(R.id.txt);
+        score = (TextView)findViewById(R.id.score);
         current = (ImageView)findViewById(R.id.current);
 
         rand = new Random();
@@ -58,7 +59,7 @@ public class ActivitySingle extends Activity
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
             button[x][y] = (ImageButton)findViewById(btn_ids[x][y]);
 
-        setPaint(isNightModeEnabled);
+        setPaint();
         drawCross();
         drawCircle();
         restartGame(null);
@@ -66,6 +67,7 @@ public class ActivitySingle extends Activity
 
     public void drawLine(String l)
     {
+        paint.setColor(Color.parseColor("#00B75B"));
         bitmap_board = Bitmap.createBitmap(304, 304, Bitmap.Config.ARGB_4444);
         canvas = new Canvas(bitmap_board);
         //drawLine(startx, starty, stopx, stopy, paint)
@@ -90,10 +92,10 @@ public class ActivitySingle extends Activity
         board.setImageBitmap(bitmap_board);
     }
 
-    public void setPaint(boolean mode)
+    public void setPaint()
     {
         paint = new Paint();
-        paint.setColor(mode ? Color.WHITE : Color.BLACK);
+        paint.setColor(isNightModeEnabled ? Color.WHITE : Color.BLACK);
         paint.setStrokeWidth(6);
         paint.setStrokeCap(Paint.Cap.SQUARE);
         paint.setAntiAlias(true);
@@ -173,8 +175,18 @@ public class ActivitySingle extends Activity
     public void doWin(String l)
     {
         isThereAWinner = true;
+        if(!isMyTurn)
+        {
+            numberOfHumanWins++;
+        }
+        else
+        {
+            numberOfAndroidWins++;
+        }
+        score.setText(numberOfHumanWins + " - " + numberOfAndroidWins);
+            //Toast.makeText(this, "human won", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "android won", Toast.LENGTH_SHORT).show();
         markDisabledAll();
-        Toast.makeText(this, "WIN", Toast.LENGTH_SHORT).show();
         drawLine(l);
     }
 

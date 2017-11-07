@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Objects;
 import java.util.Random;
 
 public class ActivitySingle extends Activity
@@ -72,21 +73,21 @@ public class ActivitySingle extends Activity
         canvas = new Canvas(bitmap_board);
         //drawLine(startx, starty, stopx, stopy, paint)
 
-        if(l == "nl")
+        if(Objects.equals(l, "nl"))
             canvas.drawLine(4, 4, 300, 300, paint);
-        else if(l == "nr")
+        else if(Objects.equals(l, "nr"))
             canvas.drawLine(300, 4, 4, 300, paint);
-        else if(l == "h1")
+        else if(Objects.equals(l, "h1"))
             canvas.drawLine(0, 50, 304, 50, paint);
-        else if(l == "h2")
+        else if(Objects.equals(l, "h2"))
             canvas.drawLine(0, 152, 304, 152, paint);
-        else if(l == "h3")
+        else if(Objects.equals(l, "h3"))
             canvas.drawLine(0, 254, 304, 254, paint);
-        else if(l == "v1")
+        else if(Objects.equals(l, "v1"))
             canvas.drawLine(50, 0, 50, 304, paint);
-        else if(l == "v2")
+        else if(Objects.equals(l, "v2"))
             canvas.drawLine(152, 0, 152, 304, paint);
-        else if(l == "v3")
+        else if(Objects.equals(l, "v3"))
             canvas.drawLine(254, 0, 254, 304, paint);
 
         board.setImageBitmap(bitmap_board);

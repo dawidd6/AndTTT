@@ -9,7 +9,6 @@
     tools:layout_editor_absoluteY="81dp">
 
     <TextView
-        android:id="@+id/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"
@@ -22,7 +21,6 @@
         app:layout_constraintStart_toEndOf="@+id/score" />
 
     <TextView
-        android:id="@+id/you"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"
@@ -215,7 +213,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/symbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="36dp"
@@ -240,7 +237,6 @@
         app:srcCompat="@android:color/transparent" />
 
     <Button
-        android:id="@+id/button_restart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"

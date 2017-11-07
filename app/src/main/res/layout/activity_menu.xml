@@ -6,7 +6,6 @@
     tools:context="com.dawidd6.andttt.ActivityMenu">
 
     <Button
-        android:id="@+id/button_single"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -21,7 +20,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button_settings"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"

@@ -1,9 +1,9 @@
 # AndTTT
 
-Currently on development.
+Currently under development.
 
-# Where to get latest build
+# Where to get latest build (apk)
 
-Search for transfer.sh link in latest build log,
+Search for transfer.sh link in latest build log:
 
-here: https://travis-ci.org/dawidd6/AndTTT
+https://travis-ci.org/dawidd6/AndTTT

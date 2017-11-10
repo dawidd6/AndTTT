@@ -17,19 +17,20 @@ import java.util.Random;
 
 public class ActivitySingle extends Activity
 {
-    private boolean isMyTurn;
-    private boolean isThereAWinner;
+    private boolean isMyTurn; //need to save
+    private boolean isThereAWinner; //need to save
     private boolean isNightModeEnabled;
-    private int numberOfHumanWins = 0;
-    private int numberOfAndroidWins = 0;
+    private boolean restoredState;
+    private int numberOfHumanWins = 0; //need to save
+    private int numberOfAndroidWins = 0; //need to save
     private ImageButton button[][];
-    private char button_str[][];
+    private char button_str[][]; //need to save
     private char smb[];
-    private char char_my;
-    private char char_comp;
+    private char char_my; //need to save
+    private char char_comp; //need to save
     private Bitmap bitmap_x;
     private Bitmap bitmap_o;
-    private Bitmap bitmap_board;
+    private Bitmap bitmap_board; //need to save
     private Bitmap bitmap_my;
     private Bitmap bitmap_comp;
     private ImageView board;
@@ -42,36 +43,97 @@ public class ActivitySingle extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        // night mode stuff and set theme
         isNightModeEnabled = getIntent().getBooleanExtra("night_mode", false);
         setTheme(isNightModeEnabled ? R.style.theme_dark : R.style.theme_light);
 
+        // initialize variables
+        rand = new Random();
+        smb = new char[] {'x', 'o'};
+        int btn_ids[][] = {{R.id.b0, R.id.b1, R.id.b2}, {R.id.b3, R.id.b4, R.id.b5}, {R.id.b6, R.id.b7, R.id.b8}};
+        button = new ImageButton[3][3];
+
+        // standard
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single);
 
-        board = (ImageView)findViewById(R.id.board);
-        score = (TextView)findViewById(R.id.score);
-        current = (ImageView)findViewById(R.id.current);
-
-        rand = new Random();
-        smb = new char[] {'x', 'o'};
-        button = new ImageButton[3][3];
-        button_str = new char[3][3];
-        int btn_ids[][] = {{R.id.b0, R.id.b1, R.id.b2}, {R.id.b3, R.id.b4, R.id.b5}, {R.id.b6, R.id.b7, R.id.b8}};
+        // findViews
+        board = findViewById(R.id.board);
+        score = findViewById(R.id.score);
+        current = findViewById(R.id.current);
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
-            button[x][y] = (ImageButton)findViewById(btn_ids[x][y]);
+            button[x][y] = findViewById(btn_ids[x][y]);
 
+        // draw symbols
         setPaint();
         drawCross();
         drawCircle();
-        restartGame(null);
+
+        // restore state
+        if(savedInstanceState != null)
+        {
+            restoredState = true;
+
+            numberOfHumanWins = savedInstanceState.getInt("numberOfHumanWins");
+            numberOfAndroidWins = savedInstanceState.getInt("numberOfAndroidWins");
+            isMyTurn = savedInstanceState.getBoolean("isMyTurn");
+            char_my = savedInstanceState.getChar("char_my");
+            char_comp = savedInstanceState.getChar("char_comp");
+            button_str = (char[][])savedInstanceState.getSerializable("button_str");
+            bitmap_board = (Bitmap)savedInstanceState.get("bitmap_board");
+
+            if(char_my == 'x')
+            {
+                bitmap_my = bitmap_x;
+                bitmap_comp = bitmap_o;
+            }
+            else
+            {
+                bitmap_my = bitmap_o;
+                bitmap_comp = bitmap_x;
+            }
+
+            current.setImageBitmap(bitmap_my);
+            board.setImageBitmap(bitmap_board);
+
+            for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
+            {
+                button[x][y] = findViewById(btn_ids[x][y]);
+                if(button_str[x][y] != '0')
+                {
+                    button[x][y].setImageBitmap(button_str[x][y] == char_my ? bitmap_my : bitmap_comp);
+                    button[x][y].setClickable(false);
+                }
+            }
+
+            checkConditions();
+        }
+        else
+        {
+            restoredState = false;
+            button_str = new char[3][3];
+            restartGame(null);
+        }
+
+        score.setText(getString(R.string.score, numberOfHumanWins, numberOfAndroidWins));
     }
 
-    public void drawLine(String l)
+    @Override
+    protected void onSaveInstanceState(Bundle bundle)
+    {
+        bundle.putInt("numberOfHumanWins", numberOfHumanWins);
+        bundle.putInt("numberOfAndroidWins", numberOfAndroidWins);
+        bundle.putBoolean("isMyTurn", isMyTurn);
+        bundle.putChar("char_my", char_my);
+        bundle.putChar("char_comp", char_comp);
+        bundle.putSerializable("button_str", button_str);
+    }
+
+    private void drawLine(String l)
     {
         paint.setColor(Color.parseColor("#00B75B"));
         bitmap_board = Bitmap.createBitmap(304, 304, Bitmap.Config.ARGB_4444);
         canvas = new Canvas(bitmap_board);
-        //drawLine(startx, starty, stopx, stopy, paint)
 
         if(Objects.equals(l, "nl"))
             canvas.drawLine(4, 4, 300, 300, paint);
@@ -93,7 +155,7 @@ public class ActivitySingle extends Activity
         board.setImageBitmap(bitmap_board);
     }
 
-    public void setPaint()
+    private void setPaint()
     {
         paint = new Paint();
         paint.setColor(isNightModeEnabled ? Color.WHITE : Color.BLACK);
@@ -103,7 +165,7 @@ public class ActivitySingle extends Activity
         paint.setStyle(Paint.Style.STROKE);
     }
 
-    public void drawCross()
+    private void drawCross()
     {
 
         bitmap_x = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_4444);
@@ -112,20 +174,20 @@ public class ActivitySingle extends Activity
         canvas.drawLine(94, 6, 6, 94, paint);
     }
 
-    public void drawCircle()
+    private void drawCircle()
     {
         bitmap_o = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_4444);
         canvas = new Canvas(bitmap_o);
         canvas.drawCircle(50, 50, 45, paint);
     }
 
-    public void randomTurn()
+    private void randomTurn()
     {
         int k = rand.nextInt(2);
         isMyTurn = (k != 0);
     }
 
-    public void randomSymbol()
+    private void randomSymbol()
     {
         int k = rand.nextInt(2);
         if(k == 0)
@@ -146,6 +208,7 @@ public class ActivitySingle extends Activity
 
     public void restartGame(View view)
     {
+        restoredState = false;
         isThereAWinner = false;
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
         {
@@ -161,37 +224,35 @@ public class ActivitySingle extends Activity
             compMove();
     }
 
-    public void markDisabledAll()
+    private void markDisabledAll()
     {
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
             button[x][y].setClickable(false);
     }
 
-    public void markEnabledAll()
+    private void markEnabledAll()
     {
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
             button[x][y].setClickable(true);
     }
 
-    public void doWin(String l)
+    private void doWin(String l)
     {
         isThereAWinner = true;
-        if(!isMyTurn)
+        if(!restoredState)
         {
-            numberOfHumanWins++;
+            if (!isMyTurn)
+                numberOfHumanWins++;
+            else
+                numberOfAndroidWins++;
+            score.setText(getString(R.string.score, numberOfHumanWins, numberOfAndroidWins));
         }
-        else
-        {
-            numberOfAndroidWins++;
-        }
-        score.setText(numberOfHumanWins + " - " + numberOfAndroidWins);
-            //Toast.makeText(this, "human won", Toast.LENGTH_SHORT).show();
-            //Toast.makeText(this, "android won", Toast.LENGTH_SHORT).show();
+
         markDisabledAll();
         drawLine(l);
     }
 
-    public void checkConditions()
+    private void checkConditions()
     {
         for(int i = 0; i < 2; i++)
         {
@@ -214,7 +275,7 @@ public class ActivitySingle extends Activity
         }
     }
 
-    public int gimmeFreeRoomHorizon(int x)
+    private int gimmeFreeRoomHorizon(int x)
     {
         for(int y = 0; y < 3; y++)
             if(button_str[x][y] == '0')
@@ -222,7 +283,7 @@ public class ActivitySingle extends Activity
         return -1;
     }
 
-    public int gimmeFreeRoomVertical(int y)
+    private int gimmeFreeRoomVertical(int y)
     {
         for(int x = 0; x < 3; x++)
             if(button_str[x][y] == '0')
@@ -232,7 +293,7 @@ public class ActivitySingle extends Activity
         return -1;
     }
 
-    public void compMove()
+    private void compMove()
     {
         int xx = -1;
         int yy = -1;
@@ -426,7 +487,7 @@ public class ActivitySingle extends Activity
         checkConditions();
     }
 
-    public boolean yallGotAnymoreOfThemButtons()
+    private boolean yallGotAnymoreOfThemButtons()
     {
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
             if(button_str[x][y] == '0')

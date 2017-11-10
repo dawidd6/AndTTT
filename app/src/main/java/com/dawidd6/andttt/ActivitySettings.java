@@ -9,12 +9,10 @@ import android.preference.PreferenceManager;
 
 public class ActivitySettings extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener
 {
-    private boolean isNightModeEnabled;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        isNightModeEnabled = getIntent().getBooleanExtra("night_mode", false);
+        boolean isNightModeEnabled = getIntent().getBooleanExtra("night_mode", false);
         setTheme(isNightModeEnabled ? R.style.theme_dark : R.style.theme_light);
 
         super.onCreate(savedInstanceState);

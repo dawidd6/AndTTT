@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 
+@SuppressWarnings("unused")
 public class ActivityMenu extends Activity
 {
     private boolean isNightModeEnabled;

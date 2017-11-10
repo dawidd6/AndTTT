@@ -15,6 +15,7 @@ import android.widget.TextView;
 import java.util.Objects;
 import java.util.Random;
 
+@SuppressWarnings({"SameParameterValue", "unused"})
 public class ActivitySingle extends Activity
 {
     private boolean isMyTurn; //need to save
@@ -206,6 +207,7 @@ public class ActivitySingle extends Activity
         }
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void restartGame(View view)
     {
         restoredState = false;
@@ -441,6 +443,7 @@ public class ActivitySingle extends Activity
                 }
                 if(count_my == 2 && count_comp == 0 && count_zero == 1)
                 {
+                    //noinspection UnusedAssignment
                     computed = true;
                     horizon = false;
                     break;
@@ -473,7 +476,8 @@ public class ActivitySingle extends Activity
                 yy = y;
             }
         }
-        else if(xx == -1 || yy == -1)
+        else //noinspection ConstantConditions
+            if(xx == -1 || yy == -1)
             do
             {
                 xx = rand.nextInt(3);

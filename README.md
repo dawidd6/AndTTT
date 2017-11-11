@@ -1,4 +1,4 @@
-# AndTTT
+# <img src="icon.svg" width="66"> AndTTT
 
 Currently under development.
 

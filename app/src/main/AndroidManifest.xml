@@ -6,10 +6,9 @@
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="false"
-        android:icon="@mipmap/ic_launcher"
-        android:fullBackupContent="@xml/backup_descriptor">
+        android:icon="@drawable/ic_icon">
         <activity
-            android:name=".ActivityMenu"
+            android:name=".activities.MenuActivity"
             android:theme="@style/theme_light">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,17 +17,17 @@
         </activity>
 
         <activity
-            android:name=".ActivitySingle"
+            android:name=".activities.SingleActivity"
             android:label=""
             android:theme="@style/theme_light"
-            android:parentActivityName="com.dawidd6.andttt.ActivityMenu">
+            android:parentActivityName="com.dawidd6.andttt.activities.MenuActivity">
         </activity>
 
         <activity
-            android:name=".ActivitySettings"
+            android:name=".activities.SettingsActivity"
             android:label="@string/settings"
             android:theme="@style/theme_light"
-            android:parentActivityName="com.dawidd6.andttt.ActivityMenu">
+            android:parentActivityName="com.dawidd6.andttt.activities.MenuActivity">
         </activity>
     </application>
 

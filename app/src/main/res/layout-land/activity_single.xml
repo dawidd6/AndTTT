@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dawidd6.andttt.ActivitySingle"
+    tools:context="com.dawidd6.andttt.activities.SingleActivity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp">
 
@@ -242,9 +242,10 @@
         android:layout_marginBottom="24dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/rounded_button"
-        android:textColor="@android:color/white"
         android:onClick="restartGame"
         android:text="@string/restart"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

@@ -1,4 +1,4 @@
-package com.dawidd6.andttt;
+package com.dawidd6.andttt.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,21 +12,25 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dawidd6.andttt.R;
+
 import java.util.Objects;
 import java.util.Random;
 
 @SuppressWarnings({"SameParameterValue", "unused"})
-public class ActivitySingle extends Activity
+public class SingleActivity extends Activity
 {
+    private final int[][] btn_ids = {{R.id.b0, R.id.b1, R.id.b2}, {R.id.b3, R.id.b4, R.id.b5}, {R.id.b6, R.id.b7, R.id.b8}};
+    private final char[] smb = {'x', 'o'};
+    private final ImageButton[][] button = new ImageButton[3][3];
+    private final Random rand = new Random();
     private boolean isMyTurn; //need to save
     private boolean isThereAWinner; //need to save
     private boolean isNightModeEnabled;
     private boolean restoredState;
     private int numberOfHumanWins = 0; //need to save
     private int numberOfAndroidWins = 0; //need to save
-    private ImageButton button[][];
     private char button_str[][]; //need to save
-    private char smb[];
     private char char_my; //need to save
     private char char_comp; //need to save
     private Bitmap bitmap_x;
@@ -38,7 +42,6 @@ public class ActivitySingle extends Activity
     private ImageView current;
     private Paint paint;
     private Canvas canvas;
-    private Random rand;
     private TextView score;
 
     @Override
@@ -47,12 +50,6 @@ public class ActivitySingle extends Activity
         // night mode stuff and set theme
         isNightModeEnabled = getIntent().getBooleanExtra("night_mode", false);
         setTheme(isNightModeEnabled ? R.style.theme_dark : R.style.theme_light);
-
-        // initialize variables
-        rand = new Random();
-        smb = new char[] {'x', 'o'};
-        int btn_ids[][] = {{R.id.b0, R.id.b1, R.id.b2}, {R.id.b3, R.id.b4, R.id.b5}, {R.id.b6, R.id.b7, R.id.b8}};
-        button = new ImageButton[3][3];
 
         // standard
         super.onCreate(savedInstanceState);
@@ -108,6 +105,8 @@ public class ActivitySingle extends Activity
             }
 
             checkConditions();
+
+            restoredState = false;
         }
         else
         {
@@ -518,7 +517,7 @@ public class ActivitySingle extends Activity
 
     public void onClickReturn(View view)
     {
-        Intent intent = new Intent(this, ActivityMenu.class);
+        Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
     }
 }

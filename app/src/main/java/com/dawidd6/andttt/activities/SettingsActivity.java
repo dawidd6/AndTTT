@@ -47,7 +47,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
                     {
                         recreate();
                     }
-                }, 200);
+                }, 250);
             break;
         }
     }

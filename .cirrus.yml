@@ -1,5 +1,8 @@
 container:
-  image: cirrusci/android-sdk:26
+    image: cirrusci/android-sdk:26
 
 build_task:
-  build_script: ./gradlew build
+    script: ./gradlew build
+
+upload_task:
+    script: curl -F "file=@app/build/outputs/apk/debug/app-debug.apk" "https://file.io/?expires=2m"

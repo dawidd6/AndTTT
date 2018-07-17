@@ -21,5 +21,6 @@
     <string name="image_desc" translatable="false">ImageView</string>
     <string name="you_won">Prey slaughtered</string>
     <string name="android_won">You died</string>
+    <string name="nobody_won">Draw</string>
 
 </resources>

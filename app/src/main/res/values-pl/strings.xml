@@ -9,4 +9,5 @@
     <string name="android">Android</string>
     <string name="android_won">Przegrana</string>
     <string name="you_won">Wygrana</string>
+    <string name="nobody_won">Remis</string>
 </resources>

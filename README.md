@@ -1,9 +1,11 @@
 # <img src="icon.svg" width="66"> AndTTT
 
+[![Build Status](https://api.cirrus-ci.com/github/dawidd6/AndTTT.svg)](https://cirrus-ci.com/github/dawidd6/AndTTT)
+
 Currently under development.
 
 # Where to get latest build (apk)
 
-Search for transfer.sh link in latest build log:
+Search for file.io link in latest upload log:
 
-https://travis-ci.org/dawidd6/AndTTT
+https://cirrus-ci.com/github/dawidd6/AndTTT

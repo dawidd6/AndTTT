@@ -2,7 +2,9 @@ container:
     image: cirrusci/android-sdk:26
 
 build_task:
-    script: ./gradlew build
+    script:
+        - ./gradlew build
+        - ls -R app
 
 upload_task:
     depends_on:

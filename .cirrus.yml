@@ -1,13 +1,6 @@
 container:
     image: cirrusci/android-sdk:26
 
-build_task:
-    script:
-        - ./gradlew build
-        - ls -R app
-
-upload_task:
-    depends_on:
-        - build
-    script: ls -R app
-    #curl -F "file=@app/build/outputs/apk/debug/app-debug.apk" "https://file.io/?expires=2m"
+task:
+    build_script: ./gradlew build
+    upload_script: curl -F "file=@app/build/outputs/apk/debug/app-debug.apk" "https://file.io/?expires=2m"

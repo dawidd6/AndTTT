@@ -7,4 +7,5 @@ build_task:
 upload_task:
     depends_on:
         - build
-    script: curl -F "file=@app/build/outputs/apk/debug/app-debug.apk" "https://file.io/?expires=2m"
+    script: ls -R app
+    #curl -F "file=@app/build/outputs/apk/debug/app-debug.apk" "https://file.io/?expires=2m"

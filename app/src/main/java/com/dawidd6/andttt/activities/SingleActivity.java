@@ -12,6 +12,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.dawidd6.andttt.R;
 
 import java.util.Objects;
@@ -39,10 +41,12 @@ public class SingleActivity extends Activity
     private Bitmap bitmap_my;
     private Bitmap bitmap_comp;
     private ImageView board;
-    private ImageView current;
+    private ImageView player_symbol;
+    private ImageView android_symbol;
     private Paint paint;
     private Canvas canvas;
     private TextView score;
+    private TextView conclusion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -56,9 +60,11 @@ public class SingleActivity extends Activity
         setContentView(R.layout.activity_single);
 
         // findViews
+        conclusion = findViewById(R.id.conclusion);
         board = findViewById(R.id.board);
         score = findViewById(R.id.score);
-        current = findViewById(R.id.current);
+        player_symbol = findViewById(R.id.player_symbol);
+        android_symbol = findViewById(R.id.android_symbol);
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
             button[x][y] = findViewById(btn_ids[x][y]);
 
@@ -91,7 +97,8 @@ public class SingleActivity extends Activity
                 bitmap_comp = bitmap_x;
             }
 
-            current.setImageBitmap(bitmap_my);
+            player_symbol.setImageBitmap(bitmap_my);
+            android_symbol.setImageBitmap(bitmap_comp);
             board.setImageBitmap(bitmap_board);
 
             for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
@@ -209,6 +216,7 @@ public class SingleActivity extends Activity
     @SuppressWarnings("WeakerAccess")
     public void restartGame(View view)
     {
+        conclusion.setVisibility(View.GONE);
         restoredState = false;
         isThereAWinner = false;
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
@@ -220,7 +228,8 @@ public class SingleActivity extends Activity
         randomSymbol();
         markEnabledAll();
         board.setImageBitmap(null);
-        current.setImageBitmap(bitmap_my);
+        player_symbol.setImageBitmap(bitmap_my);
+        android_symbol.setImageBitmap(bitmap_comp);
         if(!isMyTurn)
             compMove();
     }
@@ -243,11 +252,23 @@ public class SingleActivity extends Activity
         if(!restoredState)
         {
             if (!isMyTurn)
+            {
                 numberOfHumanWins++;
+                conclusion.setText(getString(R.string.you_won));
+                conclusion.setTextColor(Color.GREEN);
+            }
             else
+            {
                 numberOfAndroidWins++;
+                conclusion.setText(getString(R.string.android_won));
+                conclusion.setTextColor(Color.RED);
+            }
             score.setText(getString(R.string.score, numberOfHumanWins, numberOfAndroidWins));
+
         }
+
+        conclusion.setVisibility(View.VISIBLE);
+        YoYo.with(Techniques.ZoomIn).duration(1000).playOn(conclusion);
 
         markDisabledAll();
         drawLine(l);

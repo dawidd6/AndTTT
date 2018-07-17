@@ -17,7 +17,9 @@
     <string name="night_mode">Night Mode</string>
     <string name="you">You</string>
     <string name="android">Android</string>
-    <string name="score" translatable="false">%1$d - %2$d</string>
+    <string name="score" translatable="false">%1$d : %2$d</string>
     <string name="image_desc" translatable="false">ImageView</string>
+    <string name="you_won">Prey slaughtered</string>
+    <string name="android_won">You died</string>
 
 </resources>

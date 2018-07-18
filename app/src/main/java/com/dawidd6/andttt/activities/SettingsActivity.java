@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.view.View;
+import android.widget.ListView;
 
 import com.dawidd6.andttt.R;
 
@@ -27,6 +29,14 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             addPreferencesFromResource(R.xml.settings);
         }
 
+        @Override
+        public void onActivityCreated(Bundle savedInstanceState) {
+            super.onActivityCreated(savedInstanceState);
+
+            // remove dividers
+            ListView list = getView().findViewById(android.R.id.list);
+            list.setDivider(null);
+        }
     }
 
     @Override

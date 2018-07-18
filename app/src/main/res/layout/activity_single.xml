@@ -12,27 +12,27 @@
         android:id="@+id/androidText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="12dp"
         android:text="@string/android"
         android:textAlignment="center"
         android:textColor="?android:attr/colorForeground"
-        android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/android_symbol"
-        app:layout_constraintTop_toBottomOf="@+id/b8" />
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/androidImage"
+        app:layout_constraintStart_toEndOf="@+id/androidImage"
+        app:layout_constraintTop_toTopOf="@+id/androidImage" />
 
     <TextView
-        android:id="@+id/youText"
+        android:id="@+id/playerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginEnd="12dp"
         android:text="@string/you"
         android:textAlignment="center"
         android:textColor="?android:attr/colorForeground"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/player_symbol"
-        app:layout_constraintTop_toBottomOf="@+id/b6" />
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/playerImage"
+        app:layout_constraintEnd_toStartOf="@+id/playerImage"
+        app:layout_constraintTop_toTopOf="@+id/playerImage" />
 
     <ImageButton
         android:id="@+id/b0"
@@ -203,7 +203,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/board"
+        android:id="@+id/boardImage"
         android:layout_width="304dp"
         android:layout_height="304dp"
         android:layout_marginLeft="8dp"
@@ -216,25 +216,33 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/player_symbol"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:id="@+id/playerImage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/border"
         android:contentDescription="@string/image_desc"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/scoreText"
         app:layout_constraintEnd_toStartOf="@+id/scoreText"
-        app:layout_constraintTop_toBottomOf="@+id/b6"
+        app:layout_constraintTop_toTopOf="@+id/scoreText"
         app:srcCompat="@android:color/transparent" />
 
     <ImageView
-        android:id="@+id/android_symbol"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:id="@+id/androidImage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/border"
         android:contentDescription="@string/image_desc"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/scoreText"
         app:layout_constraintStart_toEndOf="@+id/scoreText"
-        app:layout_constraintTop_toBottomOf="@+id/b8"
+        app:layout_constraintTop_toTopOf="@+id/scoreText"
         app:srcCompat="@android:color/transparent" />
 
     <Button
@@ -259,20 +267,25 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/border"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
         android:text="@string/score"
-        android:textColor="#00B75B"
-        android:textSize="30sp"
+        android:textColor="@color/color_green"
+        android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/board" />
+        app:layout_constraintTop_toBottomOf="@+id/boardImage" />
 
     <TextView
         android:id="@+id/conclusionText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"

@@ -6,9 +6,11 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,7 +33,7 @@ public class SingleActivity extends Activity {
     private boolean isNightModeEnabled;
     private boolean isThereFreeRoom;
     private boolean restoredState;
-    private int animation_duration = 600;
+    private int animation_duration;
     private int numberOfHumanWins = 0; //need to save
     private int numberOfAndroidWins = 0; //need to save
     private char button_str[][]; //need to save
@@ -47,13 +49,16 @@ public class SingleActivity extends Activity {
     private ImageView android_symbol;
     private Paint paint;
     private Canvas canvas;
-    private TextView score;
-    private TextView conclusion;
+    private TextView scoreText;
+    private TextView conclusionText;
+    private TextView youText;
+    private TextView androidText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // night mode stuff and set theme
         isNightModeEnabled = getIntent().getBooleanExtra("night_mode", false);
+        animation_duration = getIntent().getIntExtra("animation_duration", 600);
         setTheme(isNightModeEnabled ? R.style.theme_dark : R.style.theme_light);
 
         // standard
@@ -61,9 +66,11 @@ public class SingleActivity extends Activity {
         setContentView(R.layout.activity_single);
 
         // findViews
-        conclusion = findViewById(R.id.conclusion);
+        youText = findViewById(R.id.youText);
+        androidText = findViewById(R.id.androidText);
+        conclusionText = findViewById(R.id.conclusionText);
         board = findViewById(R.id.board);
-        score = findViewById(R.id.score);
+        scoreText = findViewById(R.id.scoreText);
         player_symbol = findViewById(R.id.player_symbol);
         android_symbol = findViewById(R.id.android_symbol);
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
@@ -116,7 +123,7 @@ public class SingleActivity extends Activity {
             restartGame(null);
         }
 
-        score.setText(getString(R.string.score, numberOfHumanWins, numberOfAndroidWins));
+        scoreText.setText(getString(R.string.score, numberOfHumanWins, numberOfAndroidWins));
     }
 
     @Override
@@ -199,19 +206,22 @@ public class SingleActivity extends Activity {
 
     @SuppressWarnings("WeakerAccess")
     public void restartGame(View view) {
+        if(view != null)
+            YoYo.with(Techniques.StandUp).duration(animation_duration).playOn(view);
+
         if(isThereAWinner || !isThereFreeRoom) {
-            YoYo.with(Techniques.FadeOut).duration(animation_duration).playOn(conclusion);
+            YoYo.with(Techniques.FadeOut).duration(animation_duration).playOn(conclusionText);
             YoYo.with(Techniques.FadeOut).duration(animation_duration).playOn(board);
         } else
-            conclusion.setVisibility(View.GONE);
+            conclusionText.setVisibility(View.GONE);
         restoredState = false;
         isThereAWinner = false;
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++) {
             YoYo.with(Techniques.FadeOut).duration(animation_duration).playOn(button[x][y]);
             button_str[x][y] = '0';
         }
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+
+        new Handler().postDelayed(new Runnable() {
             public void run() {
                 for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
                     button[x][y].setImageBitmap(null);
@@ -221,12 +231,21 @@ public class SingleActivity extends Activity {
                     compMove();
             }
         }, animation_duration);
+
         randomTurn();
         randomSymbol();
         player_symbol.setImageBitmap(bitmap_my);
-        YoYo.with(Techniques.ZoomIn).duration(animation_duration).playOn(player_symbol);
+        YoYo.with(Techniques.Wobble).duration(animation_duration).playOn(player_symbol);
         android_symbol.setImageBitmap(bitmap_comp);
-        YoYo.with(Techniques.ZoomIn).duration(animation_duration).playOn(android_symbol);
+        YoYo.with(Techniques.Wobble).duration(animation_duration).playOn(android_symbol);
+
+        if(isMyTurn) {
+            youText.setTypeface(null, Typeface.BOLD);
+            androidText.setTypeface(null, Typeface.NORMAL);
+        } else {
+            youText.setTypeface(null, Typeface.NORMAL);
+            androidText.setTypeface(null, Typeface.BOLD);
+        }
     }
 
     private void markDisabledAll() {
@@ -244,19 +263,20 @@ public class SingleActivity extends Activity {
         if(!restoredState) {
             if (!isMyTurn) {
                 numberOfHumanWins++;
-                conclusion.setText(getString(R.string.you_won));
-                conclusion.setTextColor(Color.GREEN);
+                conclusionText.setText(getString(R.string.you_won));
+                conclusionText.setTextColor(Color.GREEN);
             } else {
                 numberOfAndroidWins++;
-                conclusion.setText(getString(R.string.android_won));
-                conclusion.setTextColor(Color.RED);
+                conclusionText.setText(getString(R.string.android_won));
+                conclusionText.setTextColor(Color.RED);
             }
-            score.setText(getString(R.string.score, numberOfHumanWins, numberOfAndroidWins));
+            scoreText.setText(getString(R.string.score, numberOfHumanWins, numberOfAndroidWins));
 
         }
 
-        conclusion.setVisibility(View.VISIBLE);
-        YoYo.with(Techniques.ZoomIn).duration(animation_duration).playOn(conclusion);
+        conclusionText.setVisibility(View.VISIBLE);
+        YoYo.with(Techniques.ZoomIn).duration(animation_duration).playOn(conclusionText);
+        YoYo.with(Techniques.Pulse).duration(animation_duration).playOn(scoreText);
 
         markDisabledAll();
         drawLine(l);
@@ -289,10 +309,10 @@ public class SingleActivity extends Activity {
         }
 
         if(!isThereFreeRoom && !isThereAWinner) {
-            conclusion.setText(getString(R.string.nobody_won));
-            conclusion.setTextColor(Color.BLUE);
-            conclusion.setVisibility(View.VISIBLE);
-            YoYo.with(Techniques.ZoomIn).duration(animation_duration).playOn(conclusion);
+            conclusionText.setText(getString(R.string.nobody_won));
+            conclusionText.setTextColor(Color.BLUE);
+            conclusionText.setVisibility(View.VISIBLE);
+            YoYo.with(Techniques.ZoomIn).duration(animation_duration).playOn(conclusionText);
         }
     }
 

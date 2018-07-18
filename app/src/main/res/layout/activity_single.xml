@@ -9,7 +9,7 @@
     tools:layout_editor_absoluteY="81dp">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/androidText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toBottomOf="@+id/b8" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/youText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -222,7 +222,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginTop="40dp"
         android:contentDescription="@string/image_desc"
-        app:layout_constraintEnd_toStartOf="@+id/score"
+        app:layout_constraintEnd_toStartOf="@+id/scoreText"
         app:layout_constraintTop_toBottomOf="@+id/b6"
         app:srcCompat="@android:color/transparent" />
 
@@ -233,12 +233,12 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="40dp"
         android:contentDescription="@string/image_desc"
-        app:layout_constraintStart_toEndOf="@+id/score"
+        app:layout_constraintStart_toEndOf="@+id/scoreText"
         app:layout_constraintTop_toBottomOf="@+id/b8"
         app:srcCompat="@android:color/transparent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/restartButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -254,7 +254,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/score"
+        android:id="@+id/scoreText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -269,7 +269,7 @@
         app:layout_constraintTop_toBottomOf="@+id/board" />
 
     <TextView
-        android:id="@+id/conclusion"
+        android:id="@+id/conclusionText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
@@ -278,9 +278,9 @@
         android:layout_marginTop="8dp"
         android:text="@string/you_won"
         android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/restartButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/score" />
+        app:layout_constraintTop_toBottomOf="@+id/scoreText" />
 
 </android.support.constraint.ConstraintLayout>

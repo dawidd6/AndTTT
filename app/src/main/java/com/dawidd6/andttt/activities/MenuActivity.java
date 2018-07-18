@@ -4,14 +4,18 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.View;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.dawidd6.andttt.R;
 
 @SuppressWarnings("unused")
 public class MenuActivity extends Activity {
     private boolean isNightModeEnabled = false;
+    private int animation_duration = 600;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,15 +28,28 @@ public class MenuActivity extends Activity {
     }
 
     public void onClickPlaySingle(View view) {
-        Intent intent = new Intent(this, com.dawidd6.andttt.activities.SingleActivity.class);
+        YoYo.with(Techniques.StandUp).duration(animation_duration).playOn(view);
+        final Intent intent = new Intent(this, com.dawidd6.andttt.activities.SingleActivity.class);
         intent.putExtra("night_mode" , isNightModeEnabled);
-        startActivity(intent);
+        intent.putExtra("animation_duration" , animation_duration);
+
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                startActivity(intent);
+            }
+        }, animation_duration);
     }
 
     public void onClickSettings(View view) {
-        Intent intent = new Intent(this, com.dawidd6.andttt.activities.SettingsActivity.class);
+        YoYo.with(Techniques.StandUp).duration(animation_duration).playOn(view);
+        final Intent intent = new Intent(this, com.dawidd6.andttt.activities.SettingsActivity.class);
         intent.putExtra("night_mode" , isNightModeEnabled);
-        startActivity(intent);
+
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                startActivity(intent);
+            }
+        }, animation_duration);
     }
 
     public void onClickExit(View view) {

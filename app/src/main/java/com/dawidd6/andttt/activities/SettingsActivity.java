@@ -34,8 +34,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         switch(key) {
             case "night_mode":
                 getIntent().putExtra("night_mode", sharedPreferences.getBoolean("night_mode", false));
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
+                new Handler().postDelayed(new Runnable() {
                     public void run() {
                         recreate();
                     }

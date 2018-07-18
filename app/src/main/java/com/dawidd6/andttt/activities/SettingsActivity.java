@@ -9,11 +9,9 @@ import android.preference.PreferenceManager;
 
 import com.dawidd6.andttt.R;
 
-public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener
-{
+public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         boolean isNightModeEnabled = getIntent().getBooleanExtra("night_mode", false);
         setTheme(isNightModeEnabled ? R.style.theme_dark : R.style.theme_light);
 
@@ -22,11 +20,9 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
     }
 
-    public static class SettingsFragment extends PreferenceFragment
-    {
+    public static class SettingsFragment extends PreferenceFragment {
         @Override
-        public void onCreate(Bundle savedInstanceState)
-        {
+        public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.settings);
         }
@@ -34,17 +30,13 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
-    {
-        switch(key)
-        {
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        switch(key) {
             case "night_mode":
                 getIntent().putExtra("night_mode", sharedPreferences.getBoolean("night_mode", false));
                 Handler handler = new Handler();
-                handler.postDelayed(new Runnable()
-                {
-                    public void run()
-                    {
+                handler.postDelayed(new Runnable() {
+                    public void run() {
                         recreate();
                     }
                 }, 250);

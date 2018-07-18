@@ -21,8 +21,7 @@ import java.util.Objects;
 import java.util.Random;
 
 @SuppressWarnings({"SameParameterValue", "unused"})
-public class SingleActivity extends Activity
-{
+public class SingleActivity extends Activity {
     private final int[][] btn_ids = {{R.id.b0, R.id.b1, R.id.b2}, {R.id.b3, R.id.b4, R.id.b5}, {R.id.b6, R.id.b7, R.id.b8}};
     private final char[] smb = {'x', 'o'};
     private final ImageButton[][] button = new ImageButton[3][3];
@@ -52,8 +51,7 @@ public class SingleActivity extends Activity
     private TextView conclusion;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         // night mode stuff and set theme
         isNightModeEnabled = getIntent().getBooleanExtra("night_mode", false);
         setTheme(isNightModeEnabled ? R.style.theme_dark : R.style.theme_light);
@@ -77,8 +75,7 @@ public class SingleActivity extends Activity
         drawCircle();
 
         // restore state
-        if(savedInstanceState != null)
-        {
+        if(savedInstanceState != null) {
             restoredState = true;
 
             numberOfHumanWins = savedInstanceState.getInt("numberOfHumanWins");
@@ -89,13 +86,10 @@ public class SingleActivity extends Activity
             button_str = (char[][])savedInstanceState.getSerializable("button_str");
             bitmap_board = (Bitmap)savedInstanceState.get("bitmap_board");
 
-            if(char_my == 'x')
-            {
+            if(char_my == 'x') {
                 bitmap_my = bitmap_x;
                 bitmap_comp = bitmap_o;
-            }
-            else
-            {
+            } else {
                 bitmap_my = bitmap_o;
                 bitmap_comp = bitmap_x;
             }
@@ -104,11 +98,9 @@ public class SingleActivity extends Activity
             android_symbol.setImageBitmap(bitmap_comp);
             board.setImageBitmap(bitmap_board);
 
-            for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
-            {
+            for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++) {
                 button[x][y] = findViewById(btn_ids[x][y]);
-                if(button_str[x][y] != '0')
-                {
+                if(button_str[x][y] != '0') {
                     button[x][y].setImageBitmap(button_str[x][y] == char_my ? bitmap_my : bitmap_comp);
                     button[x][y].setClickable(false);
                 }
@@ -117,9 +109,7 @@ public class SingleActivity extends Activity
             checkConditions();
 
             restoredState = false;
-        }
-        else
-        {
+        } else {
             isThereFreeRoom = true;
             restoredState = false;
             button_str = new char[3][3];
@@ -130,8 +120,7 @@ public class SingleActivity extends Activity
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle bundle)
-    {
+    protected void onSaveInstanceState(Bundle bundle) {
         bundle.putInt("numberOfHumanWins", numberOfHumanWins);
         bundle.putInt("numberOfAndroidWins", numberOfAndroidWins);
         bundle.putBoolean("isMyTurn", isMyTurn);
@@ -140,8 +129,7 @@ public class SingleActivity extends Activity
         bundle.putSerializable("button_str", button_str);
     }
 
-    private void drawLine(String l)
-    {
+    private void drawLine(String l) {
         paint.setColor(Color.parseColor("#00B75B"));
         bitmap_board = Bitmap.createBitmap(304, 304, Bitmap.Config.ARGB_4444);
         canvas = new Canvas(bitmap_board);
@@ -167,8 +155,7 @@ public class SingleActivity extends Activity
         YoYo.with(Techniques.Landing).duration(animation_duration).playOn(board);
     }
 
-    private void setPaint()
-    {
+    private void setPaint() {
         paint = new Paint();
         paint.setColor(isNightModeEnabled ? Color.WHITE : Color.BLACK);
         paint.setStrokeWidth(6);
@@ -177,40 +164,32 @@ public class SingleActivity extends Activity
         paint.setStyle(Paint.Style.STROKE);
     }
 
-    private void drawCross()
-    {
-
+    private void drawCross() {
         bitmap_x = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_4444);
         canvas = new Canvas(bitmap_x);
         canvas.drawLine(6, 6, 94, 94, paint);
         canvas.drawLine(94, 6, 6, 94, paint);
     }
 
-    private void drawCircle()
-    {
+    private void drawCircle() {
         bitmap_o = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_4444);
         canvas = new Canvas(bitmap_o);
         canvas.drawCircle(50, 50, 45, paint);
     }
 
-    private void randomTurn()
-    {
+    private void randomTurn() {
         int k = rand.nextInt(2);
         isMyTurn = (k != 0);
     }
 
-    private void randomSymbol()
-    {
+    private void randomSymbol() {
         int k = rand.nextInt(2);
-        if(k == 0)
-        {
+        if(k == 0) {
             bitmap_my = bitmap_x;
             bitmap_comp = bitmap_o;
             char_my = 'x';
             char_comp = 'o';
-        }
-        else
-        {
+        } else {
             bitmap_my = bitmap_o;
             bitmap_comp = bitmap_x;
             char_my = 'o';
@@ -219,27 +198,21 @@ public class SingleActivity extends Activity
     }
 
     @SuppressWarnings("WeakerAccess")
-    public void restartGame(View view)
-    {
-        if(isThereAWinner || !isThereFreeRoom)
-        {
+    public void restartGame(View view) {
+        if(isThereAWinner || !isThereFreeRoom) {
             YoYo.with(Techniques.FadeOut).duration(animation_duration).playOn(conclusion);
             YoYo.with(Techniques.FadeOut).duration(animation_duration).playOn(board);
-        }
-        else
+        } else
             conclusion.setVisibility(View.GONE);
         restoredState = false;
         isThereAWinner = false;
-        for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
-        {
+        for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++) {
             YoYo.with(Techniques.FadeOut).duration(animation_duration).playOn(button[x][y]);
             button_str[x][y] = '0';
         }
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable()
-        {
-            public void run()
-            {
+        handler.postDelayed(new Runnable() {
+            public void run() {
                 for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
                     button[x][y].setImageBitmap(null);
                 board.setImageBitmap(null);
@@ -256,31 +229,24 @@ public class SingleActivity extends Activity
         YoYo.with(Techniques.ZoomIn).duration(animation_duration).playOn(android_symbol);
     }
 
-    private void markDisabledAll()
-    {
+    private void markDisabledAll() {
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
             button[x][y].setClickable(false);
     }
 
-    private void markEnabledAll()
-    {
+    private void markEnabledAll() {
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
             button[x][y].setClickable(true);
     }
 
-    private void doWin(String l)
-    {
+    private void doWin(String l) {
         isThereAWinner = true;
-        if(!restoredState)
-        {
-            if (!isMyTurn)
-            {
+        if(!restoredState) {
+            if (!isMyTurn) {
                 numberOfHumanWins++;
                 conclusion.setText(getString(R.string.you_won));
                 conclusion.setTextColor(Color.GREEN);
-            }
-            else
-            {
+            } else {
                 numberOfAndroidWins++;
                 conclusion.setText(getString(R.string.android_won));
                 conclusion.setTextColor(Color.RED);
@@ -296,17 +262,14 @@ public class SingleActivity extends Activity
         drawLine(l);
     }
 
-    private void checkConditions()
-    {
+    private void checkConditions() {
         isThereFreeRoom = false;
-        for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
-        {
+        for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++) {
             if(button_str[x][y] == '0')
                 isThereFreeRoom = true;
         }
 
-        for(int i = 0; i < 2; i++)
-        {
+        for(int i = 0; i < 2; i++) {
             if (button_str[0][0] == smb[i] && button_str[0][1] == smb[i] && button_str[0][2] == smb[i])
                 doWin("h1");
             else if (button_str[1][0] == smb[i] && button_str[1][1] == smb[i] && button_str[1][2] == smb[i])
@@ -325,8 +288,7 @@ public class SingleActivity extends Activity
                 doWin("nr");
         }
 
-        if(!isThereFreeRoom && !isThereAWinner)
-        {
+        if(!isThereFreeRoom && !isThereAWinner) {
             conclusion.setText(getString(R.string.nobody_won));
             conclusion.setTextColor(Color.BLUE);
             conclusion.setVisibility(View.VISIBLE);
@@ -334,26 +296,21 @@ public class SingleActivity extends Activity
         }
     }
 
-    private int gimmeFreeRoomHorizon(int x)
-    {
+    private int gimmeFreeRoomHorizon(int x) {
         for(int y = 0; y < 3; y++)
             if(button_str[x][y] == '0')
                 return y;
         return -1;
     }
 
-    private int gimmeFreeRoomVertical(int y)
-    {
+    private int gimmeFreeRoomVertical(int y) {
         for(int x = 0; x < 3; x++)
             if(button_str[x][y] == '0')
-            {
                 return x;
-            }
         return -1;
     }
 
-    private void compMove()
-    {
+    private void compMove() {
         int xx = -1;
         int yy = -1;
         int y = 0;
@@ -367,45 +324,33 @@ public class SingleActivity extends Activity
         smb[0] = char_comp;
         smb[1] = char_my;
 
-        for(int i = 0; i < 2; i++)
-        {
-            if(button_str[0][0] == smb[i] && button_str[1][1] == smb[i] && button_str[2][2] == '0')
-            {
+        for(int i = 0; i < 2; i++) {
+            if(button_str[0][0] == smb[i] && button_str[1][1] == smb[i] && button_str[2][2] == '0') {
                 computed = true;
                 xx = 2;
                 yy = 2;
                 break;
-            }
-            else if(button_str[1][1] == smb[i] && button_str[2][2] == smb[i] && button_str[0][0] == '0')
-            {
+            } else if(button_str[1][1] == smb[i] && button_str[2][2] == smb[i] && button_str[0][0] == '0') {
                 computed = true;
                 xx = 0;
                 yy = 0;
                 break;
-            }
-            else if(button_str[0][0] == smb[i] && button_str[2][2] == smb[i] && button_str[1][1] == '0')
-            {
+            } else if(button_str[0][0] == smb[i] && button_str[2][2] == smb[i] && button_str[1][1] == '0') {
                 computed = true;
                 xx = 1;
                 yy = 1;
                 break;
-            }
-            else if(button_str[0][2] == smb[i] && button_str[2][0] == smb[i] && button_str[1][1] == '0')
-            {
+            } else if(button_str[0][2] == smb[i] && button_str[2][0] == smb[i] && button_str[1][1] == '0') {
                 computed = true;
                 xx = 1;
                 yy = 1;
                 break;
-            }
-            else if(button_str[1][1] == smb[i] && button_str[2][0] == smb[i] && button_str[0][2] == '0')
-            {
+            } else if(button_str[1][1] == smb[i] && button_str[2][0] == smb[i] && button_str[0][2] == '0') {
                 computed = true;
                 xx = 0;
                 yy = 2;
                 break;
-            }
-            else if(button_str[0][2] == smb[i] && button_str[1][1] == smb[i] && button_str[2][0] == '0')
-            {
+            } else if(button_str[0][2] == smb[i] && button_str[1][1] == smb[i] && button_str[2][0] == '0') {
                 computed = true;
                 xx = 2;
                 yy = 0;
@@ -414,13 +359,11 @@ public class SingleActivity extends Activity
         }
 
         if(!computed)
-            for(x = 0; x < 3; x++)
-            {
+            for(x = 0; x < 3; x++) {
                 count_my = 0;
                 count_comp = 0;
                 count_zero = 0;
-                for(y = 0; y < 3; y++)
-                {
+                for(y = 0; y < 3; y++) {
                     if(button_str[x][y] == char_my)
                         count_my++;
                     else if(button_str[x][y] == char_comp)
@@ -428,8 +371,7 @@ public class SingleActivity extends Activity
                     else
                         count_zero++;
                 }
-                if(count_my == 0 && count_comp == 2 && count_zero == 1)
-                {
+                if(count_my == 0 && count_comp == 2 && count_zero == 1) {
                     computed = true;
                     horizon = true;
                     break;
@@ -437,13 +379,11 @@ public class SingleActivity extends Activity
             }
 
         if(!computed)
-            for(x = 0; x < 3; x++)
-            {
+            for(x = 0; x < 3; x++) {
                 count_my = 0;
                 count_comp = 0;
                 count_zero = 0;
-                for(y = 0; y < 3; y++)
-                {
+                for(y = 0; y < 3; y++) {
                     if(button_str[x][y] == char_my)
                         count_my++;
                     else if(button_str[x][y] == char_comp)
@@ -451,8 +391,7 @@ public class SingleActivity extends Activity
                     else
                         count_zero++;
                 }
-                if(count_my == 2 && count_comp == 0 && count_zero == 1)
-                {
+                if(count_my == 2 && count_comp == 0 && count_zero == 1) {
                     computed = true;
                     horizon = true;
                     break;
@@ -460,13 +399,11 @@ public class SingleActivity extends Activity
             }
 
         if(!computed)
-            for(y = 0; y < 3; y++)
-            {
+            for(y = 0; y < 3; y++) {
                 count_my = 0;
                 count_comp = 0;
                 count_zero = 0;
-                for(x = 0; x < 3; x++)
-                {
+                for(x = 0; x < 3; x++) {
                     if(button_str[x][y] == char_my)
                         count_my++;
                     else if(button_str[x][y] == char_comp)
@@ -474,23 +411,19 @@ public class SingleActivity extends Activity
                     else
                         count_zero++;
                 }
-                if(count_my == 0 && count_comp == 2 && count_zero == 1)
-                {
+                if(count_my == 0 && count_comp == 2 && count_zero == 1) {
                     computed = true;
                     horizon = false;
                     break;
                 }
-
             }
 
         if(!computed)
-            for(y = 0; y < 3; y++)
-            {
+            for(y = 0; y < 3; y++) {
                 count_my = 0;
                 count_comp = 0;
                 count_zero = 0;
-                for(x = 0; x < 3; x++)
-                {
+                for(x = 0; x < 3; x++) {
                     if(button_str[x][y] == char_my)
                         count_my++;
                     else if(button_str[x][y] == char_comp)
@@ -498,8 +431,7 @@ public class SingleActivity extends Activity
                     else
                         count_zero++;
                 }
-                if(count_my == 2 && count_comp == 0 && count_zero == 1)
-                {
+                if(count_my == 2 && count_comp == 0 && count_zero == 1) {
                     //noinspection UnusedAssignment
                     computed = true;
                     horizon = false;
@@ -507,36 +439,25 @@ public class SingleActivity extends Activity
                 }
             }
 
-        if(count_my == 0 && count_comp == 2 && count_zero == 1)
-        {
-            if(horizon)
-            {
+        if(count_my == 0 && count_comp == 2 && count_zero == 1) {
+            if(horizon) {
                 yy = gimmeFreeRoomHorizon(x);
                 xx = x;
-            }
-            else
-            {
+            } else {
                 xx = gimmeFreeRoomVertical(y);
                 yy = y;
             }
-        }
-        else if(count_my == 2 && count_comp == 0 && count_zero == 1)
-        {
-            if(horizon)
-            {
+        } else if(count_my == 2 && count_comp == 0 && count_zero == 1) {
+            if(horizon) {
                 yy = gimmeFreeRoomHorizon(x);
                 xx = x;
-            }
-            else
-            {
+            } else {
                 xx = gimmeFreeRoomVertical(y);
                 yy = y;
             }
-        }
-        else //noinspection ConstantConditions
+        } else //noinspection ConstantConditions
             if(xx == -1 || yy == -1)
-            do
-            {
+            do {
                 xx = rand.nextInt(3);
                 yy = rand.nextInt(3);
             } while(button_str[xx][yy] != '0');
@@ -552,19 +473,16 @@ public class SingleActivity extends Activity
         checkConditions();
     }
 
-    private boolean yallGotAnymoreOfThemButtons()
-    {
+    private boolean yallGotAnymoreOfThemButtons() {
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
             if(button_str[x][y] == '0')
                 return true;
         return false;
     }
 
-    public void myMove(View view)
-    {
+    public void myMove(View view) {
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
-            if(button[x][y] == findViewById(view.getId()))
-            {
+            if(button[x][y] == findViewById(view.getId())) {
                 button[x][y].setImageBitmap(bitmap_my);
                 button_str[x][y] = char_my;
                 isMyTurn = false;
@@ -578,8 +496,7 @@ public class SingleActivity extends Activity
             }
     }
 
-    public void onClickReturn(View view)
-    {
+    public void onClickReturn(View view) {
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
     }

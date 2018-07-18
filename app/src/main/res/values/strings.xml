@@ -23,5 +23,6 @@
     <string name="android_won">You died</string>
     <string name="nobody_won">Draw</string>
     <string name="animations">Animations</string>
+    <string name="show_status_bar">Show status bar</string>
 
 </resources>

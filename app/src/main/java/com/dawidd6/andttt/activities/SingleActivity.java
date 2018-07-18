@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ public class SingleActivity extends Activity {
     private boolean isMyTurn; //need to save
     private boolean isThereAWinner; //need to save
     private boolean isNightModeEnabled;
+    private boolean isStatusBarEnabled;
     private boolean isThereFreeRoom;
     private boolean restoredState;
     private int animation_duration;
@@ -58,7 +60,11 @@ public class SingleActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         // night mode stuff and set theme
         isNightModeEnabled = getIntent().getBooleanExtra("night_mode", false);
+        isStatusBarEnabled = getIntent().getBooleanExtra("show_status_bar", false);
         animation_duration = getIntent().getIntExtra("animation_duration", 600);
+
+        if(isStatusBarEnabled)
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setTheme(isNightModeEnabled ? R.style.theme_dark : R.style.theme_light);
 
         // standard

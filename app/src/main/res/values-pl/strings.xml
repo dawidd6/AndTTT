@@ -11,4 +11,5 @@
     <string name="you_won">Wygrana</string>
     <string name="nobody_won">Remis</string>
     <string name="animations">Animacje</string>
+    <string name="show_status_bar">Pokaż pasek statusu</string>
 </resources>

@@ -7,6 +7,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ListView;
 
 import com.dawidd6.andttt.R;
@@ -15,6 +16,10 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         boolean isNightModeEnabled = getIntent().getBooleanExtra("night_mode", false);
+        boolean isStatusBarEnabled = getIntent().getBooleanExtra("show_status_bar", false);
+
+        if(isStatusBarEnabled)
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setTheme(isNightModeEnabled ? R.style.theme_dark : R.style.theme_light);
 
         super.onCreate(savedInstanceState);
@@ -49,7 +54,13 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
                         recreate();
                     }
                 }, 250);
-            break;
+                break;
+            case "show_status_bar":
+                if(sharedPreferences.getBoolean("show_status_bar", false))
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                else
+                    getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                break;
         }
     }
 

@@ -11,4 +11,8 @@
         android:defaultValue="false"
         android:key="night_mode"
         android:title="@string/night_mode" />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="animations"
+        android:title="@string/animations" />
 </PreferenceScreen>

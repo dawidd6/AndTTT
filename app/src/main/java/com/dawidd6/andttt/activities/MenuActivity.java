@@ -14,14 +14,19 @@ import com.dawidd6.andttt.R;
 
 @SuppressWarnings("unused")
 public class MenuActivity extends Activity {
-    private boolean isNightModeEnabled = false;
-    private int animation_duration = 600;
+    private boolean isNightModeEnabled;
+    private boolean isAnimationEnabled;
+    private int animation_duration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         isNightModeEnabled = prefs.getBoolean("night_mode", false);
+        isAnimationEnabled = prefs.getBoolean("animations", true);
+
         setTheme(isNightModeEnabled ? R.style.theme_dark : R.style.theme_light);
+
+        animation_duration = isAnimationEnabled ? 600 : 0;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);

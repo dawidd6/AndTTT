@@ -1,6 +1,5 @@
 package com.dawidd6.andttt;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -10,7 +9,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,7 +20,7 @@ import java.util.Objects;
 import java.util.Random;
 
 @SuppressWarnings({"SameParameterValue", "unused"})
-public class SingleActivity extends Activity {
+public class SingleActivity extends BaseActivity {
     private int[][] btn_ids = {{R.id.b0, R.id.b1, R.id.b2}, {R.id.b3, R.id.b4, R.id.b5}, {R.id.b6, R.id.b7, R.id.b8}};
     private char[] smb = {'x', 'o'};
     private ImageButton[][] button = new ImageButton[3][3];
@@ -31,11 +29,8 @@ public class SingleActivity extends Activity {
     private Canvas canvas;
     private boolean isMyTurn; //need to save
     private boolean isThereAWinner; //need to save
-    private boolean isNightModeEnabled;
-    private boolean isStatusBarEnabled;
     private boolean isThereFreeRoom;
     private boolean restoredState;
-    private int animation_duration;
     private int numberOfPlayerWins = 0; //need to save
     private int numberOfAndroidWins = 0; //need to save
     private char button_str[][]; //need to save
@@ -56,16 +51,6 @@ public class SingleActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // night mode stuff and set theme
-        isNightModeEnabled = getIntent().getBooleanExtra("night_mode", false);
-        isStatusBarEnabled = getIntent().getBooleanExtra("show_status_bar", false);
-        animation_duration = getIntent().getIntExtra("animation_duration", 600);
-
-        if(isStatusBarEnabled)
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setTheme(isNightModeEnabled ? R.style.theme_dark : R.style.theme_light);
-
-        // standard
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single);
 

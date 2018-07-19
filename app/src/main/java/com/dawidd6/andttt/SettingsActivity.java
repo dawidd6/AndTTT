@@ -1,22 +1,14 @@
 package com.dawidd6.andttt;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.WindowManager;
 
-public class SettingsActivity extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SettingsActivity extends BaseActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        boolean isNightModeEnabled = getIntent().getBooleanExtra("night_mode", false);
-        boolean isStatusBarEnabled = getIntent().getBooleanExtra("show_status_bar", false);
-
-        if(isStatusBarEnabled)
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setTheme(isNightModeEnabled ? R.style.theme_dark : R.style.theme_light);
-
         super.onCreate(savedInstanceState);
         getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);

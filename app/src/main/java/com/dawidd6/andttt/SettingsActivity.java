@@ -1,4 +1,4 @@
-package com.dawidd6.andttt.activities;
+package com.dawidd6.andttt;
 
 import android.app.Activity;
 import android.content.SharedPreferences;

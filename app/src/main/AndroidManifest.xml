@@ -8,7 +8,7 @@
         android:supportsRtl="false"
         android:icon="@drawable/ic_icon">
         <activity
-            android:name=".activities.MenuActivity"
+            android:name=".MenuActivity"
             android:theme="@style/theme_light">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,19 +17,19 @@
         </activity>
 
         <activity
-            android:name=".activities.SingleActivity"
+            android:name=".SingleActivity"
             android:label=""
             android:theme="@style/theme_light"
-            android:parentActivityName="com.dawidd6.andttt.activities.MenuActivity"
+            android:parentActivityName="com.dawidd6.andttt.MenuActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>
 
         <activity
-            android:name=".activities.SettingsActivity"
+            android:name=".SettingsActivity"
             android:label="@string/settings"
             android:theme="@style/theme_light"
-            android:parentActivityName="com.dawidd6.andttt.activities.MenuActivity">
+            android:parentActivityName="com.dawidd6.andttt.MenuActivity">
         </activity>
     </application>
 

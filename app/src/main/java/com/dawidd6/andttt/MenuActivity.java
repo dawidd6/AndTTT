@@ -1,7 +1,6 @@
-package com.dawidd6.andttt.activities;
+package com.dawidd6.andttt;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.view.WindowManager;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.dawidd6.andttt.R;
 
 @SuppressWarnings("unused")
 public class MenuActivity extends Activity {
@@ -52,13 +50,13 @@ public class MenuActivity extends Activity {
     public void onClickPlaySingle(View view) {
         YoYo.with(Techniques.StandUp).duration(animation_duration).playOn(view);
 
-        switchActivity(com.dawidd6.andttt.activities.SingleActivity.class);
+        switchActivity(SingleActivity.class);
     }
 
     public void onClickSettings(View view) {
         YoYo.with(Techniques.StandUp).duration(animation_duration).playOn(view);
 
-        switchActivity(com.dawidd6.andttt.activities.SettingsActivity.class);
+        switchActivity(SettingsActivity.class);
     }
 
     public void onClickExit(View view) {

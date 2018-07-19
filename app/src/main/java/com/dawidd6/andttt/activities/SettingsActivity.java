@@ -1,9 +1,9 @@
 package com.dawidd6.andttt.activities;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -12,7 +12,7 @@ import android.widget.ListView;
 
 import com.dawidd6.andttt.R;
 
-public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SettingsActivity extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         boolean isNightModeEnabled = getIntent().getBooleanExtra("night_mode", false);

@@ -4,13 +4,8 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.ListView;
-
-import com.dawidd6.andttt.R;
 
 public class SettingsActivity extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener {
     @Override
@@ -25,23 +20,6 @@ public class SettingsActivity extends Activity implements SharedPreferences.OnSh
         super.onCreate(savedInstanceState);
         getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
-    }
-
-    public static class SettingsFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.settings);
-        }
-
-        @Override
-        public void onActivityCreated(Bundle savedInstanceState) {
-            super.onActivityCreated(savedInstanceState);
-
-            // remove dividers
-            ListView list = getView().findViewById(android.R.id.list);
-            list.setDivider(null);
-        }
     }
 
     @Override

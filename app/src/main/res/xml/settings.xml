@@ -1,14 +1,22 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="night_mode"
-        android:title="@string/night_mode" />
-    <SwitchPreference
-        android:defaultValue="true"
-        android:key="animations"
-        android:title="@string/animations" />
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="show_status_bar"
-        android:title="@string/show_status_bar" />
+    <PreferenceCategory android:title="@string/appearance">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="show_status_bar"
+            android:title="@string/show_status_bar" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="night_mode"
+            android:title="@string/night_mode" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="animations"
+            android:title="@string/animations" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/about">
+        <Preference
+            android:key="licenses"
+            android:title="@string/licenses"
+            android:summary="@string/licenses_summary"/>
+    </PreferenceCategory>
 </PreferenceScreen>

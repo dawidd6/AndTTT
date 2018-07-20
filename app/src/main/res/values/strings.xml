@@ -24,5 +24,9 @@
     <string name="nobody_won">Draw</string>
     <string name="animations">Animations</string>
     <string name="show_status_bar">Show status bar</string>
+    <string name="appearance">Appearance</string>
+    <string name="about">About</string>
+    <string name="licenses">Licenses</string>
+    <string name="licenses_summary">Libraries used by this project</string>
 
 </resources>

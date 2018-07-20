@@ -12,4 +12,8 @@
     <string name="nobody_won">Remis</string>
     <string name="animations">Animacje</string>
     <string name="show_status_bar">Pokaż pasek statusu</string>
+    <string name="appearance">Wygląd</string>
+    <string name="about">O programie</string>
+    <string name="licenses">Licencje</string>
+    <string name="licenses_summary">Biblioteki używane w projekcie</string>
 </resources>

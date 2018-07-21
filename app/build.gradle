@@ -7,7 +7,7 @@ android {
         applicationId "dawidd6.andttt"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 4
+        versionCode 10
         versionName "0.1.0"
     }
     buildTypes {

@@ -1,4 +1,4 @@
-package com.dawidd6.andttt;
+package com.github.dawidd6.andttt;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,7 +9,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;

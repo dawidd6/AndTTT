@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dawidd6.andttt">
+    package="com.github.dawidd6.andttt">
 
     <application
         android:allowBackup="true"
@@ -9,7 +9,7 @@
         android:theme="@style/theme_light"
         android:icon="@mipmap/ic_launcher_round">
         <activity
-            android:name=".MenuActivity">
+            android:name="com.github.dawidd6.andttt.MenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -17,20 +17,20 @@
         </activity>
 
         <activity
-            android:name=".SingleActivity"
-            android:parentActivityName="com.dawidd6.andttt.MenuActivity"
+            android:name="com.github.dawidd6.andttt.SingleActivity"
+            android:parentActivityName="com.github.dawidd6.andttt.MenuActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>
 
         <activity
-            android:name=".SettingsActivity"
-            android:parentActivityName="com.dawidd6.andttt.MenuActivity">
+            android:name="com.github.dawidd6.andttt.SettingsActivity"
+            android:parentActivityName="com.github.dawidd6.andttt.MenuActivity">
         </activity>
 
         <activity
-            android:name=".LicensesActivity"
-            android:parentActivityName="com.dawidd6.andttt.SettingsActivity">
+            android:name="com.github.dawidd6.andttt.LicensesActivity"
+            android:parentActivityName="com.github.dawidd6.andttt.SettingsActivity">
         </activity>
     </application>
 

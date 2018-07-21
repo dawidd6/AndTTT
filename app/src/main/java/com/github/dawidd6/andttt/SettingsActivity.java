@@ -1,4 +1,4 @@
-package com.dawidd6.andttt;
+package com.github.dawidd6.andttt;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

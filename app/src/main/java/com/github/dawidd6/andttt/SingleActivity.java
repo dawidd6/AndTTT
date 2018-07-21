@@ -28,7 +28,8 @@ public class SingleActivity extends BaseActivity {
     private Paint paint;
     private Canvas canvas;
     private boolean isMyTurn; //need to save
-    private boolean isThereAWinner; //need to save
+    private boolean isThereAWinner = false; //need to save
+    private boolean isThereADraw = false;
     private boolean restoredState;
     private int numberOfPlayerWins = 0; //need to save
     private int numberOfAndroidWins = 0; //need to save
@@ -197,13 +198,14 @@ public class SingleActivity extends BaseActivity {
         if(view != null)
             YoYo.with(Techniques.StandUp).duration(animation_duration).playOn(view);
 
-        if(isThereAWinner || !yallGotAnymoreOfThemButtons()) {
+        if(isThereAWinner || isThereADraw) {
             YoYo.with(Techniques.FadeOut).duration(animation_duration).playOn(conclusionText);
             YoYo.with(Techniques.FadeOut).duration(animation_duration).playOn(boardImage);
         } else
             conclusionText.setVisibility(View.GONE);
         restoredState = false;
         isThereAWinner = false;
+        isThereADraw = false;
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++) {
             YoYo.with(Techniques.FadeOut).duration(animation_duration).playOn(button[x][y]);
             button_str[x][y] = '0';
@@ -290,6 +292,7 @@ public class SingleActivity extends BaseActivity {
         }
 
         if(!yallGotAnymoreOfThemButtons() && !isThereAWinner) {
+            isThereADraw = true;
             conclusionText.setText(getString(R.string.nobody_won));
             conclusionText.setTextColor(Color.BLUE);
             conclusionText.setVisibility(View.VISIBLE);

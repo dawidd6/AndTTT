@@ -29,7 +29,6 @@ public class SingleActivity extends BaseActivity {
     private Canvas canvas;
     private boolean isMyTurn; //need to save
     private boolean isThereAWinner; //need to save
-    private boolean isThereFreeRoom;
     private boolean restoredState;
     private int numberOfPlayerWins = 0; //need to save
     private int numberOfAndroidWins = 0; //need to save
@@ -107,7 +106,6 @@ public class SingleActivity extends BaseActivity {
 
             restoredState = false;
         } else {
-            isThereFreeRoom = true;
             restoredState = false;
             button_str = new char[3][3];
             restartGame(null);
@@ -199,7 +197,7 @@ public class SingleActivity extends BaseActivity {
         if(view != null)
             YoYo.with(Techniques.StandUp).duration(animation_duration).playOn(view);
 
-        if(isThereAWinner || !isThereFreeRoom) {
+        if(isThereAWinner || !yallGotAnymoreOfThemButtons()) {
             YoYo.with(Techniques.FadeOut).duration(animation_duration).playOn(conclusionText);
             YoYo.with(Techniques.FadeOut).duration(animation_duration).playOn(boardImage);
         } else
@@ -272,12 +270,6 @@ public class SingleActivity extends BaseActivity {
     }
 
     private void checkConditions() {
-        isThereFreeRoom = false;
-        for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++) {
-            if(button_str[x][y] == '0')
-                isThereFreeRoom = true;
-        }
-
         for(int i = 0; i < 2; i++) {
             if (button_str[0][0] == smb[i] && button_str[0][1] == smb[i] && button_str[0][2] == smb[i])
                 doWin("h1");
@@ -297,7 +289,7 @@ public class SingleActivity extends BaseActivity {
                 doWin("nr");
         }
 
-        if(!isThereFreeRoom && !isThereAWinner) {
+        if(!yallGotAnymoreOfThemButtons() && !isThereAWinner) {
             conclusionText.setText(getString(R.string.nobody_won));
             conclusionText.setTextColor(Color.BLUE);
             conclusionText.setVisibility(View.VISIBLE);

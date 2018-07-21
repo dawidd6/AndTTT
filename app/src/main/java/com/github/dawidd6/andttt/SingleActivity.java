@@ -195,9 +195,6 @@ public class SingleActivity extends BaseActivity {
 
     @SuppressWarnings("WeakerAccess")
     public void restartGame(View view) {
-        if(view != null)
-            YoYo.with(Techniques.StandUp).duration(animation_duration).playOn(view);
-
         if(isThereAWinner || isThereADraw) {
             YoYo.with(Techniques.FadeOut).duration(animation_duration).playOn(conclusionText);
             YoYo.with(Techniques.FadeOut).duration(animation_duration).playOn(boardImage);

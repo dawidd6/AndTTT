@@ -20,22 +20,14 @@ public class MenuActivity extends BaseActivity {
 
     public void switchActivity(Class c) {
         final Intent intent = new Intent(this, c);
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                startActivity(intent);
-            }
-        }, animation_duration);
+        startActivity(intent);
     }
 
     public void onClickPlaySingle(View view) {
-        YoYo.with(Techniques.StandUp).duration(animation_duration).playOn(view);
-
         switchActivity(SingleActivity.class);
     }
 
     public void onClickSettings(View view) {
-        YoYo.with(Techniques.StandUp).duration(animation_duration).playOn(view);
-
         switchActivity(SettingsActivity.class);
     }
 

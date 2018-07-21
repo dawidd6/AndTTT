@@ -34,7 +34,7 @@
         app:layout_constraintEnd_toStartOf="@+id/playerImage"
         app:layout_constraintTop_toTopOf="@+id/playerImage" />
 
-    <ImageButton
+    <com.github.dawidd6.andttt.SymbolView
         android:id="@+id/b0"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -47,7 +47,7 @@
         app:layout_constraintRight_toLeftOf="@+id/frame_vertical_1"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
+    <com.github.dawidd6.andttt.SymbolView
         android:id="@+id/b1"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -65,7 +65,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <ImageButton
+    <com.github.dawidd6.andttt.SymbolView
         android:id="@+id/b2"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -78,7 +78,7 @@
         app:layout_constraintLeft_toRightOf="@+id/frame_vertical_2"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
+    <com.github.dawidd6.andttt.SymbolView
         android:id="@+id/b3"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -91,7 +91,7 @@
         app:layout_constraintRight_toLeftOf="@+id/frame_vertical_1"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
+    <com.github.dawidd6.andttt.SymbolView
         android:id="@+id/b4"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -106,7 +106,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
+    <com.github.dawidd6.andttt.SymbolView
         android:id="@+id/b5"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -119,7 +119,7 @@
         app:layout_constraintLeft_toRightOf="@+id/frame_vertical_2"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
+    <com.github.dawidd6.andttt.SymbolView
         android:id="@+id/b6"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -132,7 +132,7 @@
         app:layout_constraintRight_toLeftOf="@+id/frame_vertical_1"
         app:layout_constraintTop_toBottomOf="@+id/frame_horizon_2" />
 
-    <ImageButton
+    <com.github.dawidd6.andttt.SymbolView
         android:id="@+id/b7"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -147,7 +147,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frame_horizon_2" />
 
-    <ImageButton
+    <com.github.dawidd6.andttt.SymbolView
         android:id="@+id/b8"
         android:layout_width="100dp"
         android:layout_height="100dp"

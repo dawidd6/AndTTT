@@ -23,7 +23,7 @@ import java.util.Random;
 public class SingleActivity extends BaseActivity {
     private int[][] btn_ids = {{R.id.b0, R.id.b1, R.id.b2}, {R.id.b3, R.id.b4, R.id.b5}, {R.id.b6, R.id.b7, R.id.b8}};
     private char[] smb = {'x', 'o'};
-    private ImageButton[][] button = new ImageButton[3][3];
+    private SymbolView[][] button = new SymbolView[3][3];
     private Random rand = new Random();
     private Paint paint;
     private Canvas canvas;
@@ -49,6 +49,9 @@ public class SingleActivity extends BaseActivity {
     private TextView playerText;
     private TextView androidText;
 
+    private SymbolView.MODE playerSymbol; //= SymbolView.MODE.CLEAR;
+    private SymbolView.MODE androidSymbol; //= SymbolView.MODE.CLEAR;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,46 +74,9 @@ public class SingleActivity extends BaseActivity {
         drawCross();
         drawCircle();
 
-        // restore state
-        if(savedInstanceState != null) {
-            restoredState = true;
-
-            numberOfPlayerWins = savedInstanceState.getInt("numberOfPlayerWins");
-            numberOfAndroidWins = savedInstanceState.getInt("numberOfAndroidWins");
-            isMyTurn = savedInstanceState.getBoolean("isMyTurn");
-            playerChar = savedInstanceState.getChar("playerChar");
-            androidChar = savedInstanceState.getChar("androidChar");
-            button_str = (char[][])savedInstanceState.getSerializable("button_str");
-            boardBitmap = (Bitmap)savedInstanceState.get("boardBitmap");
-
-            if(playerChar == 'x') {
-                playerBitmap = xBitmap;
-                androidBitmap = oBitmap;
-            } else {
-                playerBitmap = oBitmap;
-                androidBitmap = xBitmap;
-            }
-
-            playerImage.setImageBitmap(playerBitmap);
-            androidImage.setImageBitmap(androidBitmap);
-            boardImage.setImageBitmap(boardBitmap);
-
-            for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++) {
-                button[x][y] = findViewById(btn_ids[x][y]);
-                if(button_str[x][y] != '0') {
-                    button[x][y].setImageBitmap(button_str[x][y] == playerChar ? playerBitmap : androidBitmap);
-                    button[x][y].setClickable(false);
-                }
-            }
-
-            checkConditions();
-
-            restoredState = false;
-        } else {
-            restoredState = false;
-            button_str = new char[3][3];
-            restartGame(null);
-        }
+        restoredState = false;
+        button_str = new char[3][3];
+        restartGame(null);
 
         scoreText.setText(getString(R.string.score, numberOfPlayerWins, numberOfAndroidWins));
     }
@@ -185,11 +151,15 @@ public class SingleActivity extends BaseActivity {
             androidBitmap = oBitmap;
             playerChar = 'x';
             androidChar = 'o';
+            playerSymbol = SymbolView.MODE.CROSS;
+            androidSymbol = SymbolView.MODE.CIRCLE;
         } else {
             playerBitmap = oBitmap;
             androidBitmap = xBitmap;
             playerChar = 'o';
             androidChar = 'x';
+            playerSymbol = SymbolView.MODE.CIRCLE;
+            androidSymbol = SymbolView.MODE.CROSS;
         }
     }
 
@@ -203,24 +173,16 @@ public class SingleActivity extends BaseActivity {
         restoredState = false;
         isThereAWinner = false;
         isThereADraw = false;
+
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++) {
-            YoYo.with(Techniques.FadeOut).duration(animation_duration).playOn(button[x][y]);
             button_str[x][y] = '0';
+            button[x][y].clear();
         }
-
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
-                    button[x][y].setImageBitmap(null);
-                boardImage.setImageBitmap(null);
-                markEnabledAll();
-                if(!isMyTurn)
-                    compMove();
-            }
-        }, animation_duration);
-
+        boardImage.setImageBitmap(null);
+        markEnabledAll();
         randomTurn();
         randomSymbol();
+
         playerImage.setImageBitmap(playerBitmap);
         YoYo.with(Techniques.Wobble).duration(animation_duration).playOn(playerImage);
         androidImage.setImageBitmap(androidBitmap);
@@ -232,6 +194,7 @@ public class SingleActivity extends BaseActivity {
         } else {
             playerText.setTypeface(null, Typeface.NORMAL);
             androidText.setTypeface(null, Typeface.BOLD);
+            compMove();
         }
     }
 
@@ -468,8 +431,7 @@ public class SingleActivity extends BaseActivity {
         isMyTurn = true;
         button[xx][yy].setClickable(false);
 
-        button[xx][yy].setImageBitmap(androidBitmap);
-        YoYo.with(Techniques.Landing).duration(animation_duration).playOn(button[xx][yy]);
+        new SymbolAnimation(button[xx][yy], androidSymbol, isNightModeEnabled ? Color.WHITE : Color.BLACK, animation_duration);
 
         checkConditions();
     }
@@ -484,15 +446,16 @@ public class SingleActivity extends BaseActivity {
     public void myMove(View view) {
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
             if(button[x][y] == findViewById(view.getId())) {
-                button[x][y].setImageBitmap(playerBitmap);
                 button_str[x][y] = playerChar;
                 isMyTurn = false;
                 button[x][y].setClickable(false);
+
+                new SymbolAnimation(button[x][y], playerSymbol, isNightModeEnabled ? Color.WHITE : Color.BLACK, animation_duration);
+
                 checkConditions();
                 if(yallGotAnymoreOfThemButtons())
                     if(!isThereAWinner)
                         compMove();
-                YoYo.with(Techniques.Landing).duration(animation_duration).playOn(button[x][y]);
                 break;
             }
     }

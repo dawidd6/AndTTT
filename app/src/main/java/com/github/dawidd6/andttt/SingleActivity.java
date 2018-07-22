@@ -27,18 +27,17 @@ public class SingleActivity extends BaseActivity {
     private Random rand = new Random();
     private Paint paint;
     private Canvas canvas;
-    private boolean isMyTurn; //need to save
-    private boolean isThereAWinner = false; //need to save
+    private boolean isMyTurn;
+    private boolean isThereAWinner = false;
     private boolean isThereADraw = false;
-    private boolean restoredState;
-    private int numberOfPlayerWins = 0; //need to save
-    private int numberOfAndroidWins = 0; //need to save
-    private char button_str[][]; //need to save
-    private char playerChar; //need to save
-    private char androidChar; //need to save
+    private int numberOfPlayerWins = 0;
+    private int numberOfAndroidWins = 0;
+    private char button_str[][] = new char[3][3];
+    private char playerChar;
+    private char androidChar;
     private Bitmap xBitmap;
     private Bitmap oBitmap;
-    private Bitmap boardBitmap; //need to save
+    private Bitmap boardBitmap;
     private Bitmap playerBitmap;
     private Bitmap androidBitmap;
     private ImageView boardImage;
@@ -49,8 +48,8 @@ public class SingleActivity extends BaseActivity {
     private TextView playerText;
     private TextView androidText;
 
-    private SymbolView.MODE playerSymbol; //= SymbolView.MODE.CLEAR;
-    private SymbolView.MODE androidSymbol; //= SymbolView.MODE.CLEAR;
+    private SymbolView.MODE playerSymbol;
+    private SymbolView.MODE androidSymbol;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,22 +72,9 @@ public class SingleActivity extends BaseActivity {
         setPaint();
         drawCross();
         drawCircle();
-
-        restoredState = false;
-        button_str = new char[3][3];
         restartGame(null);
 
         scoreText.setText(getString(R.string.score, numberOfPlayerWins, numberOfAndroidWins));
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle bundle) {
-        bundle.putInt("numberOfPlayerWins", numberOfPlayerWins);
-        bundle.putInt("numberOfAndroidWins", numberOfAndroidWins);
-        bundle.putBoolean("isMyTurn", isMyTurn);
-        bundle.putChar("playerChar", playerChar);
-        bundle.putChar("androidChar", androidChar);
-        bundle.putSerializable("button_str", button_str);
     }
 
     private void drawLine(String l) {
@@ -170,7 +156,7 @@ public class SingleActivity extends BaseActivity {
             YoYo.with(Techniques.FadeOut).duration(animation_duration).playOn(boardImage);
         } else
             conclusionText.setVisibility(View.GONE);
-        restoredState = false;
+
         isThereAWinner = false;
         isThereADraw = false;
 
@@ -210,18 +196,17 @@ public class SingleActivity extends BaseActivity {
 
     private void doWin(String l) {
         isThereAWinner = true;
-        if(!restoredState) {
-            if (!isMyTurn) {
-                numberOfPlayerWins++;
-                conclusionText.setText(getString(R.string.you_won));
-                conclusionText.setTextColor(Color.GREEN);
-            } else {
-                numberOfAndroidWins++;
-                conclusionText.setText(getString(R.string.android_won));
-                conclusionText.setTextColor(Color.RED);
-            }
-            scoreText.setText(getString(R.string.score, numberOfPlayerWins, numberOfAndroidWins));
+        if (!isMyTurn) {
+            numberOfPlayerWins++;
+            conclusionText.setText(getString(R.string.you_won));
+            conclusionText.setTextColor(Color.GREEN);
+        } else {
+            numberOfAndroidWins++;
+            conclusionText.setText(getString(R.string.android_won));
+            conclusionText.setTextColor(Color.RED);
         }
+
+        scoreText.setText(getString(R.string.score, numberOfPlayerWins, numberOfAndroidWins));
 
         conclusionText.setVisibility(View.VISIBLE);
         YoYo.with(Techniques.ZoomIn).duration(animation_duration).playOn(conclusionText);

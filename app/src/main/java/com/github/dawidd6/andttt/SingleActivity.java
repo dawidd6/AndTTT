@@ -8,7 +8,11 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,22 +31,22 @@ public class SingleActivity extends BaseActivity {
     private Random rand = new Random();
     private Paint paint;
     private Canvas canvas;
+
     private boolean isMyTurn;
     private boolean isThereAWinner = false;
     private boolean isThereADraw = false;
+
     private int numberOfPlayerWins = 0;
     private int numberOfAndroidWins = 0;
+
     private char button_str[][] = new char[3][3];
     private char playerChar;
     private char androidChar;
-    private Bitmap xBitmap;
-    private Bitmap oBitmap;
-    private Bitmap boardBitmap;
-    private Bitmap playerBitmap;
-    private Bitmap androidBitmap;
-    private ImageView boardImage;
-    private ImageView playerImage;
-    private ImageView androidImage;
+
+    private SymbolView playerView;
+    private SymbolView androidView;
+    private SymbolView boardView;
+
     private TextView scoreText;
     private TextView conclusionText;
     private TextView playerText;
@@ -61,68 +65,54 @@ public class SingleActivity extends BaseActivity {
         androidText = findViewById(R.id.androidText);
         scoreText = findViewById(R.id.scoreText);
         conclusionText = findViewById(R.id.conclusionText);
-        boardImage = findViewById(R.id.boardImage);
-        playerImage = findViewById(R.id.playerImage);
-        androidImage = findViewById(R.id.androidImage);
+        playerView = findViewById(R.id.playerView);
+        androidView = findViewById(R.id.androidView);
+        boardView = findViewById(R.id.boardView);
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++) {
             button[x][y] = findViewById(btn_ids[x][y]);
+            button[x][y].setColor(colorForeground);
+            button[x][y].setThickness(12);
+            button[x][y].setSize(200);
         }
 
-        // draw symbols
-        setPaint();
-        drawCross();
-        drawCircle();
+        // drawing stuff
+        boardView.setMode(SymbolView.MODE.LINE);
+        boardView.setColor(ContextCompat.getColor(this, R.color.color_green));
+        boardView.setThickness(20);
+        boardView.setSize(608);
+
+        playerView.setColor(colorForeground);
+        playerView.setThickness(6);
+        playerView.setSize(80);
+
+        androidView.setColor(colorForeground);
+        androidView.setThickness(6);
+        androidView.setSize(80);
+
         restartGame(null);
 
         scoreText.setText(getString(R.string.score, numberOfPlayerWins, numberOfAndroidWins));
     }
 
     private void drawLine(String l) {
-        paint.setColor(getResources().getColor(R.color.color_green));
-        boardBitmap = Bitmap.createBitmap(304, 304, Bitmap.Config.ARGB_4444);
-        canvas = new Canvas(boardBitmap);
-
         if(Objects.equals(l, "nl"))
-            canvas.drawLine(4, 4, 300, 300, paint);
+            boardView.setLinePoints(0, 0, 608, 608);
         else if(Objects.equals(l, "nr"))
-            canvas.drawLine(300, 4, 4, 300, paint);
+            boardView.setLinePoints(608, 0, 0, 608);
         else if(Objects.equals(l, "h1"))
-            canvas.drawLine(0, 50, 304, 50, paint);
+            boardView.setLinePoints(0, 100, 608, 100);
         else if(Objects.equals(l, "h2"))
-            canvas.drawLine(0, 152, 304, 152, paint);
+            boardView.setLinePoints(0, 304, 608, 304);
         else if(Objects.equals(l, "h3"))
-            canvas.drawLine(0, 254, 304, 254, paint);
+            boardView.setLinePoints(0, 508, 608, 508);
         else if(Objects.equals(l, "v1"))
-            canvas.drawLine(50, 0, 50, 304, paint);
+            boardView.setLinePoints(100, 0, 100, 608);
         else if(Objects.equals(l, "v2"))
-            canvas.drawLine(152, 0, 152, 304, paint);
+            boardView.setLinePoints(304, 0, 304, 608);
         else if(Objects.equals(l, "v3"))
-            canvas.drawLine(254, 0, 254, 304, paint);
+            boardView.setLinePoints(508, 0, 508, 608);
 
-        boardImage.setImageBitmap(boardBitmap);
-        YoYo.with(Techniques.Landing).duration(animation_duration).playOn(boardImage);
-    }
-
-    private void setPaint() {
-        paint = new Paint();
-        paint.setColor(isNightModeEnabled ? Color.WHITE : Color.BLACK);
-        paint.setStrokeWidth(6);
-        paint.setStrokeCap(Paint.Cap.SQUARE);
-        paint.setAntiAlias(true);
-        paint.setStyle(Paint.Style.STROKE);
-    }
-
-    private void drawCross() {
-        xBitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_4444);
-        canvas = new Canvas(xBitmap);
-        canvas.drawLine(6, 6, 94, 94, paint);
-        canvas.drawLine(94, 6, 6, 94, paint);
-    }
-
-    private void drawCircle() {
-        oBitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_4444);
-        canvas = new Canvas(oBitmap);
-        canvas.drawCircle(50, 50, 45, paint);
+        new SymbolAnimation(boardView).setDuration(animation_duration);
     }
 
     private void randomTurn() {
@@ -133,15 +123,11 @@ public class SingleActivity extends BaseActivity {
     private void randomSymbol() {
         int k = rand.nextInt(2);
         if(k == 0) {
-            playerBitmap = xBitmap;
-            androidBitmap = oBitmap;
             playerChar = 'x';
             androidChar = 'o';
             playerSymbol = SymbolView.MODE.CROSS;
             androidSymbol = SymbolView.MODE.CIRCLE;
         } else {
-            playerBitmap = oBitmap;
-            androidBitmap = xBitmap;
             playerChar = 'o';
             androidChar = 'x';
             playerSymbol = SymbolView.MODE.CIRCLE;
@@ -153,26 +139,28 @@ public class SingleActivity extends BaseActivity {
     public void restartGame(View view) {
         if(isThereAWinner || isThereADraw) {
             YoYo.with(Techniques.FadeOut).duration(animation_duration).playOn(conclusionText);
-            YoYo.with(Techniques.FadeOut).duration(animation_duration).playOn(boardImage);
         } else
             conclusionText.setVisibility(View.GONE);
 
         isThereAWinner = false;
         isThereADraw = false;
 
-        for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++) {
-            button_str[x][y] = '0';
-            button[x][y].clear();
-        }
-        boardImage.setImageBitmap(null);
+        for (int x = 0; x < 3; x++)
+            for (int y = 0; y < 3; y++) {
+                button_str[x][y] = '0';
+                button[x][y].clear(Color.TRANSPARENT);
+            }
+
+        boardView.clear(Color.TRANSPARENT);
+
         markEnabledAll();
         randomTurn();
         randomSymbol();
 
-        playerImage.setImageBitmap(playerBitmap);
-        YoYo.with(Techniques.Wobble).duration(animation_duration).playOn(playerImage);
-        androidImage.setImageBitmap(androidBitmap);
-        YoYo.with(Techniques.Wobble).duration(animation_duration).playOn(androidImage);
+        playerView.setMode(playerSymbol);
+        new SymbolAnimation(playerView).setDuration(animation_duration);
+        androidView.setMode(androidSymbol);
+        new SymbolAnimation(androidView).setDuration(animation_duration);
 
         if(isMyTurn) {
             playerText.setTypeface(null, Typeface.BOLD);
@@ -416,7 +404,8 @@ public class SingleActivity extends BaseActivity {
         isMyTurn = true;
         button[xx][yy].setClickable(false);
 
-        new SymbolAnimation(button[xx][yy], androidSymbol, isNightModeEnabled ? Color.WHITE : Color.BLACK, animation_duration);
+        button[xx][yy].setMode(androidSymbol);
+        new SymbolAnimation(button[xx][yy]).setDuration(animation_duration);
 
         checkConditions();
     }
@@ -435,7 +424,8 @@ public class SingleActivity extends BaseActivity {
                 isMyTurn = false;
                 button[x][y].setClickable(false);
 
-                new SymbolAnimation(button[x][y], playerSymbol, isNightModeEnabled ? Color.WHITE : Color.BLACK, animation_duration);
+                button[x][y].setMode(playerSymbol);
+                new SymbolAnimation(button[x][y]).setDuration(animation_duration);
 
                 checkConditions();
                 if(yallGotAnymoreOfThemButtons())

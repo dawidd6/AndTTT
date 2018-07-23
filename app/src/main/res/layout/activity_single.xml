@@ -17,9 +17,9 @@
         android:textAlignment="center"
         android:textColor="?android:attr/colorForeground"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/androidImage"
-        app:layout_constraintStart_toEndOf="@+id/androidImage"
-        app:layout_constraintTop_toTopOf="@+id/androidImage" />
+        app:layout_constraintBottom_toBottomOf="@+id/androidView"
+        app:layout_constraintStart_toEndOf="@+id/androidView"
+        app:layout_constraintTop_toTopOf="@+id/androidView" />
 
     <TextView
         android:id="@+id/playerText"
@@ -30,9 +30,9 @@
         android:textAlignment="center"
         android:textColor="?android:attr/colorForeground"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/playerImage"
-        app:layout_constraintEnd_toStartOf="@+id/playerImage"
-        app:layout_constraintTop_toTopOf="@+id/playerImage" />
+        app:layout_constraintBottom_toBottomOf="@+id/playerView"
+        app:layout_constraintEnd_toStartOf="@+id/playerView"
+        app:layout_constraintTop_toTopOf="@+id/playerView" />
 
     <com.github.dawidd6.andttt.SymbolView
         android:id="@+id/b0"
@@ -202,48 +202,43 @@
         app:layout_constraintLeft_toRightOf="@+id/b4"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/boardImage"
+    <com.github.dawidd6.andttt.SymbolView
+        android:id="@+id/boardView"
         android:layout_width="304dp"
         android:layout_height="304dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="32dp"
-        android:contentDescription="@string/image_desc"
         android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/playerImage"
+    <com.github.dawidd6.andttt.SymbolView
+        android:id="@+id/playerView"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/border"
-        android:contentDescription="@string/image_desc"
         android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="@+id/scoreText"
         app:layout_constraintEnd_toStartOf="@+id/scoreText"
-        app:layout_constraintTop_toTopOf="@+id/scoreText"
-        app:srcCompat="@android:color/transparent" />
+        app:layout_constraintTop_toTopOf="@+id/scoreText" />
 
-    <ImageView
-        android:id="@+id/androidImage"
+    <com.github.dawidd6.andttt.SymbolView
+        android:id="@+id/androidView"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/border"
-        android:contentDescription="@string/image_desc"
         android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="@+id/scoreText"
         app:layout_constraintStart_toEndOf="@+id/scoreText"
-        app:layout_constraintTop_toTopOf="@+id/scoreText"
-        app:srcCompat="@android:color/transparent" />
+        app:layout_constraintTop_toTopOf="@+id/scoreText" />
 
     <Button
         android:id="@+id/restartButton"
@@ -279,7 +274,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/boardImage" />
+        app:layout_constraintTop_toBottomOf="@+id/boardView" />
 
     <TextView
         android:id="@+id/conclusionText"

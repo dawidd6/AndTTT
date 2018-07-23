@@ -11,50 +11,83 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+
 public class SymbolView extends View {
+    public enum MODE {
+        CIRCLE,
+        CROSS,
+        LINE,
+    }
 
-    private int START_ANGLE_POINT = 90;
-    private int strokeWidth = 10;
+    private MODE mode;
+
     private Paint paint = new Paint();
-    private RectF rect = new RectF(strokeWidth, strokeWidth, 200 - strokeWidth, 200 - strokeWidth);
-    private float angle = 0;
-    private float stop = 0;
 
-    public enum MODE {CIRCLE, CROSS, CLEAR}
+    private int thickness;
+    private int padding;
+    private int size;
+    private int clearBackground;
+    private int lineStartX;
+    private int lineStartY;
+    private int lineStopX;
+    private int lineStopY;
+    private float stop;
 
-    private MODE mode = MODE.CLEAR;
-
+    private boolean wantClear = false;
+    
     public SymbolView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(strokeWidth);
+
+        padding = getPaddingBottom();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        switch(mode) {
-            case CIRCLE:
-                canvas.drawArc(rect, START_ANGLE_POINT, angle, false, paint);
-                break;
-            case CROSS:
-                canvas.drawLine(strokeWidth, strokeWidth, stop - strokeWidth, stop - strokeWidth, paint);
-                canvas.drawLine(200 - strokeWidth, strokeWidth, 200 - stop + strokeWidth, stop - strokeWidth, paint);
-                break;
-            case CLEAR:
-                setBackgroundColor(Color.TRANSPARENT);
-                break;
+        if(wantClear) {
+            setBackgroundColor(clearBackground);
+            wantClear = false;
+        } else {
+            switch(mode) {
+                case CIRCLE:
+                    canvas.drawArc(thickness + padding,
+                            thickness + padding,
+                            size - thickness - padding,
+                            size - thickness - padding,
+                            90,
+                            stop,
+                            false,
+                            paint);
+                    break;
+                case CROSS:
+                    canvas.drawLine(thickness + padding,
+                            thickness + padding,
+                            stop <= thickness + padding ? thickness + padding : stop,
+                            stop <= thickness + padding ? thickness + padding : stop,
+                            paint);
+                    canvas.drawLine(size - thickness - padding,
+                            thickness + padding,
+                            size - stop >= size - thickness - padding ? size - thickness - padding : size - stop,
+                            stop <= thickness + padding ? thickness + padding : stop,
+                            paint);
+                    break;
+                case LINE:
+                    canvas.drawLine(lineStartX,
+                            lineStartY == size ? stop : lineStartY,
+                            lineStopX == size ? stop : (lineStartX == size ? size - stop : lineStopX),
+                            lineStopY == size ? stop : lineStopY,
+                            paint);
+                    break;
+            }
         }
     }
 
-    public void setCircleAngle(float angle) {
-        this.angle = angle;
-    }
-
-    public void setLineStop(float stop) {
+    // called only from SymbolAnimation
+    public void setStop(float stop) {
         this.stop = stop;
     }
 
@@ -65,9 +98,38 @@ public class SymbolView extends View {
     public void setColor(int color) {
         paint.setColor(color);
     }
+    
+    public void setThickness(int thickness) {
+        this.thickness = thickness;
+        paint.setStrokeWidth(thickness);
+    }
 
-    public void clear() {
-        this.mode = MODE.CLEAR;
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public void setLinePoints(int lineStartX, int lineStartY, int lineStopX, int lineStopY) {
+        this.lineStartX = lineStartX;
+        this.lineStartY = lineStartY;
+        this.lineStopX = lineStopX;
+        this.lineStopY = lineStopY;
+    }
+    
+    public int getSize() {
+        switch(mode) {
+            case CIRCLE:
+                return 360;
+            case CROSS:
+                return size - thickness - padding;
+            case LINE:
+                return size;
+        }
+        return size;
+    }
+
+    public void clear(int clearBackground) {
+        this.clearBackground = clearBackground;
+        this.wantClear = true;
         invalidate();
     }
 }

@@ -36,9 +36,8 @@
 
     <com.github.dawidd6.andttt.SymbolView
         android:id="@+id/b0"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginRight="0dp"
+        android:layout_width="@dimen/tile_dimen"
+        android:layout_height="@dimen/tile_dimen"
         android:layout_marginTop="32dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/b0"
@@ -49,9 +48,8 @@
 
     <com.github.dawidd6.andttt.SymbolView
         android:id="@+id/b1"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginBottom="0dp"
+        android:layout_width="@dimen/tile_dimen"
+        android:layout_height="@dimen/tile_dimen"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="32dp"
@@ -67,9 +65,8 @@
 
     <com.github.dawidd6.andttt.SymbolView
         android:id="@+id/b2"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginLeft="0dp"
+        android:layout_width="@dimen/tile_dimen"
+        android:layout_height="@dimen/tile_dimen"
         android:layout_marginTop="32dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/b2"
@@ -80,9 +77,8 @@
 
     <com.github.dawidd6.andttt.SymbolView
         android:id="@+id/b3"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginRight="0dp"
+        android:layout_width="@dimen/tile_dimen"
+        android:layout_height="@dimen/tile_dimen"
         android:layout_marginTop="134dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/b3"
@@ -93,8 +89,8 @@
 
     <com.github.dawidd6.andttt.SymbolView
         android:id="@+id/b4"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="@dimen/tile_dimen"
+        android:layout_height="@dimen/tile_dimen"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="134dp"
@@ -108,9 +104,8 @@
 
     <com.github.dawidd6.andttt.SymbolView
         android:id="@+id/b5"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginLeft="0dp"
+        android:layout_width="@dimen/tile_dimen"
+        android:layout_height="@dimen/tile_dimen"
         android:layout_marginTop="134dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/b5"
@@ -121,10 +116,8 @@
 
     <com.github.dawidd6.andttt.SymbolView
         android:id="@+id/b6"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_width="@dimen/tile_dimen"
+        android:layout_height="@dimen/tile_dimen"
         android:background="@android:color/transparent"
         android:contentDescription="@string/b6"
         android:onClick="myMove"
@@ -134,11 +127,10 @@
 
     <com.github.dawidd6.andttt.SymbolView
         android:id="@+id/b7"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="@dimen/tile_dimen"
+        android:layout_height="@dimen/tile_dimen"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="0dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/b7"
         android:onClick="myMove"
@@ -149,10 +141,8 @@
 
     <com.github.dawidd6.andttt.SymbolView
         android:id="@+id/b8"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_width="@dimen/tile_dimen"
+        android:layout_height="@dimen/tile_dimen"
         android:background="@android:color/transparent"
         android:contentDescription="@string/b8"
         android:onClick="myMove"
@@ -162,8 +152,8 @@
 
     <TextView
         android:id="@+id/frame_horizon_1"
-        android:layout_width="304dp"
-        android:layout_height="2dp"
+        android:layout_width="@dimen/board_dimen"
+        android:layout_height="@dimen/frame_dimen"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:background="?android:attr/colorForeground"
@@ -174,8 +164,8 @@
 
     <TextView
         android:id="@+id/frame_horizon_2"
-        android:layout_width="304dp"
-        android:layout_height="2dp"
+        android:layout_width="@dimen/board_dimen"
+        android:layout_height="@dimen/frame_dimen"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:background="?android:attr/colorForeground"
@@ -186,8 +176,8 @@
 
     <TextView
         android:id="@+id/frame_vertical_1"
-        android:layout_width="2dp"
-        android:layout_height="304dp"
+        android:layout_width="@dimen/frame_dimen"
+        android:layout_height="@dimen/board_dimen"
         android:layout_marginTop="32dp"
         android:background="?android:attr/colorForeground"
         app:layout_constraintRight_toLeftOf="@+id/b4"
@@ -195,8 +185,8 @@
 
     <TextView
         android:id="@+id/frame_vertical_2"
-        android:layout_width="2dp"
-        android:layout_height="304dp"
+        android:layout_width="@dimen/frame_dimen"
+        android:layout_height="@dimen/board_dimen"
         android:layout_marginTop="32dp"
         android:background="?android:attr/colorForeground"
         app:layout_constraintLeft_toRightOf="@+id/b4"
@@ -204,8 +194,8 @@
 
     <com.github.dawidd6.andttt.SymbolView
         android:id="@+id/boardView"
-        android:layout_width="304dp"
-        android:layout_height="304dp"
+        android:layout_width="@dimen/board_dimen"
+        android:layout_height="@dimen/board_dimen"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="32dp"
@@ -216,8 +206,8 @@
 
     <com.github.dawidd6.andttt.SymbolView
         android:id="@+id/playerView"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/symbol_dimen"
+        android:layout_height="@dimen/symbol_dimen"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
@@ -229,8 +219,8 @@
 
     <com.github.dawidd6.andttt.SymbolView
         android:id="@+id/androidView"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/symbol_dimen"
+        android:layout_height="@dimen/symbol_dimen"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"

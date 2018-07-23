@@ -9,6 +9,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.Animation;
@@ -55,10 +56,21 @@ public class SingleActivity extends BaseActivity {
     private SymbolView.MODE playerSymbol;
     private SymbolView.MODE androidSymbol;
 
+    private int tile_dimen;
+    private int symbol_dimen;
+    private int board_dimen;
+    private int frame_dimen;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single);
+
+        // get dimens
+        tile_dimen = getResources().getDimensionPixelSize(R.dimen.tile_dimen);
+        symbol_dimen = getResources().getDimensionPixelSize(R.dimen.symbol_dimen);
+        board_dimen = getResources().getDimensionPixelSize(R.dimen.board_dimen);
+        frame_dimen = getResources().getDimensionPixelSize(R.dimen.frame_dimen);
 
         // findViews
         playerText = findViewById(R.id.playerText);
@@ -72,22 +84,22 @@ public class SingleActivity extends BaseActivity {
             button[x][y] = findViewById(btn_ids[x][y]);
             button[x][y].setColor(colorForeground);
             button[x][y].setThickness(12);
-            button[x][y].setSize(200);
+            button[x][y].setSize(tile_dimen);
         }
 
         // drawing stuff
         boardView.setMode(SymbolView.MODE.LINE);
         boardView.setColor(ContextCompat.getColor(this, R.color.color_green));
         boardView.setThickness(20);
-        boardView.setSize(608);
+        boardView.setSize(board_dimen);
 
         playerView.setColor(colorForeground);
         playerView.setThickness(6);
-        playerView.setSize(80);
+        playerView.setSize(symbol_dimen);
 
         androidView.setColor(colorForeground);
         androidView.setThickness(6);
-        androidView.setSize(80);
+        androidView.setSize(symbol_dimen);
 
         restartGame(null);
 
@@ -96,21 +108,21 @@ public class SingleActivity extends BaseActivity {
 
     private void drawLine(String l) {
         if(Objects.equals(l, "nl"))
-            boardView.setLinePoints(0, 0, 608, 608);
+            boardView.setLinePoints(0, 0, board_dimen, board_dimen);
         else if(Objects.equals(l, "nr"))
-            boardView.setLinePoints(608, 0, 0, 608);
+            boardView.setLinePoints(board_dimen, 0, 0, board_dimen);
         else if(Objects.equals(l, "h1"))
-            boardView.setLinePoints(0, 100, 608, 100);
+            boardView.setLinePoints(0, tile_dimen / 2, board_dimen, tile_dimen / 2);
         else if(Objects.equals(l, "h2"))
-            boardView.setLinePoints(0, 304, 608, 304);
+            boardView.setLinePoints(0, board_dimen / 2, board_dimen, board_dimen / 2);
         else if(Objects.equals(l, "h3"))
-            boardView.setLinePoints(0, 508, 608, 508);
+            boardView.setLinePoints(0, board_dimen - (tile_dimen / 2), board_dimen, board_dimen - (tile_dimen / 2));
         else if(Objects.equals(l, "v1"))
-            boardView.setLinePoints(100, 0, 100, 608);
+            boardView.setLinePoints(tile_dimen / 2, 0, tile_dimen / 2, board_dimen);
         else if(Objects.equals(l, "v2"))
-            boardView.setLinePoints(304, 0, 304, 608);
+            boardView.setLinePoints(board_dimen / 2, 0, board_dimen / 2, board_dimen);
         else if(Objects.equals(l, "v3"))
-            boardView.setLinePoints(508, 0, 508, 608);
+            boardView.setLinePoints(board_dimen - (tile_dimen / 2), 0, board_dimen - (tile_dimen / 2), board_dimen);
 
         new SymbolAnimation(boardView).setDuration(animation_duration);
     }

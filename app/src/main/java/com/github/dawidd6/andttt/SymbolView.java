@@ -13,13 +13,13 @@ import android.view.View;
 
 
 public class SymbolView extends View {
-    public enum MODE {
+    public enum Mode {
         CIRCLE,
         CROSS,
         LINE,
     }
 
-    private MODE mode;
+    private Mode mode = Mode.CIRCLE;
 
     private Paint paint = new Paint();
 
@@ -91,7 +91,7 @@ public class SymbolView extends View {
         this.stop = stop;
     }
 
-    public void setMode(MODE mode) {
+    public void setMode(Mode mode) {
         this.mode = mode;
     }
 

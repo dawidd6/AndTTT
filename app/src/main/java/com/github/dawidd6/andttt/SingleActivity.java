@@ -1,21 +1,13 @@
 package com.github.dawidd6.andttt;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.daimajia.androidanimations.library.Techniques;
@@ -26,24 +18,24 @@ import java.util.Random;
 
 @SuppressWarnings({"SameParameterValue", "unused"})
 public class SingleActivity extends BaseActivity {
-    private int[][] btn_ids = {{R.id.b0, R.id.b1, R.id.b2}, {R.id.b3, R.id.b4, R.id.b5}, {R.id.b6, R.id.b7, R.id.b8}};
-    private char[] smb = {'x', 'o'};
-    private SymbolView[][] button = new SymbolView[3][3];
+    
+    private enum Status {WIN, DRAW, PLAYING}
+    private enum Turn {PLAYER, ANDROID}
+    
+    private Status status = Status.PLAYING;
+    private Turn turn;
+    
     private Random rand = new Random();
-    private Paint paint;
-    private Canvas canvas;
-
-    private boolean isMyTurn;
-    private boolean isThereAWinner = false;
-    private boolean isThereADraw = false;
-
+    
     private int numberOfPlayerWins = 0;
     private int numberOfAndroidWins = 0;
-
-    private char button_str[][] = new char[3][3];
+    
+    private char symbolChar[] = new char[2];
+    private char tileChar[][] = new char[3][3];
     private char playerChar;
     private char androidChar;
-
+    
+    private SymbolView[][] tileView = new SymbolView[3][3];
     private SymbolView playerView;
     private SymbolView androidView;
     private SymbolView boardView;
@@ -53,8 +45,9 @@ public class SingleActivity extends BaseActivity {
     private TextView playerText;
     private TextView androidText;
 
-    private SymbolView.MODE playerSymbol;
-    private SymbolView.MODE androidSymbol;
+    private SymbolView.Mode tileSymbol;
+    private SymbolView.Mode playerSymbol;
+    private SymbolView.Mode androidSymbol;
 
     private int tile_dimen;
     private int symbol_dimen;
@@ -81,22 +74,20 @@ public class SingleActivity extends BaseActivity {
         androidView = findViewById(R.id.androidView);
         boardView = findViewById(R.id.boardView);
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++) {
-            button[x][y] = findViewById(btn_ids[x][y]);
-            button[x][y].setColor(colorForeground);
-            button[x][y].setThickness(12);
-            button[x][y].setSize(tile_dimen);
+            tileView[x][y] = findViewById(getResources().getIdentifier("b" + x + y, "id", getPackageName()));
+            tileView[x][y].setColor(colorForeground);
+            tileView[x][y].setThickness(12);
+            tileView[x][y].setSize(tile_dimen);
         }
 
         // drawing stuff
-        boardView.setMode(SymbolView.MODE.LINE);
+        boardView.setMode(SymbolView.Mode.LINE);
         boardView.setColor(ContextCompat.getColor(this, R.color.color_green));
         boardView.setThickness(20);
         boardView.setSize(board_dimen);
-
         playerView.setColor(colorForeground);
         playerView.setThickness(6);
         playerView.setSize(symbol_dimen);
-
         androidView.setColor(colorForeground);
         androidView.setThickness(6);
         androidView.setSize(symbol_dimen);
@@ -128,39 +119,37 @@ public class SingleActivity extends BaseActivity {
     }
 
     private void randomTurn() {
-        int k = rand.nextInt(2);
-        isMyTurn = (k != 0);
+        turn = rand.nextInt(2) == 0 ? Turn.PLAYER : Turn.ANDROID;
     }
 
     private void randomSymbol() {
-        int k = rand.nextInt(2);
-        if(k == 0) {
+        if(rand.nextInt(2) == 0) {
             playerChar = 'x';
             androidChar = 'o';
-            playerSymbol = SymbolView.MODE.CROSS;
-            androidSymbol = SymbolView.MODE.CIRCLE;
+            playerSymbol = SymbolView.Mode.CROSS;
+            androidSymbol = SymbolView.Mode.CIRCLE;
         } else {
             playerChar = 'o';
             androidChar = 'x';
-            playerSymbol = SymbolView.MODE.CIRCLE;
-            androidSymbol = SymbolView.MODE.CROSS;
+            playerSymbol = SymbolView.Mode.CIRCLE;
+            androidSymbol = SymbolView.Mode.CROSS;
         }
+        symbolChar[0] = androidChar;
+        symbolChar[1] = playerChar;
     }
 
     @SuppressWarnings("WeakerAccess")
     public void restartGame(View view) {
-        if(isThereAWinner || isThereADraw) {
+        if(status != Status.PLAYING) {
             YoYo.with(Techniques.FadeOut).duration(animation_duration).playOn(conclusionText);
+            status = Status.PLAYING;
         } else
             conclusionText.setVisibility(View.GONE);
 
-        isThereAWinner = false;
-        isThereADraw = false;
-
         for (int x = 0; x < 3; x++)
             for (int y = 0; y < 3; y++) {
-                button_str[x][y] = '0';
-                button[x][y].clear(Color.TRANSPARENT);
+                tileChar[x][y] = '0';
+                tileView[x][y].clear(Color.TRANSPARENT);
             }
 
         boardView.clear(Color.TRANSPARENT);
@@ -174,29 +163,30 @@ public class SingleActivity extends BaseActivity {
         androidView.setMode(androidSymbol);
         new SymbolAnimation(androidView).setDuration(animation_duration);
 
-        if(isMyTurn) {
+        if(turn == Turn.PLAYER) {
             playerText.setTypeface(null, Typeface.BOLD);
             androidText.setTypeface(null, Typeface.NORMAL);
         } else {
             playerText.setTypeface(null, Typeface.NORMAL);
             androidText.setTypeface(null, Typeface.BOLD);
-            compMove();
+            androidMove();
         }
     }
 
     private void markDisabledAll() {
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
-            button[x][y].setClickable(false);
+            tileView[x][y].setClickable(false);
     }
 
     private void markEnabledAll() {
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
-            button[x][y].setClickable(true);
+            tileView[x][y].setClickable(true);
     }
 
     private void doWin(String l) {
-        isThereAWinner = true;
-        if (!isMyTurn) {
+        status = Status.WIN;
+
+        if (turn == Turn.ANDROID) {
             numberOfPlayerWins++;
             conclusionText.setText(getString(R.string.you_won));
             conclusionText.setTextColor(Color.GREEN);
@@ -218,26 +208,26 @@ public class SingleActivity extends BaseActivity {
 
     private void checkConditions() {
         for(int i = 0; i < 2; i++) {
-            if (button_str[0][0] == smb[i] && button_str[0][1] == smb[i] && button_str[0][2] == smb[i])
+            if (tileChar[0][0] == symbolChar[i] && tileChar[0][1] == symbolChar[i] && tileChar[0][2] == symbolChar[i])
                 doWin("h1");
-            else if (button_str[1][0] == smb[i] && button_str[1][1] == smb[i] && button_str[1][2] == smb[i])
+            else if (tileChar[1][0] == symbolChar[i] && tileChar[1][1] == symbolChar[i] && tileChar[1][2] == symbolChar[i])
                 doWin("h2");
-            else if (button_str[2][0] == smb[i] && button_str[2][1] == smb[i] && button_str[2][2] == smb[i])
+            else if (tileChar[2][0] == symbolChar[i] && tileChar[2][1] == symbolChar[i] && tileChar[2][2] == symbolChar[i])
                 doWin("h3");
-            else if (button_str[0][0] == smb[i] && button_str[1][0] == smb[i] && button_str[2][0] == smb[i])
+            else if (tileChar[0][0] == symbolChar[i] && tileChar[1][0] == symbolChar[i] && tileChar[2][0] == symbolChar[i])
                 doWin("v1");
-            else if (button_str[0][1] == smb[i] && button_str[1][1] == smb[i] && button_str[2][1] == smb[i])
+            else if (tileChar[0][1] == symbolChar[i] && tileChar[1][1] == symbolChar[i] && tileChar[2][1] == symbolChar[i])
                 doWin("v2");
-            else if (button_str[0][2] == smb[i] && button_str[1][2] == smb[i] && button_str[2][2] == smb[i])
+            else if (tileChar[0][2] == symbolChar[i] && tileChar[1][2] == symbolChar[i] && tileChar[2][2] == symbolChar[i])
                 doWin("v3");
-            else if (button_str[0][0] == smb[i] && button_str[1][1] == smb[i] && button_str[2][2] == smb[i])
+            else if (tileChar[0][0] == symbolChar[i] && tileChar[1][1] == symbolChar[i] && tileChar[2][2] == symbolChar[i])
                 doWin("nl");
-            else if (button_str[0][2] == smb[i] && button_str[1][1] == smb[i] && button_str[2][0] == smb[i])
+            else if (tileChar[0][2] == symbolChar[i] && tileChar[1][1] == symbolChar[i] && tileChar[2][0] == symbolChar[i])
                 doWin("nr");
         }
 
-        if(!yallGotAnymoreOfThemButtons() && !isThereAWinner) {
-            isThereADraw = true;
+        if(!yallGotAnymoreOfThemButtons() && status != Status.WIN) {
+            status = Status.DRAW;
             conclusionText.setText(getString(R.string.nobody_won));
             conclusionText.setTextColor(Color.BLUE);
             conclusionText.setVisibility(View.VISIBLE);
@@ -247,19 +237,19 @@ public class SingleActivity extends BaseActivity {
 
     private int gimmeFreeRoomHorizon(int x) {
         for(int y = 0; y < 3; y++)
-            if(button_str[x][y] == '0')
+            if(tileChar[x][y] == '0')
                 return y;
         return -1;
     }
 
     private int gimmeFreeRoomVertical(int y) {
         for(int x = 0; x < 3; x++)
-            if(button_str[x][y] == '0')
+            if(tileChar[x][y] == '0')
                 return x;
         return -1;
     }
 
-    private void compMove() {
+    private void androidMove() {
         int xx = -1;
         int yy = -1;
         int y = 0;
@@ -269,37 +259,34 @@ public class SingleActivity extends BaseActivity {
         int count_zero = 0;
         boolean horizon = false;
         boolean computed = false;
-        char smb[] = new char[2];
-        smb[0] = androidChar;
-        smb[1] = playerChar;
-
+        
         for(int i = 0; i < 2; i++) {
-            if(button_str[0][0] == smb[i] && button_str[1][1] == smb[i] && button_str[2][2] == '0') {
+            if(tileChar[0][0] == symbolChar[i] && tileChar[1][1] == symbolChar[i] && tileChar[2][2] == '0') {
                 computed = true;
                 xx = 2;
                 yy = 2;
                 break;
-            } else if(button_str[1][1] == smb[i] && button_str[2][2] == smb[i] && button_str[0][0] == '0') {
+            } else if(tileChar[1][1] == symbolChar[i] && tileChar[2][2] == symbolChar[i] && tileChar[0][0] == '0') {
                 computed = true;
                 xx = 0;
                 yy = 0;
                 break;
-            } else if(button_str[0][0] == smb[i] && button_str[2][2] == smb[i] && button_str[1][1] == '0') {
+            } else if(tileChar[0][0] == symbolChar[i] && tileChar[2][2] == symbolChar[i] && tileChar[1][1] == '0') {
                 computed = true;
                 xx = 1;
                 yy = 1;
                 break;
-            } else if(button_str[0][2] == smb[i] && button_str[2][0] == smb[i] && button_str[1][1] == '0') {
+            } else if(tileChar[0][2] == symbolChar[i] && tileChar[2][0] == symbolChar[i] && tileChar[1][1] == '0') {
                 computed = true;
                 xx = 1;
                 yy = 1;
                 break;
-            } else if(button_str[1][1] == smb[i] && button_str[2][0] == smb[i] && button_str[0][2] == '0') {
+            } else if(tileChar[1][1] == symbolChar[i] && tileChar[2][0] == symbolChar[i] && tileChar[0][2] == '0') {
                 computed = true;
                 xx = 0;
                 yy = 2;
                 break;
-            } else if(button_str[0][2] == smb[i] && button_str[1][1] == smb[i] && button_str[2][0] == '0') {
+            } else if(tileChar[0][2] == symbolChar[i] && tileChar[1][1] == symbolChar[i] && tileChar[2][0] == '0') {
                 computed = true;
                 xx = 2;
                 yy = 0;
@@ -313,9 +300,9 @@ public class SingleActivity extends BaseActivity {
                 count_comp = 0;
                 count_zero = 0;
                 for(y = 0; y < 3; y++) {
-                    if(button_str[x][y] == playerChar)
+                    if(tileChar[x][y] == playerChar)
                         count_my++;
-                    else if(button_str[x][y] == androidChar)
+                    else if(tileChar[x][y] == androidChar)
                         count_comp++;
                     else
                         count_zero++;
@@ -333,9 +320,9 @@ public class SingleActivity extends BaseActivity {
                 count_comp = 0;
                 count_zero = 0;
                 for(y = 0; y < 3; y++) {
-                    if(button_str[x][y] == playerChar)
+                    if(tileChar[x][y] == playerChar)
                         count_my++;
-                    else if(button_str[x][y] == androidChar)
+                    else if(tileChar[x][y] == androidChar)
                         count_comp++;
                     else
                         count_zero++;
@@ -353,9 +340,9 @@ public class SingleActivity extends BaseActivity {
                 count_comp = 0;
                 count_zero = 0;
                 for(x = 0; x < 3; x++) {
-                    if(button_str[x][y] == playerChar)
+                    if(tileChar[x][y] == playerChar)
                         count_my++;
-                    else if(button_str[x][y] == androidChar)
+                    else if(tileChar[x][y] == androidChar)
                         count_comp++;
                     else
                         count_zero++;
@@ -373,9 +360,9 @@ public class SingleActivity extends BaseActivity {
                 count_comp = 0;
                 count_zero = 0;
                 for(x = 0; x < 3; x++) {
-                    if(button_str[x][y] == playerChar)
+                    if(tileChar[x][y] == playerChar)
                         count_my++;
-                    else if(button_str[x][y] == androidChar)
+                    else if(tileChar[x][y] == androidChar)
                         count_comp++;
                     else
                         count_zero++;
@@ -409,46 +396,40 @@ public class SingleActivity extends BaseActivity {
             do {
                 xx = rand.nextInt(3);
                 yy = rand.nextInt(3);
-            } while(button_str[xx][yy] != '0');
+            } while(tileChar[xx][yy] != '0');
 
 
-        button_str[xx][yy] = androidChar;
-        isMyTurn = true;
-        button[xx][yy].setClickable(false);
+        tileChar[xx][yy] = androidChar;
+        turn = Turn.PLAYER;
+        tileView[xx][yy].setClickable(false);
 
-        button[xx][yy].setMode(androidSymbol);
-        new SymbolAnimation(button[xx][yy]).setDuration(animation_duration);
+        tileView[xx][yy].setMode(androidSymbol);
+        new SymbolAnimation(tileView[xx][yy]).setDuration(animation_duration);
 
         checkConditions();
     }
 
     private boolean yallGotAnymoreOfThemButtons() {
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
-            if(button_str[x][y] == '0')
+            if(tileChar[x][y] == '0')
                 return true;
         return false;
     }
 
-    public void myMove(View view) {
+    public void playerMove(View view) {
         for(int x = 0; x < 3; x++) for(int y = 0; y < 3; y++)
-            if(button[x][y] == findViewById(view.getId())) {
-                button_str[x][y] = playerChar;
-                isMyTurn = false;
-                button[x][y].setClickable(false);
+            if(tileView[x][y] == findViewById(view.getId())) {
+                tileChar[x][y] = playerChar;
+                turn = Turn.ANDROID;
+                tileView[x][y].setClickable(false);
 
-                button[x][y].setMode(playerSymbol);
-                new SymbolAnimation(button[x][y]).setDuration(animation_duration);
+                tileView[x][y].setMode(playerSymbol);
+                new SymbolAnimation(tileView[x][y]).setDuration(animation_duration);
 
                 checkConditions();
-                if(yallGotAnymoreOfThemButtons())
-                    if(!isThereAWinner)
-                        compMove();
+                if(yallGotAnymoreOfThemButtons() && status == Status.PLAYING)
+                    androidMove();
                 break;
             }
-    }
-
-    public void onClickReturn(View view) {
-        Intent intent = new Intent(this, MenuActivity.class);
-        startActivity(intent);
     }
 }

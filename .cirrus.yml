@@ -1,5 +1,5 @@
-container:
-    image: cirrusci/android-sdk:26
-
-task:
-    build_script: ./gradlew build
+build_task:
+    container:
+        image: cirrusci/android-sdk:26
+    build_script:
+        - ./gradlew build

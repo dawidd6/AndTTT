@@ -25,9 +25,8 @@ public abstract class BaseGameActivity extends BaseActivity {
         private int wins;
         private int color;
 
-        public Player(String name, int text, int view, int string) {
+        public Player(int text, int view, int string) {
             this.wins = 0;
-            this.name = name;
             this.string = string;
 
             this.text = findViewById(text);
@@ -138,8 +137,8 @@ public abstract class BaseGameActivity extends BaseActivity {
         frame_dimen = getResources().getDimensionPixelSize(R.dimen.frame_dimen);
 
         // initialize players
-        player1 = new Player("Player1", R.id.player1Text, R.id.player1View, R.string.player1);
-        player2 = new Player("Player2", R.id.player2Text, R.id.player2View, R.string.player2);
+        player1 = new Player(R.id.player1Text, R.id.player1View, R.string.player1);
+        player2 = new Player(R.id.player2Text, R.id.player2View, R.string.player2);
         player1.setColor(Color.GREEN);
         player2.setColor(Color.RED);
 

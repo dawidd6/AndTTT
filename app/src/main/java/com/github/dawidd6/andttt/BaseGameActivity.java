@@ -153,9 +153,6 @@ public abstract class BaseGameActivity extends BaseActivity {
             tilesView[i].setSize(tile_dimen);
         }
 
-        // conclusion frame stuff
-        conclusionFrame.setBackgroundColor(colorBackground);
-
         // board drawing stuff
         boardView.setMode(Symbols.LINE);
         boardView.setColor(ContextCompat.getColor(this, R.color.color_green));

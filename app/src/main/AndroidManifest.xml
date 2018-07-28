@@ -24,6 +24,13 @@
         </activity>
 
         <activity
+            android:name="com.github.dawidd6.andttt.LocalActivity"
+            android:parentActivityName="com.github.dawidd6.andttt.MenuActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
             android:name="com.github.dawidd6.andttt.SettingsActivity"
             android:parentActivityName="com.github.dawidd6.andttt.MenuActivity">
         </activity>

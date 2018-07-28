@@ -6,6 +6,23 @@
     tools:context="com.github.dawidd6.andttt.MenuActivity">
 
     <Button
+        android:id="@+id/localButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/rounded_button"
+        android:onClick="onClickPlayLocal"
+        android:text="@string/play_local"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/singleButton" />
+
+    <Button
         android:id="@+id/singleButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -27,13 +44,14 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/rounded_button"
         android:onClick="onClickSettings"
         android:text="@string/settings"
         android:textColor="@android:color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/singleButton" />
+        app:layout_constraintTop_toBottomOf="@+id/localButton" />
 </android.support.constraint.ConstraintLayout>

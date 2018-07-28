@@ -27,6 +27,10 @@ public class MenuActivity extends BaseActivity {
         switchActivity(SingleActivity.class);
     }
 
+    public void onClickPlayLocal(View view) {
+        switchActivity(LocalActivity.class);
+    }
+
     public void onClickSettings(View view) {
         switchActivity(SettingsActivity.class);
     }

@@ -13,6 +13,7 @@ public abstract class BaseActivity extends Activity {
     protected boolean isStatusBarEnabled;
     protected int animation_duration;
     protected int colorForeground;
+    protected int colorBackground;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,7 @@ public abstract class BaseActivity extends Activity {
         isAnimationEnabled = prefs.getBoolean("animations", true);
         isStatusBarEnabled = prefs.getBoolean("show_status_bar", false);
 
+        colorBackground = getResources().getColor(isNightModeEnabled ? R.color.color_black : R.color.color_light);
         colorForeground = isNightModeEnabled ? Color.WHITE : Color.BLACK;
         animation_duration = isAnimationEnabled ? 600 : 0;
 

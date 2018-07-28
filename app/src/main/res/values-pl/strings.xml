@@ -1,19 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AndTTT</string>
     <string name="restart">Restart</string>
-    <string name="your_symbol">Twój symbol</string>
     <string name="play_single">Zagraj samotnie</string>
-    <string name="settings">Opcje</string>
-    <string name="night_mode">Tryb nocny</string>
-    <string name="you">Ty</string>
-    <string name="android">SI</string>
-    <string name="android_won">Przegrana</string>
-    <string name="you_won">Wygrana</string>
+    <string name="play_local">Zagraj lokalnie</string>
+    <string name="play_multi">Zagraj przez sieć</string>
+    <string name="settings">Ustawienia</string>
+    <string name="player_won">%1$s wygrał</string>
     <string name="nobody_won">Remis</string>
     <string name="animations">Animacje</string>
     <string name="show_status_bar">Pokaż pasek statusu</string>
+    <string name="night_mode">Tryb nocny</string>
     <string name="appearance">Wygląd</string>
-    <string name="about">O programie</string>
+    <string name="about">O</string>
     <string name="licenses">Licencje</string>
-    <string name="licenses_summary">Biblioteki używane w projekcie</string>
+    <string name="licenses_summary">Biblioteki użyte w tym projekcie</string>
+    <string name="player">Gracz</string>
+    <string name="ai">SI</string>
 </resources>

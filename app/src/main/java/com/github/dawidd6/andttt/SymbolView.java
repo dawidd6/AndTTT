@@ -11,22 +11,22 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+enum Symbols {
+    NONE,
+    CIRCLE,
+    CROSS,
+    LINE,
+}
 
 public class SymbolView extends View {
-    public enum Mode {
-        CIRCLE,
-        CROSS,
-        LINE,
-    }
 
-    private Mode mode = Mode.CIRCLE;
+    private Symbols symbol = Symbols.CIRCLE;
 
     private Paint paint = new Paint();
 
     private int thickness;
     private int padding;
     private int size;
-    private int clearBackground;
     private int lineStartX;
     private int lineStartY;
     private int lineStopX;
@@ -49,10 +49,10 @@ public class SymbolView extends View {
         super.onDraw(canvas);
 
         if(wantClear) {
-            setBackgroundColor(clearBackground);
+            setBackgroundColor(Color.TRANSPARENT);
             wantClear = false;
         } else {
-            switch(mode) {
+            switch(symbol) {
                 case CIRCLE:
                     canvas.drawArc(thickness + padding,
                             thickness + padding,
@@ -91,8 +91,8 @@ public class SymbolView extends View {
         this.stop = stop;
     }
 
-    public void setMode(Mode mode) {
-        this.mode = mode;
+    public void setMode(Symbols symbol) {
+        this.symbol = symbol;
     }
 
     public void setColor(int color) {
@@ -116,7 +116,7 @@ public class SymbolView extends View {
     }
     
     public int getSize() {
-        switch(mode) {
+        switch(symbol) {
             case CIRCLE:
                 return 360;
             case CROSS:
@@ -127,8 +127,7 @@ public class SymbolView extends View {
         return size;
     }
 
-    public void clear(int clearBackground) {
-        this.clearBackground = clearBackground;
+    public void clear() {
         this.wantClear = true;
         invalidate();
     }

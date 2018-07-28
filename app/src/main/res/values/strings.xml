@@ -1,31 +1,32 @@
 <resources>
-    <string name="b1" translatable="false">b1</string>
-    <string name="b2" translatable="false">b2</string>
-    <string name="b3" translatable="false">b3</string>
-    <string name="b4" translatable="false">b4</string>
-    <string name="b5" translatable="false">b5</string>
-    <string name="b6" translatable="false">b6</string>
-    <string name="b7" translatable="false">b7</string>
-    <string name="b8" translatable="false">b8</string>
-    <string name="b0" translatable="false">b0</string>
+
+    <string name="score" translatable="false">%1$d : %2$d</string>
 
     <string name="app_name">AndTTT</string>
     <string name="restart">Restart</string>
-    <string name="your_symbol">Your symbol</string>
+
     <string name="play_single">Play Single</string>
+    <string name="play_local">Play Local</string>
+    <string name="play_multi">Play Multi</string>
     <string name="settings">Settings</string>
-    <string name="night_mode">Night Mode</string>
-    <string name="you">You</string>
-    <string name="android">AI</string>
-    <string name="score" translatable="false">%1$d : %2$d</string>
-    <string name="you_won">Prey slaughtered</string>
-    <string name="android_won">You died</string>
+
+    <string name="player1" translatable="false">%1$s</string>
+    <string name="player2" translatable="false">%1$s</string>
+
+    <string name="player_won">%1$s won</string>
     <string name="nobody_won">Draw</string>
+
     <string name="animations">Animations</string>
     <string name="show_status_bar">Show status bar</string>
+    <string name="night_mode">Night Mode</string>
+
     <string name="appearance">Appearance</string>
     <string name="about">About</string>
+
     <string name="licenses">Licenses</string>
     <string name="licenses_summary">Libraries used by this project</string>
+
+    <string name="player">Player</string>
+    <string name="ai">AI</string>
 
 </resources>

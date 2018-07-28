@@ -35,30 +35,25 @@ public class SingleActivity extends BaseGameActivity {
         Vector<Integer> nonePositions = new Vector<>();
 
         int counter = 0;
-        int pos = 0;
 
-        Symbols smb[] = {player2.getSymbol(), player1.getSymbol()};
-
-        for(int i = 0; i < tiles.length; i++)
-            if(tiles[i] == Symbols.NONE)
-                    nonePositions.add(i);
-
-        for(Symbols s : smb)
+        for(Symbols s : new Symbols[] {player2.getSymbol(), player1.getSymbol()}) {
+            nonePositions.removeAllElements();
             for(int p[] : patterns) {
                 for(int j = 0; j < 3; j++) {
                     if(tiles[p[j]] == s)
                         counter++;
                     else if(tiles[p[j]] == Symbols.NONE) {
                         counter = counter + 8;
-                        pos = p[j];
+                        nonePositions.add(p[j]);
                     }
                 }
 
                 if(counter == 10)
-                    return pos;
+                    return nonePositions.lastElement();
                 else
                     counter = 0;
             }
+        }
 
         return nonePositions.elementAt(rand.nextInt(nonePositions.size()));
     }

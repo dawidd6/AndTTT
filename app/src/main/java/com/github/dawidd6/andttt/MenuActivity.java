@@ -34,9 +34,4 @@ public class MenuActivity extends BaseActivity {
     public void onClickSettings(View view) {
         switchActivity(SettingsActivity.class);
     }
-
-    public void onClickExit(View view) {
-        finish();
-        System.exit(0);
-    }
 }

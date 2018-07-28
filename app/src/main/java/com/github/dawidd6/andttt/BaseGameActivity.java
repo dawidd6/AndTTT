@@ -112,6 +112,8 @@ public abstract class BaseGameActivity extends BaseActivity {
     private int board_dimen;
     private int frame_dimen;
 
+    private int noneCounter;
+
     private boolean bool;
     protected boolean player1Turn;
 
@@ -205,6 +207,8 @@ public abstract class BaseGameActivity extends BaseActivity {
             status = Statuses.PLAYING;
         }
 
+        noneCounter = tiles.length;
+
         player1Turn = rand.nextBoolean();
         player1.setTurn(player1Turn);
         player2.setTurn(!player1Turn);
@@ -272,18 +276,13 @@ public abstract class BaseGameActivity extends BaseActivity {
             }
         }
 
-        if(!yallGotAnymoreOfThemButtons() && status == Statuses.PLAYING)
+        if(noneCounter == 0 && status == Statuses.PLAYING)
             endGame(Statuses.DRAW);
     }
 
-    private boolean yallGotAnymoreOfThemButtons() {
-        for(int i = 0; i < 9; i++)
-            if(tiles[i] == Symbols.NONE)
-                return true;
-        return false;
-    }
-
     public void makeMove(Player player, int i) {
+        noneCounter--;
+
         tiles[i] = player.getSymbol();
         tilesView[i].setClickable(false);
         tilesView[i].setMode(tiles[i]);

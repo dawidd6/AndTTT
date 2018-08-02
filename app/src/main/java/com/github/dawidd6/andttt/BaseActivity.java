@@ -14,6 +14,8 @@ public abstract class BaseActivity extends Activity {
     protected int animation_duration;
     protected int colorForeground;
     protected int colorBackground;
+    protected int theme;
+    protected int theme_dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +27,13 @@ public abstract class BaseActivity extends Activity {
         colorBackground = getResources().getColor(isNightModeEnabled ? R.color.color_black : R.color.color_light);
         colorForeground = isNightModeEnabled ? Color.WHITE : Color.BLACK;
         animation_duration = isAnimationEnabled ? 600 : 0;
+        theme = isNightModeEnabled ? R.style.theme_dark : R.style.theme_light;
+        theme_dialog = isNightModeEnabled ? R.style.theme_dark_dialog : R.style.theme_light_dialog;
 
         if(isStatusBarEnabled)
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        setTheme(isNightModeEnabled ? R.style.theme_dark : R.style.theme_light);
+        setTheme(theme);
         super.onCreate(savedInstanceState);
     }
 }

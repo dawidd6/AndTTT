@@ -6,6 +6,23 @@
     tools:context="com.github.dawidd6.andttt.MenuActivity">
 
     <Button
+        android:id="@+id/bluetoothButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/rounded_button"
+        android:onClick="onClickPlayBluetooth"
+        android:text="@string/play_bluetooth"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/localButton" />
+
+    <Button
         android:id="@+id/localButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -42,16 +59,16 @@
         android:id="@+id/settingsButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
         android:background="@drawable/rounded_button"
         android:onClick="onClickSettings"
         android:text="@string/settings"
         android:textColor="@android:color/white"
         android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/localButton" />
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

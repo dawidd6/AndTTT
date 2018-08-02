@@ -4,7 +4,7 @@
     <string name="restart">Restart</string>
     <string name="play_single">Zagraj samotnie</string>
     <string name="play_local">Zagraj lokalnie</string>
-    <string name="play_multi">Zagraj przez sieć</string>
+    <string name="play_bluetooth">Zagraj przez bluetooth</string>
     <string name="settings">Ustawienia</string>
     <string name="player_won">%1$s wygrał</string>
     <string name="nobody_won">Remis</string>

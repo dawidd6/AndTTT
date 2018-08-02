@@ -25,4 +25,16 @@
         <item name="android:textColorSecondary">@color/color_summary</item>
         <item name="android:listDivider">@null</item>
     </style>
+
+    <style name="theme_dark_dialog" parent="android:Theme.Material.Dialog">
+        <item name="android:textColorAlertDialogListItem">@color/color_white</item>
+        <item name="android:textColor">@color/color_white</item>
+        <item name="android:background">@color/color_black</item>
+    </style>
+
+    <style name="theme_light_dialog" parent="android:Theme.Material.Dialog">
+        <item name="android:textColorAlertDialogListItem">@color/color_black</item>
+        <item name="android:textColor">@color/color_black</item>
+        <item name="android:background">@color/color_light</item>
+    </style>
 </resources>

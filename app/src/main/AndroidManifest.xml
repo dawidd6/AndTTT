@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.github.dawidd6.andttt">
 
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:label="@string/app_name"
@@ -39,6 +43,11 @@
         <activity
             android:name="com.github.dawidd6.andttt.LicensesActivity"
             android:parentActivityName="com.github.dawidd6.andttt.SettingsActivity">
+        </activity>
+
+        <activity
+            android:name="com.github.dawidd6.andttt.BluetoothActivity"
+            android:parentActivityName="com.github.dawidd6.andttt.MenuActivity">
         </activity>
     </application>
 

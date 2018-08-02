@@ -7,7 +7,7 @@
 
     <string name="play_single">Play Single</string>
     <string name="play_local">Play Local</string>
-    <string name="play_multi">Play Multi</string>
+    <string name="play_bluetooth">Play via Bluetooth</string>
     <string name="settings">Settings</string>
 
     <string name="player1" translatable="false">%1$s</string>

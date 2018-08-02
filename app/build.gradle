@@ -14,15 +14,16 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            applicationVariants.all { variant ->
-                variant.outputs.all {
-                    outputFileName = "AndTTT-${variant.versionName}.apk"
-                }
-            }
         }
         debug {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        applicationVariants.all { variant ->
+            variant.outputs.all { output ->
+                if (variant.buildType.name == 'release')
+                    outputFileName = "AndTTT-${variant.versionName}.apk"
+            }
         }
     }
 }

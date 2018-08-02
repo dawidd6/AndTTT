@@ -28,5 +28,7 @@
 
     <string name="player">Player</string>
     <string name="ai">AI</string>
+    <string name="host">Host</string>
+    <string name="guest">Guest</string>
 
 </resources>

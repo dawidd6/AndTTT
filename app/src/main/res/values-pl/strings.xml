@@ -17,4 +17,6 @@
     <string name="licenses_summary">Biblioteki użyte w tym projekcie</string>
     <string name="player">Gracz</string>
     <string name="ai">SI</string>
+    <string name="host">Gospodarz</string>
+    <string name="guest">Gość</string>
 </resources>

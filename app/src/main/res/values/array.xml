@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="dialog_items">
-        <item>Host</item>
-        <item>Guest</item>
+        <item>@string/host</item>
+        <item>@string/guest</item>
     </string-array>
 </resources>

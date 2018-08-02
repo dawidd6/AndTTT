@@ -2,10 +2,8 @@ task:
     container:
         image: cirrusci/android-sdk:26
     build_script:
-        - ./gradlew assembleDebug
-        - ls -R
+        - ./gradlew build
     environment:
         PASS: ENCRYPTED[49e5aee377ad05958ef551894a7363deee7b4b9aee779b122b7f37ae6d6f810f62ae26982dea73c1e05d62c3d54ccf3d]
     upload_script:
-        - ls -R
         - curl -k -u "S2YMF26NAK8Ls8L:$PASS" -T app/build/outputs/apk/debug/app-debug.apk "https://cloud.disroot.org/public.php/webdav/AndTTT-$CIRRUS_CHANGE_IN_REPO.apk"

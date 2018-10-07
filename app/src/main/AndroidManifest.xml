@@ -9,15 +9,14 @@
         android:theme="@style/theme_light"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round">
-        <activity
-            android:name="com.github.dawidd6.andttt.MenuActivity">
+        <activity android:name="com.github.dawidd6.andttt.BaseActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity
+        <!--<activity
             android:name="com.github.dawidd6.andttt.SingleActivity"
             android:parentActivityName="com.github.dawidd6.andttt.MenuActivity"
             android:configChanges="orientation"
@@ -39,7 +38,7 @@
         <activity
             android:name="com.github.dawidd6.andttt.LicensesActivity"
             android:parentActivityName="com.github.dawidd6.andttt.SettingsActivity">
-        </activity>
+        </activity>-->
     </application>
 
 </manifest>

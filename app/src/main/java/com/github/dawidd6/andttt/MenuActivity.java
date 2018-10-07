@@ -2,12 +2,8 @@ package com.github.dawidd6.andttt;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.View;
-
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 
 @SuppressWarnings("unused")
 public class MenuActivity extends BaseActivity {
@@ -15,7 +11,7 @@ public class MenuActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
+        setContentView(R.layout.menu);
     }
 
     public void switchActivity(Class c) {

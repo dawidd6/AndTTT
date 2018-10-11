@@ -13,30 +13,37 @@ import android.util.Log;
 import android.view.WindowManager;
 
 public class SettingsFragment extends PreferenceFragment {
-    BaseActivity activity;
+    private BaseActivity activity;
+    private int delay;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.settings);
-        setRetainInstance(true);
+
+        activity = ((BaseActivity)getActivity());
+        delay = getResources().getInteger(R.integer.activity_recreate_delay);
 
         PreferenceManager manager = getPreferenceManager();
         Preference night_mode = manager.findPreference("night_mode");
         Preference status_bar = manager.findPreference("show_status_bar");
-        activity = ((BaseActivity)getActivity());
+        Preference animations = manager.findPreference("animations");
 
+        assert night_mode != null;
         night_mode.setOnPreferenceChangeListener((preference, newValue) -> {
-            Log.i("TAG", "changed theme");
-            new Handler().postDelayed(() -> activity.recreate(), 250);
+            new Handler().postDelayed(() -> activity.recreate(), delay);
             return true;
         });
 
+        assert status_bar != null;
         status_bar.setOnPreferenceChangeListener((preference, newValue) -> {
-            Log.i("TAG", "changed status bar");
-            new Handler().postDelayed(() -> {
+            new Handler().postDelayed(() -> activity.recreate(), delay);
+            return true;
+        });
 
-            }, 250);
+        assert animations != null;
+        animations.setOnPreferenceChangeListener((preference, newValue) -> {
+            new Handler().postDelayed(() -> activity.recreate(), delay);
             return true;
         });
     }

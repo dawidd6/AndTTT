@@ -9,7 +9,6 @@
     android:background="@drawable/rectangular_button"
     android:clickable="true"
     android:focusable="true"
-    android:onClick="onClickLibrary"
     android:padding="5dp">
 
     <TextView

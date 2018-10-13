@@ -5,11 +5,10 @@ import android.view.View;
 
 import java.util.Vector;
 
-public class SingleActivity extends BaseGameActivity {
-
+public class SingleFragment extends BaseGameFragment {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         player1.setName(getString(R.string.player));
         player2.setName(getString(R.string.ai));

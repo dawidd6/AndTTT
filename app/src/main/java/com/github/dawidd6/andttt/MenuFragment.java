@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 public class MenuFragment extends Fragment {
-    private BaseActivity activity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -18,11 +17,24 @@ public class MenuFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        activity = ((BaseActivity)getActivity());
+        super.onViewCreated(view, savedInstanceState);
+
+        MainActivity activity = (MainActivity)getActivity();
+
+        Button localButton = view.findViewById(R.id.localButton);
+        localButton.setOnClickListener(v -> {
+            activity.switchFragments(new LocalFragment(), true);
+        });
+
+        Button singleButton = view.findViewById(R.id.singleButton);
+        singleButton.setOnClickListener(v -> {
+            activity.switchFragments(new SingleFragment(), true);
+
+        });
 
         Button settingsButton = view.findViewById(R.id.settingsButton);
         settingsButton.setOnClickListener(v -> {
-            activity.switchFragments(Stack.SETTINGS);
+            activity.switchFragments(new SettingsFragment(), true);
         });
     }
 }

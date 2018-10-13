@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="false"
+    android:layout_centerVertical="false"
+    android:paddingTop="20dp">
+
+    <com.github.dawidd6.andttt.SymbolView
+        android:id="@+id/b0"
+        android:layout_width="@dimen/tile_dimen"
+        android:layout_height="@dimen/tile_dimen"
+        android:background="@android:color/transparent"
+        android:onClick="onClickTile"
+        android:scaleType="fitCenter"
+        app:layout_constraintRight_toLeftOf="@+id/frame_vertical_1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.github.dawidd6.andttt.SymbolView
+        android:id="@+id/b1"
+        android:layout_width="@dimen/tile_dimen"
+        android:layout_height="@dimen/tile_dimen"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@android:color/transparent"
+        android:onClick="onClickTile"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/frame_horizon_1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <com.github.dawidd6.andttt.SymbolView
+        android:id="@+id/b2"
+        android:layout_width="@dimen/tile_dimen"
+        android:layout_height="@dimen/tile_dimen"
+        android:background="@android:color/transparent"
+        android:onClick="onClickTile"
+        android:scaleType="fitCenter"
+        app:layout_constraintLeft_toRightOf="@+id/frame_vertical_2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.github.dawidd6.andttt.SymbolView
+        android:id="@+id/b3"
+        android:layout_width="@dimen/tile_dimen"
+        android:layout_height="@dimen/tile_dimen"
+        android:layout_marginTop="102dp"
+        android:background="@android:color/transparent"
+        android:onClick="onClickTile"
+        android:scaleType="fitCenter"
+        app:layout_constraintRight_toLeftOf="@+id/frame_vertical_1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.github.dawidd6.andttt.SymbolView
+        android:id="@+id/b4"
+        android:layout_width="@dimen/tile_dimen"
+        android:layout_height="@dimen/tile_dimen"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="102dp"
+        android:background="@android:color/transparent"
+        android:onClick="onClickTile"
+        android:scaleType="fitCenter"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.github.dawidd6.andttt.SymbolView
+        android:id="@+id/b5"
+        android:layout_width="@dimen/tile_dimen"
+        android:layout_height="@dimen/tile_dimen"
+        android:layout_marginTop="102dp"
+        android:background="@android:color/transparent"
+        android:onClick="onClickTile"
+        android:scaleType="fitCenter"
+        app:layout_constraintLeft_toRightOf="@+id/frame_vertical_2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.github.dawidd6.andttt.SymbolView
+        android:id="@+id/b6"
+        android:layout_width="@dimen/tile_dimen"
+        android:layout_height="@dimen/tile_dimen"
+        android:background="@android:color/transparent"
+        android:onClick="onClickTile"
+        android:scaleType="fitCenter"
+        app:layout_constraintRight_toLeftOf="@+id/frame_vertical_1"
+        app:layout_constraintTop_toBottomOf="@+id/frame_horizon_2" />
+
+    <com.github.dawidd6.andttt.SymbolView
+        android:id="@+id/b7"
+        android:layout_width="@dimen/tile_dimen"
+        android:layout_height="@dimen/tile_dimen"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@android:color/transparent"
+        android:onClick="onClickTile"
+        android:scaleType="fitCenter"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frame_horizon_2" />
+
+    <com.github.dawidd6.andttt.SymbolView
+        android:id="@+id/b8"
+        android:layout_width="@dimen/tile_dimen"
+        android:layout_height="@dimen/tile_dimen"
+        android:background="@android:color/transparent"
+        android:onClick="onClickTile"
+        android:scaleType="fitCenter"
+        app:layout_constraintLeft_toRightOf="@+id/frame_vertical_2"
+        app:layout_constraintTop_toBottomOf="@+id/frame_horizon_2" />
+
+    <TextView
+        android:id="@+id/frame_horizon_1"
+        android:layout_width="@dimen/board_dimen"
+        android:layout_height="@dimen/frame_dimen"
+        android:background="?android:attr/colorForeground"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/b4"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/frame_horizon_2"
+        android:layout_width="@dimen/board_dimen"
+        android:layout_height="@dimen/frame_dimen"
+        android:background="?android:attr/colorForeground"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/b4" />
+
+    <TextView
+        android:id="@+id/frame_vertical_1"
+        android:layout_width="@dimen/frame_dimen"
+        android:layout_height="@dimen/board_dimen"
+        android:background="?android:attr/colorForeground"
+        app:layout_constraintRight_toLeftOf="@+id/b4"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/frame_vertical_2"
+        android:layout_width="@dimen/frame_dimen"
+        android:layout_height="@dimen/board_dimen"
+        android:background="?android:attr/colorForeground"
+        app:layout_constraintLeft_toRightOf="@+id/b4"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.github.dawidd6.andttt.SymbolView
+        android:id="@+id/boardView"
+        android:layout_width="@dimen/board_dimen"
+        android:layout_height="@dimen/board_dimen"
+        android:visibility="visible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/conclusionFrame"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="@+id/boardView"
+        app:layout_constraintEnd_toEndOf="@+id/boardView"
+        app:layout_constraintStart_toStartOf="@+id/boardView"
+        app:layout_constraintTop_toTopOf="@+id/boardView" />
+
+    <TextView
+        android:id="@+id/conclusionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/nobody_won"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toBottomOf="@+id/conclusionFrame"
+        app:layout_constraintEnd_toEndOf="@+id/conclusionFrame"
+        app:layout_constraintStart_toStartOf="@+id/conclusionFrame"
+        app:layout_constraintTop_toTopOf="@+id/conclusionFrame" />
+
+    <TextView
+        android:id="@+id/player2Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/player2"
+        android:textAlignment="center"
+        android:textColor="?android:attr/colorForeground"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/player2View"
+        app:layout_constraintStart_toEndOf="@+id/player2View"
+        app:layout_constraintTop_toTopOf="@+id/player2View" />
+
+    <TextView
+        android:id="@+id/player1Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/player1"
+        android:textAlignment="center"
+        android:textColor="?android:attr/colorForeground"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/player1View"
+        app:layout_constraintEnd_toStartOf="@+id/player1View"
+        app:layout_constraintTop_toTopOf="@+id/player1View" />
+
+    <com.github.dawidd6.andttt.SymbolView
+        android:id="@+id/player1View"
+        android:layout_width="@dimen/symbol_dimen"
+        android:layout_height="@dimen/symbol_dimen"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/border"
+        android:padding="5dp"
+        app:layout_constraintStart_toStartOf="@+id/scoreText"
+        app:layout_constraintTop_toBottomOf="@+id/scoreText" />
+
+    <com.github.dawidd6.andttt.SymbolView
+        android:id="@+id/player2View"
+        android:layout_width="@dimen/symbol_dimen"
+        android:layout_height="@dimen/symbol_dimen"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/border"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/scoreText"
+        app:layout_constraintTop_toBottomOf="@+id/scoreText" />
+
+
+    <TextView
+        android:id="@+id/scoreText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="64dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/border"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:text="@string/score"
+        android:textAlignment="center"
+        android:textColor="@color/color_green"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/restartButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/restartButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/rounded_button"
+        android:text="@string/restart"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

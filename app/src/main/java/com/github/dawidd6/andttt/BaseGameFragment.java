@@ -1,80 +1,25 @@
 package com.github.dawidd6.andttt;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
+import android.app.Fragment;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 
 import java.util.Random;
 
-public abstract class BaseGameActivity extends BaseActivity {
-
-    protected class Player {
-        private TextView text;
-        private SymbolView view;
-        private Symbols symbol;
-        private String name;
-        private int string;
-        private int wins;
-        private int color;
-
-        public Player(int text, int view, int string) {
-            this.wins = 0;
-            this.string = string;
-
-            this.text = findViewById(text);
-            this.view = findViewById(view);
-
-            this.view.setColor(colorForeground);
-            this.view.setThickness(2 + frame_dimen);
-            this.view.setSize(symbol_dimen);
-
-            this.text.setText(getString(string, name));
-        }
-
-        public void addWin() {
-            this.wins++;
-        }
-
-        public void setColor(int color) {
-            this.color = color;
-        }
-
-        public int getColor() {
-            return color;
-        }
-
-        public void setSymbol(Symbols symbol) {
-            this.symbol = symbol;
-            view.setMode(symbol);
-            new SymbolAnimation(view).setDuration(animation_duration);
-        }
-
-        public Symbols getSymbol() {
-            return symbol;
-        }
-
-        public void setTurn(boolean turn) {
-            this.text.setTypeface(null, turn ? Typeface.BOLD : Typeface.NORMAL);
-        }
-
-        public void setName(String name) {
-            this.name = name;
-            this.text.setText(getString(string, name));
-        }
-
-        public String getName() {
-            return name;
-        }
-    }
-
+public abstract class BaseGameFragment extends Fragment {
     protected int patterns[][] = {
             {0,1,2}, // 0 horizontal up
             {3,4,5}, // 1 horizontal mid
@@ -119,10 +64,101 @@ public abstract class BaseGameActivity extends BaseActivity {
     protected Player player1;
     protected Player player2;
 
+    private TextView player1Text;
+    private TextView player2Text;
+    private SymbolView player1View;
+    private SymbolView player2View;
+
+    private Animator darken;
+    private Animator lighten;
+    private AnimatorSet pulse;
+
+    private MainActivity activity;
+
+    protected class Player {
+        private TextView text;
+        private SymbolView view;
+        private Symbols symbol;
+        private String name;
+        private int string;
+        private int wins;
+        private int color;
+
+        public Player(TextView text, SymbolView view, int string) {
+            this.wins = 0;
+            this.string = string;
+
+            this.text = text;
+            this.view = view;
+
+            this.view.setColor(activity.colorForeground);
+            this.view.setThickness(2 + frame_dimen);
+            this.view.setSize(symbol_dimen);
+
+            this.text.setText(getString(string, name));
+        }
+
+        public void addWin() {
+            this.wins++;
+        }
+
+        public void setColor(int color) {
+            this.color = color;
+        }
+
+        public int getColor() {
+            return color;
+        }
+
+        public void setSymbol(Symbols symbol) {
+            this.symbol = symbol;
+            view.setMode(symbol);
+            new SymbolAnimation(view).setDuration(activity.animation_duration);
+        }
+
+        public Symbols getSymbol() {
+            return symbol;
+        }
+
+        public void setTurn(boolean turn) {
+            this.text.setTypeface(null, turn ? Typeface.BOLD : Typeface.NORMAL);
+        }
+
+        public void setName(String name) {
+            this.name = name;
+            this.text.setText(getString(string, name));
+        }
+
+        public String getName() {
+            return name;
+        }
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
+        setRetainInstance(true);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.game, parent, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        activity = (MainActivity)getActivity();
+
+        // set on clicks listeners
+        Button restartButton = view.findViewById(R.id.restartButton);
+        restartButton.setOnClickListener(this::onClickRestart);
+
+        // load animations
+        darken = AnimatorInflater.loadAnimator(activity, R.animator.darken);
+        lighten = AnimatorInflater.loadAnimator(activity, R.animator.lighten);
+        pulse = (AnimatorSet)AnimatorInflater.loadAnimator(activity, R.animator.pulse);
 
         // init
         rand = new Random();
@@ -137,26 +173,32 @@ public abstract class BaseGameActivity extends BaseActivity {
         frame_dimen = getResources().getDimensionPixelSize(R.dimen.frame_dimen);
 
         // initialize players
-        player1 = new Player(R.id.player1Text, R.id.player1View, R.string.player1);
-        player2 = new Player(R.id.player2Text, R.id.player2View, R.string.player2);
+        player1Text = view.findViewById(R.id.player1Text);
+        player2Text = view.findViewById(R.id.player2Text);
+        player1View = view.findViewById(R.id.player1View);
+        player2View = view.findViewById(R.id.player2View);
+
+        player1 = new Player(player1Text, player1View, R.string.player1);
+        player2 = new Player(player2Text, player2View, R.string.player2);
         player1.setColor(Color.GREEN);
         player2.setColor(Color.RED);
 
         // find views + init tiles
-        scoreText = findViewById(R.id.scoreText);
-        conclusionFrame = findViewById(R.id.conclusionFrame);
-        conclusionText = findViewById(R.id.conclusionText);
-        boardView = findViewById(R.id.boardView);
+        scoreText = view.findViewById(R.id.scoreText);
+        conclusionFrame = view.findViewById(R.id.conclusionFrame);
+        conclusionText = view.findViewById(R.id.conclusionText);
+        boardView = view.findViewById(R.id.boardView);
         for(int i = 0; i < 9; i++) {
-            tilesView[i] = findViewById(getResources().getIdentifier("b" + i, "id", getPackageName()));
-            tilesView[i].setColor(colorForeground);
+            tilesView[i] = view.findViewById(getResources().getIdentifier("b" + i, "id", activity.getPackageName()));
+            tilesView[i].setColor(activity.colorForeground);
             tilesView[i].setThickness(12);
             tilesView[i].setSize(tile_dimen);
+            tilesView[i].setOnClickListener(this::onClickTile);
         }
 
-        // board drawing stuff
+        // game drawing stuff
         boardView.setMode(Symbols.LINE);
-        boardView.setColor(ContextCompat.getColor(this, R.color.color_green));
+        boardView.setColor(ContextCompat.getColor(activity, R.color.color_green));
         boardView.setThickness(20);
         boardView.setSize(board_dimen);
 
@@ -192,7 +234,7 @@ public abstract class BaseGameActivity extends BaseActivity {
                 break;
         }
 
-        new SymbolAnimation(boardView).setDuration(animation_duration);
+        new SymbolAnimation(boardView).setDuration(activity.animation_duration);
     }
 
     public void restartGame() {
@@ -201,8 +243,8 @@ public abstract class BaseGameActivity extends BaseActivity {
             conclusionFrame.setAlpha(0);
         }
         else {
-            YoYo.with(new FadeOutAnimator()).duration(animation_duration).playOn(conclusionText);
-            YoYo.with(new FadeOutAnimator()).duration(animation_duration).playOn(conclusionFrame);
+            YoYo.with(new FadeOutAnimator()).duration(activity.animation_duration).playOn(conclusionText);
+            YoYo.with(new FadeOutAnimator()).duration(activity.animation_duration).playOn(conclusionFrame);
             status = Statuses.PLAYING;
         }
 
@@ -243,7 +285,7 @@ public abstract class BaseGameActivity extends BaseActivity {
                     conclusionText.setTextColor(player2.getColor());
 
                 }
-                YoYo.with(Techniques.Pulse).duration(animation_duration).playOn(scoreText);
+                YoYo.with(Techniques.Pulse).duration(activity.animation_duration).playOn(scoreText);
                 break;
             case DRAW:
                 conclusionText.setText(getString(R.string.nobody_won));
@@ -251,8 +293,8 @@ public abstract class BaseGameActivity extends BaseActivity {
                 break;
         }
 
-        YoYo.with(new FadeInAnimator()).duration(animation_duration).playOn(conclusionFrame);
-        YoYo.with(new FadeInAnimator()).duration(animation_duration).playOn(conclusionText);
+        YoYo.with(new FadeInAnimator()).duration(activity.animation_duration).playOn(conclusionFrame);
+        YoYo.with(new FadeInAnimator()).duration(activity.animation_duration).playOn(conclusionText);
 
         scoreText.setText(getString(R.string.score, player1.wins, player2.wins));
         setAllTilesClickable(false);
@@ -285,7 +327,7 @@ public abstract class BaseGameActivity extends BaseActivity {
         tiles[i] = player.getSymbol();
         tilesView[i].setClickable(false);
         tilesView[i].setMode(tiles[i]);
-        new SymbolAnimation(tilesView[i]).setDuration(animation_duration);
+        new SymbolAnimation(tilesView[i]).setDuration(activity.animation_duration);
         player.setTurn(false);
 
         checkConditions();

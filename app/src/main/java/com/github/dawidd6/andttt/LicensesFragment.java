@@ -1,26 +1,33 @@
 package com.github.dawidd6.andttt;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.Vector;
 
-public class LicensesActivity extends BaseActivity
-{
+public class LicensesFragment extends Fragment {
     private LinearLayout layout;
     private Vector<View> libraries = new Vector<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_licenses);
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.licenses, parent, false);
+    }
 
-        layout = findViewById(R.id.licenses_layout);
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        layout = view.findViewById(R.id.licenses_layout);
 
         addLibrary("Android View Animations", "daimajia", "MIT", "https://github.com/daimajia/AndroidViewAnimations");
         addLibrary("Android Easing Functions", "daimajia", "MIT", "https://github.com/daimajia/AnimationEasingFunctions");
@@ -33,7 +40,9 @@ public class LicensesActivity extends BaseActivity
     }
 
     public void addLibrary(String name, String author, String license, String url) {
-        libraries.add(View.inflate(this, R.layout.library,null));
+        libraries.add(View.inflate(getActivity(), R.layout.library,null));
+        libraries.lastElement().setOnClickListener(this::onClickLibrary);
+
         layout.addView(libraries.lastElement());
 
         TextView library_name = libraries.lastElement().findViewById(R.id.library_name);

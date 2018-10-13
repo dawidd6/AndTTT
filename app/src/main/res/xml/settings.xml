@@ -18,9 +18,6 @@
             android:key="licenses"
             android:summary="@string/licenses_summary"
             android:title="@string/licenses">
-            <intent
-                android:targetClass="com.github.dawidd6.andttt.LicensesActivity"
-                android:targetPackage="com.github.dawidd6.andttt" />
         </Preference>
     </PreferenceCategory>
 </PreferenceScreen>

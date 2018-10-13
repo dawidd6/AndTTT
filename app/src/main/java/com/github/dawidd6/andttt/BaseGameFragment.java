@@ -14,8 +14,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
+import com.github.dawidd6.andttt.animations.DarkenAnimation;
+import com.github.dawidd6.andttt.animations.LightenAnimation;
+import com.github.dawidd6.andttt.animations.PulseAnimation;
 
 import java.util.Random;
 
@@ -68,10 +69,6 @@ public abstract class BaseGameFragment extends Fragment {
     private TextView player2Text;
     private SymbolView player1View;
     private SymbolView player2View;
-
-    private Animator darken;
-    private Animator lighten;
-    private AnimatorSet pulse;
 
     private MainActivity activity;
 
@@ -154,11 +151,6 @@ public abstract class BaseGameFragment extends Fragment {
         // set on clicks listeners
         Button restartButton = view.findViewById(R.id.restartButton);
         restartButton.setOnClickListener(this::onClickRestart);
-
-        // load animations
-        darken = AnimatorInflater.loadAnimator(activity, R.animator.darken);
-        lighten = AnimatorInflater.loadAnimator(activity, R.animator.lighten);
-        pulse = (AnimatorSet)AnimatorInflater.loadAnimator(activity, R.animator.pulse);
 
         // init
         rand = new Random();
@@ -243,8 +235,8 @@ public abstract class BaseGameFragment extends Fragment {
             conclusionFrame.setAlpha(0);
         }
         else {
-            YoYo.with(new FadeOutAnimator()).duration(activity.animation_duration).playOn(conclusionText);
-            YoYo.with(new FadeOutAnimator()).duration(activity.animation_duration).playOn(conclusionFrame);
+            new LightenAnimation(conclusionText, activity.animation_duration);
+            new LightenAnimation(conclusionFrame, activity.animation_duration);
             status = Statuses.PLAYING;
         }
 
@@ -285,7 +277,7 @@ public abstract class BaseGameFragment extends Fragment {
                     conclusionText.setTextColor(player2.getColor());
 
                 }
-                YoYo.with(Techniques.Pulse).duration(activity.animation_duration).playOn(scoreText);
+                new PulseAnimation(scoreText, activity.animation_duration);
                 break;
             case DRAW:
                 conclusionText.setText(getString(R.string.nobody_won));
@@ -293,8 +285,8 @@ public abstract class BaseGameFragment extends Fragment {
                 break;
         }
 
-        YoYo.with(new FadeInAnimator()).duration(activity.animation_duration).playOn(conclusionFrame);
-        YoYo.with(new FadeInAnimator()).duration(activity.animation_duration).playOn(conclusionText);
+        new DarkenAnimation(conclusionFrame, activity.animation_duration);
+        new DarkenAnimation(conclusionText, activity.animation_duration);
 
         scoreText.setText(getString(R.string.score, player1.wins, player2.wins));
         setAllTilesClickable(false);

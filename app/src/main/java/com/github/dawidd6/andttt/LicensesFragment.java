@@ -28,9 +28,6 @@ public class LicensesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         layout = view.findViewById(R.id.licenses_layout);
-
-        addLibrary("Android View Animations", "daimajia", "MIT", "https://github.com/daimajia/AndroidViewAnimations");
-        addLibrary("Android Easing Functions", "daimajia", "MIT", "https://github.com/daimajia/AnimationEasingFunctions");
     }
 
     public void onClickLibrary(View v) {

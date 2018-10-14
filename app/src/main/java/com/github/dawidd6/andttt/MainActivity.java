@@ -8,16 +8,14 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.TypedValue;
 import android.view.WindowManager;
-
-import java.util.List;
 
 public class MainActivity extends Activity {
     protected boolean isNightModeEnabled;
     protected boolean isAnimationEnabled;
     protected boolean isStatusBarEnabled;
     protected int animation_duration;
-    protected int colorForeground;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +31,7 @@ public class MainActivity extends Activity {
         animation_duration = getResources().getInteger(R.integer.animation_duration);
         animation_duration = isAnimationEnabled ? animation_duration : 0;
 
-        colorForeground = isNightModeEnabled ? Color.WHITE : Color.BLACK;
+        //colorForeground = isNightModeEnabled ? Color.WHITE : Color.BLACK;
 
         if(isStatusBarEnabled)
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);

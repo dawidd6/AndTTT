@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,8 @@ public abstract class BaseGameFragment extends Fragment {
     private int symbol_dimen;
     private int board_dimen;
     private int frame_dimen;
+    private int symbol_thickness_dimen;
+    private int line_thickness_dimen;
 
     private int noneCounter;
 
@@ -69,67 +72,10 @@ public abstract class BaseGameFragment extends Fragment {
     private TextView player2Text;
     private SymbolView player1View;
     private SymbolView player2View;
+    
+    private int colorAccent;
 
     private MainActivity activity;
-
-    protected class Player {
-        private TextView text;
-        private SymbolView view;
-        private Symbols symbol;
-        private String name;
-        private int string;
-        private int wins;
-        private int color;
-
-        public Player(TextView text, SymbolView view, int string) {
-            this.wins = 0;
-            this.string = string;
-
-            this.text = text;
-            this.view = view;
-
-            this.view.setColor(activity.colorForeground);
-            this.view.setThickness(2 + frame_dimen);
-            this.view.setSize(symbol_dimen);
-
-            this.text.setText(getString(string, name));
-        }
-
-        public void addWin() {
-            this.wins++;
-        }
-
-        public void setColor(int color) {
-            this.color = color;
-        }
-
-        public int getColor() {
-            return color;
-        }
-
-        public void setSymbol(Symbols symbol) {
-            this.symbol = symbol;
-            view.setMode(symbol);
-            new SymbolAnimation(view).setDuration(activity.animation_duration);
-        }
-
-        public Symbols getSymbol() {
-            return symbol;
-        }
-
-        public void setTurn(boolean turn) {
-            this.text.setTypeface(null, turn ? Typeface.BOLD : Typeface.NORMAL);
-        }
-
-        public void setName(String name) {
-            this.name = name;
-            this.text.setText(getString(string, name));
-        }
-
-        public String getName() {
-            return name;
-        }
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -152,6 +98,11 @@ public abstract class BaseGameFragment extends Fragment {
         Button restartButton = view.findViewById(R.id.restartButton);
         restartButton.setOnClickListener(this::onClickRestart);
 
+        // get colorAccent
+        TypedValue typedValue = new TypedValue();
+        getActivity().getTheme().resolveAttribute(R.attr.colorAccent, typedValue, true);
+        colorAccent = typedValue.data;
+        
         // init
         rand = new Random();
         tiles = new Symbols[9];
@@ -163,6 +114,8 @@ public abstract class BaseGameFragment extends Fragment {
         symbol_dimen = getResources().getDimensionPixelSize(R.dimen.symbol_dimen);
         board_dimen = getResources().getDimensionPixelSize(R.dimen.board_dimen);
         frame_dimen = getResources().getDimensionPixelSize(R.dimen.frame_dimen);
+        symbol_thickness_dimen = getResources().getDimensionPixelSize(R.dimen.symbol_thickness_dimen);
+        line_thickness_dimen = getResources().getDimensionPixelSize(R.dimen.line_thickness_dimen);
 
         // initialize players
         player1Text = view.findViewById(R.id.player1Text);
@@ -170,8 +123,8 @@ public abstract class BaseGameFragment extends Fragment {
         player1View = view.findViewById(R.id.player1View);
         player2View = view.findViewById(R.id.player2View);
 
-        player1 = new Player(player1Text, player1View, R.string.player1);
-        player2 = new Player(player2Text, player2View, R.string.player2);
+        player1 = new Player(player1Text, player1View, getString(R.string.player1), colorAccent, symbol_thickness_dimen, symbol_dimen);
+        player2 = new Player(player2Text, player2View, getString(R.string.player2), colorAccent, symbol_thickness_dimen, symbol_dimen);
         player1.setColor(Color.GREEN);
         player2.setColor(Color.RED);
 
@@ -182,8 +135,8 @@ public abstract class BaseGameFragment extends Fragment {
         boardView = view.findViewById(R.id.boardView);
         for(int i = 0; i < 9; i++) {
             tilesView[i] = view.findViewById(getResources().getIdentifier("b" + i, "id", activity.getPackageName()));
-            tilesView[i].setColor(activity.colorForeground);
-            tilesView[i].setThickness(12);
+            tilesView[i].setColor(colorAccent);
+            tilesView[i].setThickness(symbol_thickness_dimen);
             tilesView[i].setSize(tile_dimen);
             tilesView[i].setOnClickListener(this::onClickTile);
         }
@@ -191,7 +144,7 @@ public abstract class BaseGameFragment extends Fragment {
         // game drawing stuff
         boardView.setMode(Symbols.LINE);
         boardView.setColor(ContextCompat.getColor(activity, R.color.color_green));
-        boardView.setThickness(20);
+        boardView.setThickness(line_thickness_dimen);
         boardView.setSize(board_dimen);
 
         // starting point
@@ -247,8 +200,8 @@ public abstract class BaseGameFragment extends Fragment {
         player2.setTurn(!player1Turn);
 
         bool = rand.nextBoolean();
-        player1.setSymbol(bool ? Symbols.CIRCLE : Symbols.CROSS);
-        player2.setSymbol(!bool ? Symbols.CIRCLE : Symbols.CROSS);
+        player1.setSymbol(bool ? Symbols.CIRCLE : Symbols.CROSS, activity.animation_duration);
+        player2.setSymbol(!bool ? Symbols.CIRCLE : Symbols.CROSS, activity.animation_duration);
 
         for(int i = 0; i < 9; i++) {
             tilesView[i].clear();
@@ -257,7 +210,7 @@ public abstract class BaseGameFragment extends Fragment {
 
         boardView.clear();
 
-        scoreText.setText(getString(R.string.score, player1.wins, player2.wins));
+        scoreText.setText(getString(R.string.score, player1.getWins(), player2.getWins()));
 
         setAllTilesClickable(true);
     }
@@ -288,7 +241,8 @@ public abstract class BaseGameFragment extends Fragment {
         new DarkenAnimation(conclusionFrame, activity.animation_duration);
         new DarkenAnimation(conclusionText, activity.animation_duration);
 
-        scoreText.setText(getString(R.string.score, player1.wins, player2.wins));
+        scoreText.setText(getString(R.string.score, player1.getWins(), player2.getWins()));
+
         setAllTilesClickable(false);
     }
 

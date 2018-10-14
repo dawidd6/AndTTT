@@ -53,12 +53,10 @@ public class MainActivity extends Activity {
 
         if(isAnimationEnabled)
             t.setCustomAnimations(
-                    R.animator.slide_in_left,
-                    R.animator.slide_out_right,
-                    R.animator.slide_in_right,
-                    R.animator.slide_out_left);
-
-        //t.setCustomAnimations(R.animator.fade_in, R.animator.fade_out);
+                    android.R.animator.fade_in,
+                    android.R.animator.fade_out,
+                    android.R.animator.fade_in,
+                    android.R.animator.fade_out);
 
         t.replace(R.id.placeholder, fragment);
         t.commit();

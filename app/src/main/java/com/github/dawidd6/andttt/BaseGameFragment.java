@@ -300,6 +300,7 @@ public abstract class BaseGameFragment extends Fragment {
         // reset tiles
         for(int i = 0; i < 9; i++) {
             tilesBitmap[i].eraseColor(Color.TRANSPARENT);
+            tilesView[i].clearAnimation();
             tiles[i] = Symbol.NONE;
         }
 

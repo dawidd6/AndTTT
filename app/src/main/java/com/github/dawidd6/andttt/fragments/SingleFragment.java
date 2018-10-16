@@ -1,8 +1,10 @@
-package com.github.dawidd6.andttt;
+package com.github.dawidd6.andttt.fragments;
 
-import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import com.github.dawidd6.andttt.MainActivity;
+import com.github.dawidd6.andttt.R;
+import com.github.dawidd6.andttt.game.Symbol;
 
 import java.util.Random;
 import java.util.Vector;
@@ -15,7 +17,7 @@ public class SingleFragment extends BaseGameFragment {
         super.onFirstStart();
 
         delay = getResources().getInteger(R.integer.ai_move_delay);
-        delay = ((MainActivity)getActivity()).isAnimationEnabled ? delay : 0;
+        delay = ((MainActivity)getActivity()).isAnimationEnabled() ? delay : 0;
 
         player1.setName(getString(R.string.player));
         player2.setName(getString(R.string.ai));

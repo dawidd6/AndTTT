@@ -1,4 +1,4 @@
-package com.github.dawidd6.andttt;
+package com.github.dawidd6.andttt.fragments;
 
 import android.app.Fragment;
 import android.graphics.Bitmap;
@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +15,16 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.github.dawidd6.andttt.*;
 import com.github.dawidd6.andttt.animations.DarkenAnimation;
 import com.github.dawidd6.andttt.animations.LightenAnimation;
 import com.github.dawidd6.andttt.animations.PulseAnimation;
-import com.github.dawidd6.andttt.drawings.Draw;
 import com.github.dawidd6.andttt.drawings.DrawCircle;
 import com.github.dawidd6.andttt.drawings.DrawCross;
 import com.github.dawidd6.andttt.drawings.DrawLine;
+import com.github.dawidd6.andttt.game.Game;
+import com.github.dawidd6.andttt.game.Player;
+import com.github.dawidd6.andttt.game.Symbol;
 
 
 public abstract class BaseGameFragment extends Fragment {
@@ -76,7 +78,7 @@ public abstract class BaseGameFragment extends Fragment {
 
         // set animation duration
         animation_duration = getResources().getInteger(R.integer.animation_duration);
-        animation_duration = ((MainActivity)getActivity()).isAnimationEnabled ? animation_duration : 0;
+        animation_duration = ((MainActivity)getActivity()).isAnimationEnabled() ? animation_duration : 0;
 
         // set on clicks listeners
         Button restartButton = view.findViewById(R.id.restartButton);

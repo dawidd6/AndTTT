@@ -1,10 +1,12 @@
-package com.github.dawidd6.andttt;
+package com.github.dawidd6.andttt.fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import com.github.dawidd6.andttt.MainActivity;
+import com.github.dawidd6.andttt.R;
 
 public class SettingsFragment extends PreferenceFragment {
     @Override

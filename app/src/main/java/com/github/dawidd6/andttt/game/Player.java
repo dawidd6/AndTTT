@@ -1,4 +1,4 @@
-package com.github.dawidd6.andttt;
+package com.github.dawidd6.andttt.game;
 
 public class Player {
     private boolean turn;

@@ -2,19 +2,17 @@ package com.github.dawidd6.andttt;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.TypedValue;
 import android.view.WindowManager;
+import com.github.dawidd6.andttt.fragments.MenuFragment;
 
 public class MainActivity extends Activity {
-    protected boolean isNightModeEnabled;
-    protected boolean isAnimationEnabled;
-    protected boolean isStatusBarEnabled;
+    private boolean isNightModeEnabled;
+    private boolean isAnimationEnabled;
+    private boolean isStatusBarEnabled;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +33,10 @@ public class MainActivity extends Activity {
 
         if(savedInstanceState == null)
             switchFragments(new MenuFragment(), false);
+    }
+
+    public boolean isAnimationEnabled() {
+        return isAnimationEnabled;
     }
 
     public void switchFragments(Fragment fragment, boolean addToBackStack) {

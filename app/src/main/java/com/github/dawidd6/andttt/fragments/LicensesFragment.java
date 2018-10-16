@@ -1,4 +1,4 @@
-package com.github.dawidd6.andttt;
+package com.github.dawidd6.andttt.fragments;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.github.dawidd6.andttt.R;
 
 import java.util.Vector;
 

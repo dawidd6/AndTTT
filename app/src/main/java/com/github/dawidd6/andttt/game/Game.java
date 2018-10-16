@@ -1,4 +1,4 @@
-package com.github.dawidd6.andttt;
+package com.github.dawidd6.andttt.game;
 
 import java.util.Arrays;
 import java.util.Random;

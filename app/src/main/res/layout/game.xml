@@ -8,24 +8,22 @@
     android:layout_centerVertical="false"
     android:paddingTop="20dp">
 
-    <com.github.dawidd6.andttt.SymbolView
+    <ImageView
         android:id="@+id/b0"
         android:layout_width="@dimen/tile_dimen"
         android:layout_height="@dimen/tile_dimen"
         android:background="@android:color/transparent"
-        android:onClick="onClickTile"
         android:scaleType="fitCenter"
         app:layout_constraintRight_toLeftOf="@+id/frame_vertical_1"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.github.dawidd6.andttt.SymbolView
+    <ImageView
         android:id="@+id/b1"
         android:layout_width="@dimen/tile_dimen"
         android:layout_height="@dimen/tile_dimen"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:background="@android:color/transparent"
-        android:onClick="onClickTile"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/frame_horizon_1"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -33,28 +31,26 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <com.github.dawidd6.andttt.SymbolView
+    <ImageView
         android:id="@+id/b2"
         android:layout_width="@dimen/tile_dimen"
         android:layout_height="@dimen/tile_dimen"
         android:background="@android:color/transparent"
-        android:onClick="onClickTile"
         android:scaleType="fitCenter"
         app:layout_constraintLeft_toRightOf="@+id/frame_vertical_2"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.github.dawidd6.andttt.SymbolView
+    <ImageView
         android:id="@+id/b3"
         android:layout_width="@dimen/tile_dimen"
         android:layout_height="@dimen/tile_dimen"
         android:layout_marginTop="102dp"
         android:background="@android:color/transparent"
-        android:onClick="onClickTile"
         android:scaleType="fitCenter"
         app:layout_constraintRight_toLeftOf="@+id/frame_vertical_1"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.github.dawidd6.andttt.SymbolView
+    <ImageView
         android:id="@+id/b4"
         android:layout_width="@dimen/tile_dimen"
         android:layout_height="@dimen/tile_dimen"
@@ -62,52 +58,47 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="102dp"
         android:background="@android:color/transparent"
-        android:onClick="onClickTile"
         android:scaleType="fitCenter"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.github.dawidd6.andttt.SymbolView
+    <ImageView
         android:id="@+id/b5"
         android:layout_width="@dimen/tile_dimen"
         android:layout_height="@dimen/tile_dimen"
         android:layout_marginTop="102dp"
         android:background="@android:color/transparent"
-        android:onClick="onClickTile"
         android:scaleType="fitCenter"
         app:layout_constraintLeft_toRightOf="@+id/frame_vertical_2"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.github.dawidd6.andttt.SymbolView
+    <ImageView
         android:id="@+id/b6"
         android:layout_width="@dimen/tile_dimen"
         android:layout_height="@dimen/tile_dimen"
         android:background="@android:color/transparent"
-        android:onClick="onClickTile"
         android:scaleType="fitCenter"
         app:layout_constraintRight_toLeftOf="@+id/frame_vertical_1"
         app:layout_constraintTop_toBottomOf="@+id/frame_horizon_2" />
 
-    <com.github.dawidd6.andttt.SymbolView
+    <ImageView
         android:id="@+id/b7"
         android:layout_width="@dimen/tile_dimen"
         android:layout_height="@dimen/tile_dimen"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:background="@android:color/transparent"
-        android:onClick="onClickTile"
         android:scaleType="fitCenter"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frame_horizon_2" />
 
-    <com.github.dawidd6.andttt.SymbolView
+    <ImageView
         android:id="@+id/b8"
         android:layout_width="@dimen/tile_dimen"
         android:layout_height="@dimen/tile_dimen"
         android:background="@android:color/transparent"
-        android:onClick="onClickTile"
         android:scaleType="fitCenter"
         app:layout_constraintLeft_toRightOf="@+id/frame_vertical_2"
         app:layout_constraintTop_toBottomOf="@+id/frame_horizon_2" />
@@ -148,7 +139,7 @@
         app:layout_constraintLeft_toRightOf="@+id/b4"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.github.dawidd6.andttt.SymbolView
+    <ImageView
         android:id="@+id/boardView"
         android:layout_width="@dimen/board_dimen"
         android:layout_height="@dimen/board_dimen"
@@ -212,7 +203,7 @@
         app:layout_constraintEnd_toStartOf="@+id/player1View"
         app:layout_constraintTop_toTopOf="@+id/player1View" />
 
-    <com.github.dawidd6.andttt.SymbolView
+    <ImageView
         android:id="@+id/player1View"
         android:layout_width="@dimen/symbol_dimen"
         android:layout_height="@dimen/symbol_dimen"
@@ -222,7 +213,7 @@
         app:layout_constraintStart_toStartOf="@+id/scoreText"
         app:layout_constraintTop_toBottomOf="@+id/scoreText" />
 
-    <com.github.dawidd6.andttt.SymbolView
+    <ImageView
         android:id="@+id/player2View"
         android:layout_width="@dimen/symbol_dimen"
         android:layout_height="@dimen/symbol_dimen"

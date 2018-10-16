@@ -1,14 +1,19 @@
 package com.github.dawidd6.andttt;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 
 import java.util.Vector;
 
 public class SingleFragment extends BaseGameFragment {
+    private int delay;
+
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void onFirstStart() {
+        super.onFirstStart();
+
+        delay = getResources().getInteger(R.integer.ai_move_delay);
 
         player1.setName(getString(R.string.player));
         player2.setName(getString(R.string.ai));
@@ -18,16 +23,25 @@ public class SingleFragment extends BaseGameFragment {
     public void restartGame() {
         super.restartGame();
 
-        if(!player1Turn)
-            makeMove(player2, computeMove());
+        AIMove();
     }
 
     @Override
     public void onClickTile(View view) {
         super.onClickTile(view);
 
-        if(!player1Turn)
-            makeMove(player2, computeMove());
+        AIMove();
+    }
+
+    private void AIMove() {
+        setAllTilesClickable(false);
+
+        new Handler().postDelayed(() -> {
+            if (!player1.isTurn())
+                makeMove(player2, player1, computeMove());
+
+            setAllTilesClickable(true);
+        }, delay);
     }
 
     public int computeMove() {
@@ -35,13 +49,13 @@ public class SingleFragment extends BaseGameFragment {
 
         int counter = 0;
 
-        for(Symbols s : new Symbols[] {player2.getSymbol(), player1.getSymbol()}) {
+        for(Symbol s : new Symbol[] {player2.getSymbol(), player1.getSymbol()}) {
             nonePositions.removeAllElements();
             for(int p[] : patterns) {
                 for(int j = 0; j < 3; j++) {
                     if(tiles[p[j]] == s)
                         counter++;
-                    else if(tiles[p[j]] == Symbols.NONE) {
+                    else if(tiles[p[j]] == Symbol.NONE) {
                         counter = counter + 8;
                         nonePositions.add(p[j]);
                     }

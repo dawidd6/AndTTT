@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.app.Fragment;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -14,11 +15,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.github.dawidd6.andttt.animations.DarkenAnimation;
 import com.github.dawidd6.andttt.animations.LightenAnimation;
 import com.github.dawidd6.andttt.animations.PulseAnimation;
+import com.github.dawidd6.andttt.drawings.Draw;
+import com.github.dawidd6.andttt.drawings.DrawCircle;
+import com.github.dawidd6.andttt.drawings.DrawCross;
+import com.github.dawidd6.andttt.drawings.DrawLine;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public abstract class BaseGameFragment extends Fragment {
@@ -33,20 +40,14 @@ public abstract class BaseGameFragment extends Fragment {
             {2,4,6}, // 7 narrow right
     };
 
-    protected enum Statuses {
-        PLAYING,
-        WIN,
-        DRAW,
-    }
-
-    protected Statuses status;
-
+    protected Status status;
+    protected Symbol tiles[];
     protected Random rand;
 
-    protected Symbols tiles[];
-
-    private SymbolView tilesView[];
-    private SymbolView boardView;
+    private ImageView tilesView[];
+    private ImageView boardView;
+    private Bitmap tilesBitmap[];
+    private Bitmap boardBitmap;
 
     private TextView scoreText;
     private TextView conclusionText;
@@ -62,20 +63,19 @@ public abstract class BaseGameFragment extends Fragment {
 
     private int noneCounter;
 
-    private boolean bool;
-    protected boolean player1Turn;
-
     protected Player player1;
     protected Player player2;
-
     private TextView player1Text;
     private TextView player2Text;
-    private SymbolView player1View;
-    private SymbolView player2View;
+    private ImageView player1View;
+    private ImageView player2View;
+    private Bitmap player1Bitmap;
+    private Bitmap player2Bitmap;
     
-    private int colorAccent;
+    private int colorSymbol;
+    private int colorLine;
 
-    private MainActivity activity;
+    private int animation_duration;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,22 +92,28 @@ public abstract class BaseGameFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        activity = (MainActivity)getActivity();
+        // set initial status
+        status = Status.PLAYING;
+
+        // set animation duration
+        animation_duration = getResources().getInteger(R.integer.animation_duration);
+        animation_duration = ((MainActivity)getActivity()).isAnimationEnabled ? animation_duration : 0;
 
         // set on clicks listeners
         Button restartButton = view.findViewById(R.id.restartButton);
         restartButton.setOnClickListener(this::onClickRestart);
 
-        // get colorAccent
+        // get colorSymbol and colorLine
         TypedValue typedValue = new TypedValue();
         getActivity().getTheme().resolveAttribute(R.attr.colorAccent, typedValue, true);
-        colorAccent = typedValue.data;
+        colorSymbol = typedValue.data;
+        colorLine = ContextCompat.getColor(getActivity(), R.color.color_green);
         
-        // init
+        // init stuff
         rand = new Random();
-        tiles = new Symbols[9];
-        tilesView = new SymbolView[9];
-        status = Statuses.PLAYING;
+        tiles = new Symbol[9];
+        tilesView = new ImageView[9];
+        tilesBitmap = new Bitmap[9];
 
         // get dimens
         tile_dimen = getResources().getDimensionPixelSize(R.dimen.tile_dimen);
@@ -123,104 +129,213 @@ public abstract class BaseGameFragment extends Fragment {
         player1View = view.findViewById(R.id.player1View);
         player2View = view.findViewById(R.id.player2View);
 
-        player1 = new Player(player1Text, player1View, getString(R.string.player1), colorAccent, symbol_thickness_dimen, symbol_dimen);
-        player2 = new Player(player2Text, player2View, getString(R.string.player2), colorAccent, symbol_thickness_dimen, symbol_dimen);
-        player1.setColor(Color.GREEN);
-        player2.setColor(Color.RED);
+        player1 = new Player()
+                .setColor(Color.GREEN)
+                .setName(getString(R.string.player1));
+        player2 = new Player()
+                .setColor(Color.RED)
+                .setName(getString(R.string.player2));
 
-        // find views + init tiles
+        // find views
         scoreText = view.findViewById(R.id.scoreText);
         conclusionFrame = view.findViewById(R.id.conclusionFrame);
         conclusionText = view.findViewById(R.id.conclusionText);
         boardView = view.findViewById(R.id.boardView);
+
+        // function meant to be override,
+        // if there is a need to do something before
+        // restarting the game for the first time
+        onFirstStart();
+
+        // init tiles + their bitmaps
         for(int i = 0; i < 9; i++) {
-            tilesView[i] = view.findViewById(getResources().getIdentifier("b" + i, "id", activity.getPackageName()));
-            tilesView[i].setColor(colorAccent);
-            tilesView[i].setThickness(symbol_thickness_dimen);
-            tilesView[i].setSize(tile_dimen);
+            tilesBitmap[i] = Bitmap.createBitmap(tile_dimen, tile_dimen, Bitmap.Config.ARGB_4444);
+            tilesView[i] = view.findViewById(getResources().getIdentifier("b" + i, "id", getActivity().getPackageName()));
             tilesView[i].setOnClickListener(this::onClickTile);
+            tilesView[i].setImageBitmap(tilesBitmap[i]);
         }
 
-        // game drawing stuff
-        boardView.setMode(Symbols.LINE);
-        boardView.setColor(ContextCompat.getColor(activity, R.color.color_green));
-        boardView.setThickness(line_thickness_dimen);
-        boardView.setSize(board_dimen);
+        // init board and its bitmap
+        boardBitmap = Bitmap.createBitmap(board_dimen, board_dimen, Bitmap.Config.ARGB_4444);
+        boardView.setImageBitmap(boardBitmap);
+
+        // init players' bitmaps
+        player1Bitmap = Bitmap.createBitmap(symbol_dimen, symbol_dimen, Bitmap.Config.ARGB_4444);
+        player2Bitmap = Bitmap.createBitmap(symbol_dimen, symbol_dimen, Bitmap.Config.ARGB_4444);
+        player1View.setImageBitmap(player1Bitmap);
+        player2View.setImageBitmap(player2Bitmap);
+
+        // set players' names to display
+        player1Text.setText(player1.getName());
+        player2Text.setText(player2.getName());
 
         // starting point
         restartGame();
     }
 
+    protected void onFirstStart() {}
+
     private void drawLine(int i) {
+        int startX, startY, stopX, stopY;
+
         switch(i) {
             case 0: // h1
-                boardView.setLinePoints(0, tile_dimen / 2, board_dimen, tile_dimen / 2);
+                startX = 0;
+                startY = tile_dimen / 2;
+                stopX = DrawLine.INCREMENT;
+                stopY = tile_dimen / 2;
                 break;
             case 1: // h2
-                boardView.setLinePoints(0, board_dimen / 2, board_dimen, board_dimen / 2);
+                startX = 0;
+                startY = board_dimen / 2;
+                stopX = DrawLine.INCREMENT;
+                stopY = board_dimen / 2;
                 break;
             case 2: // h3
-                boardView.setLinePoints(0, board_dimen - (tile_dimen / 2), board_dimen, board_dimen - (tile_dimen / 2));
+                startX = 0;
+                startY = board_dimen - (tile_dimen / 2);
+                stopX = DrawLine.INCREMENT;
+                stopY = board_dimen - (tile_dimen / 2);
                 break;
             case 3: // v1
-                boardView.setLinePoints(tile_dimen / 2, 0, tile_dimen / 2, board_dimen);
+                startX = tile_dimen / 2;
+                startY = 0;
+                stopX = tile_dimen / 2;
+                stopY = DrawLine.INCREMENT;
                 break;
             case 4: // v2
-                boardView.setLinePoints(board_dimen / 2, 0, board_dimen / 2, board_dimen);
+                startX = board_dimen / 2;
+                startY = 0;
+                stopX = board_dimen / 2;
+                stopY = DrawLine.INCREMENT;
                 break;
             case 5: // v3
-                boardView.setLinePoints(board_dimen - (tile_dimen / 2), 0, board_dimen - (tile_dimen / 2), board_dimen);
+                startX = board_dimen - (tile_dimen / 2);
+                startY = 0;
+                stopX = board_dimen - (tile_dimen / 2);
+                stopY = DrawLine.INCREMENT;
                 break;
             case 6: // nl
-                boardView.setLinePoints(0, 0, board_dimen, board_dimen);
+                // TODO random line direction, same below and above
+                //if(new Random().nextBoolean())
+                startX = 0;
+                startY = 0;
+                stopX = DrawLine.INCREMENT;
+                stopY = DrawLine.INCREMENT;
                 break;
             case 7: // nr
-                boardView.setLinePoints(board_dimen, 0, 0, board_dimen);
+                startX = board_dimen;
+                startY = 0;
+                stopX = DrawLine.DECREMENT;
+                stopY = DrawLine.INCREMENT;
+                break;
+            default:
+                startX = 0;
+                startY = 0;
+                stopX = 0;
+                stopY = 0;
                 break;
         }
 
-        new SymbolAnimation(boardView).setDuration(activity.animation_duration);
+        new DrawLine()
+                .setPoints(startX, startY, stopX, stopY)
+                .setDuration(animation_duration)
+                .setColor(colorLine)
+                .setThickness(line_thickness_dimen)
+                .setImage(boardView)
+                .setBitmap(boardBitmap)
+                .execute();
+    }
+
+    private void drawSymbol(ImageView image, Bitmap bitmap, Symbol symbol) {
+        switch(symbol) {
+            case CIRCLE:
+                new DrawCircle()
+                        .setDuration(animation_duration)
+                        .setColor(colorSymbol)
+                        .setThickness(symbol_thickness_dimen)
+                        .setImage(image)
+                        .setBitmap(bitmap)
+                        .execute();
+                break;
+            case CROSS:
+                new DrawCross()
+                        .setDuration(animation_duration/2)
+                        .setColor(colorSymbol)
+                        .setThickness(symbol_thickness_dimen)
+                        .setImage(image)
+                        .setBitmap(bitmap)
+                        .execute();
+                break;
+        }
     }
 
     public void restartGame() {
-        if(status == Statuses.PLAYING) {
+        // determine if game is started for first time or restarted
+        if(status == Status.PLAYING) {
             conclusionText.setAlpha(0);
             conclusionFrame.setAlpha(0);
-        }
-        else {
-            new LightenAnimation(conclusionText, activity.animation_duration);
-            new LightenAnimation(conclusionFrame, activity.animation_duration);
-            status = Statuses.PLAYING;
+        } else {
+            new LightenAnimation(conclusionText, animation_duration);
+            new LightenAnimation(conclusionFrame, animation_duration);
         }
 
+        status = Status.PLAYING;
         noneCounter = tiles.length;
 
-        player1Turn = rand.nextBoolean();
-        player1.setTurn(player1Turn);
-        player2.setTurn(!player1Turn);
+        // randomize players' turns
+        boolean turn = rand.nextBoolean();
+        player1.setTurn(turn);
+        player2.setTurn(!turn);
 
-        bool = rand.nextBoolean();
-        player1.setSymbol(bool ? Symbols.CIRCLE : Symbols.CROSS, activity.animation_duration);
-        player2.setSymbol(!bool ? Symbols.CIRCLE : Symbols.CROSS, activity.animation_duration);
+        // randomize symbols for players
+        boolean symbol = rand.nextBoolean();
+        player1.setSymbol(symbol ? Symbol.CIRCLE : Symbol.CROSS);
+        player2.setSymbol(!symbol ? Symbol.CIRCLE : Symbol.CROSS);
 
+        // draw players' symbols on respective views
+        drawSymbol(player1View, player1Bitmap, player1.getSymbol());
+        drawSymbol(player2View, player2Bitmap, player2.getSymbol());
+
+        // reset tiles
         for(int i = 0; i < 9; i++) {
-            tilesView[i].clear();
-            tiles[i] = Symbols.NONE;
+            tilesBitmap[i].eraseColor(Color.TRANSPARENT);
+            tiles[i] = Symbol.NONE;
         }
 
-        boardView.clear();
+        // clear rest of bitmaps
+        boardBitmap.eraseColor(Color.TRANSPARENT);
+        player1Bitmap.eraseColor(Color.TRANSPARENT);
+        player2Bitmap.eraseColor(Color.TRANSPARENT);
 
+        // set score
         scoreText.setText(getString(R.string.score, player1.getWins(), player2.getWins()));
 
+        // set font type for players
+        updateTurnFont();
+
+        // enable all tiles
         setAllTilesClickable(true);
     }
 
-    public void endGame(Statuses stat) {
-        status = stat;
+    public void updateTurnFont() {
+        if(player1.isTurn())
+            player1Text.setTypeface(null, Typeface.BOLD);
+        else
+            player1Text.setTypeface(null, Typeface.NORMAL);
+
+        if(player2.isTurn())
+            player2Text.setTypeface(null, Typeface.BOLD);
+        else
+            player2Text.setTypeface(null, Typeface.NORMAL);
+    }
+
+    public void endGame(Status status) {
+        this.status = status;
 
         switch(status) {
             case WIN:
-                if(player1Turn) {
+                if(player1.isTurn()) {
                     player1.addWin();
                     conclusionText.setText(getString(R.string.player_won, player1.getName()));
                     conclusionText.setTextColor(player1.getColor());
@@ -228,9 +343,8 @@ public abstract class BaseGameFragment extends Fragment {
                     player2.addWin();
                     conclusionText.setText(getString(R.string.player_won, player2.getName()));
                     conclusionText.setTextColor(player2.getColor());
-
                 }
-                new PulseAnimation(scoreText, activity.animation_duration);
+                new PulseAnimation(scoreText, animation_duration);
                 break;
             case DRAW:
                 conclusionText.setText(getString(R.string.nobody_won));
@@ -238,56 +352,59 @@ public abstract class BaseGameFragment extends Fragment {
                 break;
         }
 
-        new DarkenAnimation(conclusionFrame, activity.animation_duration);
-        new DarkenAnimation(conclusionText, activity.animation_duration);
+        new DarkenAnimation(conclusionFrame, animation_duration*2);
+        new DarkenAnimation(conclusionText, animation_duration*2);
 
         scoreText.setText(getString(R.string.score, player1.getWins(), player2.getWins()));
 
         setAllTilesClickable(false);
     }
 
-    private void setAllTilesClickable(boolean enabled) {
+    protected void setAllTilesClickable(boolean clickable) {
         for(int i = 0; i < 9; i++)
-            tilesView[i].setClickable(enabled);
+            if(tiles[i] == Symbol.NONE)
+                tilesView[i].setClickable(clickable);
     }
 
     private void checkConditions() {
         for(int i = 0; i < patterns.length; i++) {
             if(tiles[patterns[i][0]] == tiles[patterns[i][1]] && tiles[patterns[i][0]] == tiles[patterns[i][2]] &&
-                    tiles[patterns[i][0]] != Symbols.NONE &&
-                    tiles[patterns[i][1]] != Symbols.NONE &&
-                    tiles[patterns[i][2]] != Symbols.NONE) {
+                    tiles[patterns[i][0]] != Symbol.NONE &&
+                    tiles[patterns[i][1]] != Symbol.NONE &&
+                    tiles[patterns[i][2]] != Symbol.NONE) {
                 drawLine(i);
-                endGame(Statuses.WIN);
+                endGame(Status.WIN);
                 break;
             }
         }
 
-        if(noneCounter == 0 && status == Statuses.PLAYING)
-            endGame(Statuses.DRAW);
+        if(noneCounter == 0 && status == Status.PLAYING)
+            endGame(Status.DRAW);
     }
 
-    public void makeMove(Player player, int i) {
+    public void makeMove(Player playerWithTurn, Player playerWithoutTurn, int i) {
         noneCounter--;
 
-        tiles[i] = player.getSymbol();
+        tiles[i] = playerWithTurn.getSymbol();
         tilesView[i].setClickable(false);
-        tilesView[i].setMode(tiles[i]);
-        new SymbolAnimation(tilesView[i]).setDuration(activity.animation_duration);
-        player.setTurn(false);
+
+        drawSymbol(tilesView[i], tilesBitmap[i], tiles[i]);
 
         checkConditions();
 
-        if(status == Statuses.PLAYING) {
-            player1Turn = !player1Turn;
-            player1.setTurn(player1Turn);
-            player2.setTurn(!player1Turn);
+        if(status == Status.PLAYING) {
+            playerWithTurn.setTurn(false);
+            playerWithoutTurn.setTurn(true);
         }
+
+        updateTurnFont();
     }
 
     public void onClickTile(View view) {
         int i = Character.getNumericValue(getResources().getResourceEntryName(view.getId()).charAt(1));
-        makeMove(player1Turn ? player1 : player2, i);
+        makeMove(player1.isTurn() ? player1 : player2,
+                player2.isTurn() ? player1 : player2,
+                i);
     }
 
     public void onClickRestart(View view) {

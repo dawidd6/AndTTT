@@ -3,4 +3,5 @@
     <integer name="fragment_transition_duration">600</integer>
     <integer name="activity_recreate_delay">600</integer>
     <integer name="animation_duration">600</integer>
+    <integer name="ai_move_delay">500</integer>
 </resources>

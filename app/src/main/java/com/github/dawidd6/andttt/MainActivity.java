@@ -15,7 +15,6 @@ public class MainActivity extends Activity {
     protected boolean isNightModeEnabled;
     protected boolean isAnimationEnabled;
     protected boolean isStatusBarEnabled;
-    protected int animation_duration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +26,6 @@ public class MainActivity extends Activity {
         isAnimationEnabled = prefs.getBoolean("animations", true);
         isStatusBarEnabled = prefs.getBoolean("show_status_bar", false);
         isNightModeEnabled = prefs.getBoolean("night_mode", false);
-
-        animation_duration = getResources().getInteger(R.integer.animation_duration);
-        animation_duration = isAnimationEnabled ? animation_duration : 0;
-
-        //colorForeground = isNightModeEnabled ? Color.WHITE : Color.BLACK;
 
         if(isStatusBarEnabled)
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);

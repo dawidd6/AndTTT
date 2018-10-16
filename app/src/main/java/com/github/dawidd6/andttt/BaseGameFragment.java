@@ -1,14 +1,13 @@
 package com.github.dawidd6.andttt;
 
-import android.animation.Animator;
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
 import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,25 +24,8 @@ import com.github.dawidd6.andttt.drawings.DrawCircle;
 import com.github.dawidd6.andttt.drawings.DrawCross;
 import com.github.dawidd6.andttt.drawings.DrawLine;
 
-import java.util.Arrays;
-import java.util.Random;
 
 public abstract class BaseGameFragment extends Fragment {
-    protected int patterns[][] = {
-            {0,1,2}, // 0 horizontal up
-            {3,4,5}, // 1 horizontal mid
-            {6,7,8}, // 2 horizontal bottom
-            {0,3,6}, // 3 vertical left
-            {1,4,7}, // 4 vertical mid
-            {2,5,8}, // 5 vertical right
-            {0,4,8}, // 6 narrow left
-            {2,4,6}, // 7 narrow right
-    };
-
-    protected Status status;
-    protected Symbol tiles[];
-    protected Random rand;
-
     private ImageView tilesView[];
     private ImageView boardView;
     private Bitmap tilesBitmap[];
@@ -61,8 +43,6 @@ public abstract class BaseGameFragment extends Fragment {
     private int symbol_thickness_dimen;
     private int line_thickness_dimen;
 
-    private int noneCounter;
-
     protected Player player1;
     protected Player player2;
     private TextView player1Text;
@@ -76,6 +56,8 @@ public abstract class BaseGameFragment extends Fragment {
     private int colorLine;
 
     private int animation_duration;
+
+    protected Game game;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,9 +74,6 @@ public abstract class BaseGameFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // set initial status
-        status = Status.PLAYING;
-
         // set animation duration
         animation_duration = getResources().getInteger(R.integer.animation_duration);
         animation_duration = ((MainActivity)getActivity()).isAnimationEnabled ? animation_duration : 0;
@@ -110,8 +89,7 @@ public abstract class BaseGameFragment extends Fragment {
         colorLine = ContextCompat.getColor(getActivity(), R.color.color_green);
         
         // init stuff
-        rand = new Random();
-        tiles = new Symbol[9];
+        game = new Game();
         tilesView = new ImageView[9];
         tilesBitmap = new Bitmap[9];
 
@@ -175,10 +153,10 @@ public abstract class BaseGameFragment extends Fragment {
 
     protected void onFirstStart() {}
 
-    private void drawLine(int i) {
+    private void drawLine() {
         int startX, startY, stopX, stopY;
 
-        switch(i) {
+        switch(game.getPattern()) {
             case 0: // h1
                 startX = 0;
                 startY = tile_dimen / 2;
@@ -272,7 +250,7 @@ public abstract class BaseGameFragment extends Fragment {
 
     public void restartGame() {
         // determine if game is started for first time or restarted
-        if(status == Status.PLAYING) {
+        if(game.isPlaying()) {
             conclusionText.setAlpha(0);
             conclusionFrame.setAlpha(0);
         } else {
@@ -280,18 +258,20 @@ public abstract class BaseGameFragment extends Fragment {
             new LightenAnimation(conclusionFrame, animation_duration);
         }
 
-        status = Status.PLAYING;
-        noneCounter = tiles.length;
+        // game stuff
+        game.resetStatus();
+        game.resetNoneCounter();
+        game.resetTiles();
 
         // randomize players' turns
-        boolean turn = rand.nextBoolean();
-        player1.setTurn(turn);
-        player2.setTurn(!turn);
+        boolean turns[] = game.getRandomTurns();
+        player1.setTurn(turns[0]);
+        player2.setTurn(turns[1]);
 
         // randomize symbols for players
-        boolean symbol = rand.nextBoolean();
-        player1.setSymbol(symbol ? Symbol.CIRCLE : Symbol.CROSS);
-        player2.setSymbol(!symbol ? Symbol.CIRCLE : Symbol.CROSS);
+        Symbol symbols[] = game.getRandomSymbols();
+        player1.setSymbol(symbols[0]);
+        player2.setSymbol(symbols[1]);
 
         // draw players' symbols on respective views
         drawSymbol(player1View, player1Bitmap, player1.getSymbol());
@@ -301,7 +281,6 @@ public abstract class BaseGameFragment extends Fragment {
         for(int i = 0; i < 9; i++) {
             tilesBitmap[i].eraseColor(Color.TRANSPARENT);
             tilesView[i].clearAnimation();
-            tiles[i] = Symbol.NONE;
         }
 
         // clear rest of bitmaps
@@ -313,92 +292,73 @@ public abstract class BaseGameFragment extends Fragment {
         scoreText.setText(getString(R.string.score, player1.getWins(), player2.getWins()));
 
         // set font type for players
-        updateTurnFont();
+        updateTurnFont(player1, player1Text);
+        updateTurnFont(player2, player2Text);
 
         // enable all tiles
         setAllTilesClickable(true);
     }
 
-    public void updateTurnFont() {
-        if(player1.isTurn())
-            player1Text.setTypeface(null, Typeface.BOLD);
-        else
-            player1Text.setTypeface(null, Typeface.NORMAL);
-
-        if(player2.isTurn())
-            player2Text.setTypeface(null, Typeface.BOLD);
-        else
-            player2Text.setTypeface(null, Typeface.NORMAL);
+    private void updateTurnFont(Player player, TextView playerText) {
+        if(player.isTurn()) {
+            playerText.setTypeface(null, Typeface.BOLD);
+            playerText.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+        } else {
+            playerText.setTypeface(null, Typeface.NORMAL);
+            playerText.setPaintFlags(0);
+        }
     }
 
-    public void endGame(Status status) {
-        this.status = status;
-
-        switch(status) {
-            case WIN:
-                if(player1.isTurn()) {
-                    player1.addWin();
-                    conclusionText.setText(getString(R.string.player_won, player1.getName()));
-                    conclusionText.setTextColor(player1.getColor());
-                } else {
-                    player2.addWin();
-                    conclusionText.setText(getString(R.string.player_won, player2.getName()));
-                    conclusionText.setTextColor(player2.getColor());
-                }
-                new PulseAnimation(scoreText, animation_duration);
-                break;
-            case DRAW:
-                conclusionText.setText(getString(R.string.nobody_won));
-                conclusionText.setTextColor(Color.BLUE);
-                break;
+    public void checkStatus() {
+        if(game.isWin()) {
+            if(player1.isTurn()) {
+                player1.addWin();
+                conclusionText.setText(getString(R.string.player_won, player1.getName()));
+                conclusionText.setTextColor(player1.getColor());
+            } else {
+                player2.addWin();
+                conclusionText.setText(getString(R.string.player_won, player2.getName()));
+                conclusionText.setTextColor(player2.getColor());
+            }
+            new PulseAnimation(scoreText, animation_duration);
+            scoreText.setText(getString(R.string.score, player1.getWins(), player2.getWins()));
+            drawLine();
+        } else if(game.isDraw()) {
+            conclusionText.setText(getString(R.string.nobody_won));
+            conclusionText.setTextColor(Color.BLUE);
+        } else {
+            return;
         }
 
         new DarkenAnimation(conclusionFrame, animation_duration*2);
         new DarkenAnimation(conclusionText, animation_duration*2);
-
-        scoreText.setText(getString(R.string.score, player1.getWins(), player2.getWins()));
 
         setAllTilesClickable(false);
     }
 
     protected void setAllTilesClickable(boolean clickable) {
         for(int i = 0; i < 9; i++)
-            if(tiles[i] == Symbol.NONE)
+            if(game.getTile(i) == Symbol.NONE)
                 tilesView[i].setClickable(clickable);
     }
 
-    private void checkConditions() {
-        for(int i = 0; i < patterns.length; i++) {
-            if(tiles[patterns[i][0]] == tiles[patterns[i][1]] && tiles[patterns[i][0]] == tiles[patterns[i][2]] &&
-                    tiles[patterns[i][0]] != Symbol.NONE &&
-                    tiles[patterns[i][1]] != Symbol.NONE &&
-                    tiles[patterns[i][2]] != Symbol.NONE) {
-                drawLine(i);
-                endGame(Status.WIN);
-                break;
-            }
-        }
 
-        if(noneCounter == 0 && status == Status.PLAYING)
-            endGame(Status.DRAW);
-    }
 
     public void makeMove(Player playerWithTurn, Player playerWithoutTurn, int i) {
-        noneCounter--;
-
-        tiles[i] = playerWithTurn.getSymbol();
+        game.setTile(i, playerWithTurn.getSymbol());
         tilesView[i].setClickable(false);
 
-        drawSymbol(tilesView[i], tilesBitmap[i], tiles[i]);
+        drawSymbol(tilesView[i], tilesBitmap[i], playerWithTurn.getSymbol());
 
-        checkConditions();
+        checkStatus();
 
-        if(status == Status.PLAYING) {
+        if(game.isPlaying()) {
             playerWithTurn.setTurn(false);
             playerWithoutTurn.setTurn(true);
         }
 
-        updateTurnFont();
+        updateTurnFont(player1, player1Text);
+        updateTurnFont(player2, player2Text);
     }
 
     public void onClickTile(View view) {

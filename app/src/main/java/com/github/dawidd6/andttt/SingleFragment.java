@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 
+import java.util.Random;
 import java.util.Vector;
 
 public class SingleFragment extends BaseGameFragment {
@@ -47,16 +48,16 @@ public class SingleFragment extends BaseGameFragment {
 
     public int computeMove() {
         Vector<Integer> nonePositions = new Vector<>();
-
+        Random rand = new Random();
         int counter = 0;
 
         for(Symbol s : new Symbol[] {player2.getSymbol(), player1.getSymbol()}) {
             nonePositions.removeAllElements();
-            for(int p[] : patterns) {
+            for(int p[] : game.getPatterns()) {
                 for(int j = 0; j < 3; j++) {
-                    if(tiles[p[j]] == s)
+                    if(game.getTile(p[j]) == s)
                         counter++;
-                    else if(tiles[p[j]] == Symbol.NONE) {
+                    else if(game.getTile(p[j]) == Symbol.NONE) {
                         counter = counter + 8;
                         nonePositions.add(p[j]);
                     }

@@ -14,6 +14,7 @@ public class SingleFragment extends BaseGameFragment {
         super.onFirstStart();
 
         delay = getResources().getInteger(R.integer.ai_move_delay);
+        delay = ((MainActivity)getActivity()).isAnimationEnabled ? delay : 0;
 
         player1.setName(getString(R.string.player));
         player2.setName(getString(R.string.ai));

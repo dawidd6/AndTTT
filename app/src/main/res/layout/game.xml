@@ -12,9 +12,10 @@
         android:id="@+id/b0"
         android:layout_width="@dimen/tile_dimen"
         android:layout_height="@dimen/tile_dimen"
+        android:layout_marginTop="8dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
-        app:layout_constraintRight_toLeftOf="@+id/frame_vertical_1"
+        app:layout_constraintEnd_toStartOf="@+id/frame_vertical_1"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -23,32 +24,31 @@
         android:layout_height="@dimen/tile_dimen"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/frame_horizon_1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/b2"
         android:layout_width="@dimen/tile_dimen"
         android:layout_height="@dimen/tile_dimen"
+        android:layout_marginTop="8dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
-        app:layout_constraintLeft_toRightOf="@+id/frame_vertical_2"
+        app:layout_constraintStart_toEndOf="@+id/frame_vertical_2"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/b3"
         android:layout_width="@dimen/tile_dimen"
         android:layout_height="@dimen/tile_dimen"
-        android:layout_marginTop="102dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         app:layout_constraintRight_toLeftOf="@+id/frame_vertical_1"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/frame_horizon_1" />
 
     <ImageView
         android:id="@+id/b4"
@@ -56,22 +56,20 @@
         android:layout_height="@dimen/tile_dimen"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="102dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/frame_horizon_1" />
 
     <ImageView
         android:id="@+id/b5"
         android:layout_width="@dimen/tile_dimen"
         android:layout_height="@dimen/tile_dimen"
-        android:layout_marginTop="102dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
-        app:layout_constraintLeft_toRightOf="@+id/frame_vertical_2"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/frame_vertical_2"
+        app:layout_constraintTop_toBottomOf="@+id/frame_horizon_1" />
 
     <ImageView
         android:id="@+id/b6"
@@ -108,9 +106,9 @@
         android:layout_width="@dimen/board_dimen"
         android:layout_height="@dimen/frame_dimen"
         android:background="?android:attr/colorForeground"
-        app:layout_constraintBottom_toTopOf="@+id/b4"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/b1" />
 
     <View
         android:id="@+id/frame_horizon_2"
@@ -126,8 +124,8 @@
         android:layout_width="@dimen/frame_dimen"
         android:layout_height="@dimen/board_dimen"
         android:background="?android:attr/colorForeground"
-        app:layout_constraintRight_toLeftOf="@+id/b4"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/b1"
+        app:layout_constraintTop_toTopOf="@+id/b1" />
 
     <View
         android:id="@+id/frame_vertical_2"
@@ -135,13 +133,13 @@
         android:layout_height="@dimen/board_dimen"
         android:background="?android:attr/colorForeground"
         app:layout_constraintLeft_toRightOf="@+id/b4"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/b1" />
 
     <ImageView
         android:id="@+id/boardView"
         android:layout_width="@dimen/board_dimen"
         android:layout_height="@dimen/board_dimen"
-        android:visibility="visible"
+        android:layout_marginTop="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -226,9 +224,10 @@
         android:id="@+id/scoreText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/border"
         android:paddingBottom="5dp"
         android:paddingLeft="10dp"
@@ -241,13 +240,14 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/restartButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/conclusionFrame" />
 
     <Button
         android:id="@+id/restartButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:background="@drawable/rounded_button"

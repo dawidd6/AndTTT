@@ -1,18 +1,13 @@
 package com.github.dawidd6.andttt.animations;
 
 import android.view.View;
-import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
-public class PulseAnimation extends Animation {
-    private View view;
-
+public class PulseAnimation extends BaseAnimation {
     public PulseAnimation(View view, int duration) {
-        this.view = view;
-        this.setDuration(duration);
+        super(view, duration);
         this.setRepeatCount(1);
-        this.setRepeatMode(Animation.REVERSE);
-        view.startAnimation(this);
+        this.setRepeatMode(BaseAnimation.REVERSE);
     }
 
     @Override

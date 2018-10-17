@@ -17,4 +17,6 @@
     <string name="licenses_summary">Biblioteki użyte w tym projekcie</string>
     <string name="player">Gracz</string>
     <string name="ai">SI</string>
+    <string name="board_maximization">Maksymalizacja planszy</string>
+    <string name="board_maximization_summary">Dynamicznie powiększ planszę bazując na wielkości wyświetlacza</string>
 </resources>

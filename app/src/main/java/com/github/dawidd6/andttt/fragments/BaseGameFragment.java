@@ -158,8 +158,10 @@ public abstract class BaseGameFragment extends Fragment {
             }
         }
 
-        board_dimen = boardWidth;
-        tile_dimen = tileWidth;
+        if(((MainActivity)getActivity()).isMaximizationEnabled()) {
+            board_dimen = boardWidth;
+            tile_dimen = tileWidth;
+        }
 
         setViewSize(view.findViewById(R.id.frame_horizon_1), board_dimen, -1);
         setViewSize(view.findViewById(R.id.frame_horizon_2), board_dimen, -1);

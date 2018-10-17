@@ -21,6 +21,7 @@ public class SettingsFragment extends PreferenceFragment {
         Preference night_mode = manager.findPreference("night_mode");
         Preference status_bar = manager.findPreference("show_status_bar");
         Preference animations = manager.findPreference("animations");
+        Preference maximization = manager.findPreference("maximization");
         Preference licenses = manager.findPreference("licenses");
 
         assert night_mode != null;
@@ -31,13 +32,19 @@ public class SettingsFragment extends PreferenceFragment {
 
         assert status_bar != null;
         status_bar.setOnPreferenceChangeListener((preference, newValue) -> {
-            new Handler().postDelayed(() -> getActivity().recreate(), delay);
+            ((MainActivity)getActivity()).setStatusBar((boolean)newValue);
             return true;
         });
 
         assert animations != null;
         animations.setOnPreferenceChangeListener((preference, newValue) -> {
-            new Handler().postDelayed(() -> getActivity().recreate(), delay);
+            ((MainActivity)getActivity()).setAnimations((boolean)newValue);
+            return true;
+        });
+
+        assert maximization != null;
+        maximization.setOnPreferenceChangeListener((preference, newValue) -> {
+            ((MainActivity)getActivity()).setMaximization((boolean)newValue);
             return true;
         });
 

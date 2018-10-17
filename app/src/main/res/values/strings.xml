@@ -28,5 +28,7 @@
 
     <string name="player">Player</string>
     <string name="ai">AI</string>
+    <string name="board_maximization">Board maximization</string>
+    <string name="board_maximization_summary">Dynamically maximize board basing on screen size</string>
 
 </resources>

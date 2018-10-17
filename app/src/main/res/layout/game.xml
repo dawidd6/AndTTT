@@ -203,31 +203,30 @@
         android:id="@+id/player1View"
         android:layout_width="@dimen/symbol_dimen"
         android:layout_height="@dimen/symbol_dimen"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/border"
         android:padding="5dp"
-        app:layout_constraintStart_toStartOf="@+id/scoreText"
-        app:layout_constraintTop_toBottomOf="@+id/scoreText" />
+        app:layout_constraintBottom_toTopOf="@+id/restartButton"
+        app:layout_constraintStart_toStartOf="@+id/scoreText" />
 
     <ImageView
         android:id="@+id/player2View"
         android:layout_width="@dimen/symbol_dimen"
         android:layout_height="@dimen/symbol_dimen"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/border"
         android:padding="5dp"
-        app:layout_constraintEnd_toEndOf="@+id/scoreText"
-        app:layout_constraintTop_toBottomOf="@+id/scoreText" />
+        app:layout_constraintBottom_toTopOf="@+id/restartButton"
+        app:layout_constraintEnd_toEndOf="@+id/scoreText" />
 
 
     <TextView
         android:id="@+id/scoreText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:background="@drawable/border"
         android:paddingBottom="5dp"
         android:paddingLeft="10dp"
@@ -238,10 +237,9 @@
         android:textColor="@color/color_green"
         android:textSize="36sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/restartButton"
+        app:layout_constraintBottom_toTopOf="@+id/player2View"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/conclusionFrame" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/restartButton"

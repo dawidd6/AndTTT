@@ -103,27 +103,25 @@
         app:layout_constraintLeft_toRightOf="@+id/frame_vertical_2"
         app:layout_constraintTop_toBottomOf="@+id/frame_horizon_2" />
 
-    <TextView
+    <View
         android:id="@+id/frame_horizon_1"
         android:layout_width="@dimen/board_dimen"
         android:layout_height="@dimen/frame_dimen"
         android:background="?android:attr/colorForeground"
-        android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/b4"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <TextView
+    <View
         android:id="@+id/frame_horizon_2"
         android:layout_width="@dimen/board_dimen"
         android:layout_height="@dimen/frame_dimen"
         android:background="?android:attr/colorForeground"
-        android:textAlignment="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/b4" />
 
-    <TextView
+    <View
         android:id="@+id/frame_vertical_1"
         android:layout_width="@dimen/frame_dimen"
         android:layout_height="@dimen/board_dimen"
@@ -131,7 +129,7 @@
         app:layout_constraintRight_toLeftOf="@+id/b4"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <View
         android:id="@+id/frame_vertical_2"
         android:layout_width="@dimen/frame_dimen"
         android:layout_height="@dimen/board_dimen"

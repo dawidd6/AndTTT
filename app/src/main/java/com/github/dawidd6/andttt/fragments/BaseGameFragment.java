@@ -1,20 +1,22 @@
 package com.github.dawidd6.andttt.fragments;
 
 import android.app.Fragment;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.*;
 import com.github.dawidd6.andttt.*;
 import com.github.dawidd6.andttt.animations.DarkenAnimation;
 import com.github.dawidd6.andttt.animations.LightenAnimation;
@@ -28,6 +30,8 @@ import com.github.dawidd6.andttt.game.Symbol;
 
 
 public abstract class BaseGameFragment extends Fragment {
+    private final String TAG = "BaseGameFragment";
+
     private ImageView tilesView[];
     private ImageView boardView;
     private Bitmap tilesBitmap[];
@@ -73,8 +77,19 @@ public abstract class BaseGameFragment extends Fragment {
     }
 
     @Override
+    public void onDetach() {
+        super.onDetach();
+
+        // unlock orientation
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+    }
+
+    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // lock to portrait only
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         // set animation duration
         animation_duration = getResources().getInteger(R.integer.animation_duration);

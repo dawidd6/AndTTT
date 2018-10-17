@@ -142,12 +142,43 @@ public abstract class BaseGameFragment extends Fragment {
         // restarting the game for the first time
         onFirstStart();
 
+        // maximize board, tiles and other stuff
+        DisplayMetrics metrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int boardWidth = metrics.widthPixels;
+        int tileWidth = 0;
+
+        while(true) {
+            tileWidth = (boardWidth - 2 * frame_dimen) / 3;
+
+            if(tileWidth % 2 == 0) {
+                break;
+            } else {
+                boardWidth--;
+            }
+        }
+
+        board_dimen = boardWidth;
+        tile_dimen = tileWidth;
+
+        setViewSize(view.findViewById(R.id.frame_horizon_1), board_dimen, -1);
+        setViewSize(view.findViewById(R.id.frame_horizon_2), board_dimen, -1);
+        setViewSize(view.findViewById(R.id.frame_vertical_1), -1, board_dimen);
+        setViewSize(view.findViewById(R.id.frame_vertical_2), -1, board_dimen);
+        setViewSize(boardView, board_dimen, board_dimen);
+
+        Log.i(TAG, "frame_dimen = " + frame_dimen);
+        Log.i(TAG, "board_dimen = " + board_dimen);
+        Log.i(TAG, "tile_dimen = " + tile_dimen);
+
         // init tiles + their bitmaps
         for(int i = 0; i < 9; i++) {
             tilesBitmap[i] = Bitmap.createBitmap(tile_dimen, tile_dimen, Bitmap.Config.ARGB_4444);
             tilesView[i] = view.findViewById(getResources().getIdentifier("b" + i, "id", getActivity().getPackageName()));
             tilesView[i].setOnClickListener(this::onClickTile);
             tilesView[i].setImageBitmap(tilesBitmap[i]);
+
+            setViewSize(tilesView[i], tile_dimen, tile_dimen);
         }
 
         // init board and its bitmap
@@ -169,6 +200,18 @@ public abstract class BaseGameFragment extends Fragment {
     }
 
     protected void onFirstStart() {}
+
+    private void setViewSize(View view, int width, int height) {
+        if(width != -1) {
+            view.getLayoutParams().width = width;
+        }
+
+        if(height != -1) {
+            view.getLayoutParams().height = height;
+        }
+
+        view.requestLayout();
+    }
 
     private void drawLine() {
         int startX, startY, stopX, stopY;

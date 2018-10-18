@@ -41,10 +41,10 @@ public class SingleFragment extends BaseGameFragment {
         setAllTilesClickable(false);
 
         new Handler().postDelayed(() -> {
-            if (!player1.isTurn())
+            if (player2.isTurn())
                 makeMove(player2, player1, computeMove());
-
-            setAllTilesClickable(true);
+            if(player1.isTurn())
+                setAllTilesClickable(true);
         }, delay);
     }
 

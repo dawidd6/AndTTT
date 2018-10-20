@@ -1,23 +1,35 @@
 package com.github.dawidd6.andttt.drawings;
 
-
 import android.view.animation.Transformation;
 
+import java.util.Random;
+
 public class DrawLine extends Draw {
-    public final static int INCREMENT = -1;
-    public final static int DECREMENT = -2;
+    private final int INCREMENT = -1;
+    private final int DECREMENT = -2;
 
     private int startX;
     private int startY;
     private int stopX;
     private int stopY;
 
-    public DrawLine setPoints(int startX, int startY, int stopX, int stopY) {
+    public DrawLine(int startX, int startY, int stopX, int stopY, boolean random) {
         this.startX = startX;
         this.startY = startY;
         this.stopX = stopX;
         this.stopY = stopY;
-        return this;
+
+        if(new Random().nextBoolean() && random) {
+            this.startX = stopX;
+            this.startY = stopY;
+            this.stopX = startX;
+            this.stopY = startY;
+        }
+
+        this.stopX = this.stopX < this.startX ? DECREMENT :
+                (this.stopX > this.startX ? INCREMENT : this.stopX);
+        this.stopY = this.stopY < this.startY ? DECREMENT :
+                (this.stopY > this.startY ? INCREMENT : this.stopY);
     }
 
     @Override
@@ -26,10 +38,12 @@ public class DrawLine extends Draw {
         float decrement = size - increment;
 
         canvas.drawLine(
-                startX == -1 ? increment : (startX == -2 ? decrement : startX),
-                startY == -1 ? increment : (startY == -2 ? decrement : startY),
-                stopX == -1 ? increment : (stopX == -2 ? decrement : stopX),
-                stopY == -1 ? increment : (stopY == -2 ? decrement : stopY),
+                startX,
+                startY,
+                stopX == INCREMENT ? increment :
+                        (stopX == DECREMENT ? decrement : stopX),
+                stopY == INCREMENT ? increment :
+                        (stopY == DECREMENT ? decrement : stopY),
                 paint);
 
         image.invalidate();

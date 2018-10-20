@@ -218,7 +218,6 @@ public abstract class BaseGameFragment extends Fragment {
     }
 
     private void drawLine() {
-        boolean random = new Random().nextBoolean();
         int startX = 0;
         int startY = 0;
         int stopX = 0;
@@ -226,113 +225,56 @@ public abstract class BaseGameFragment extends Fragment {
 
         switch(game.getPattern()) {
             case 0: // h1
-                if(!random) {
-                    startX = 0;
-                    startY = tile_dimen / 2;
-                    stopX = DrawLine.INCREMENT;
-                    stopY = tile_dimen / 2;
-                } else {
-                    startX = board_dimen;
-                    startY = tile_dimen / 2;
-                    stopX = DrawLine.DECREMENT;
-                    stopY = tile_dimen / 2;
-                }
+                startX = 0;
+                startY = tile_dimen / 2;
+                stopX = board_dimen;
+                stopY = tile_dimen / 2;
                 break;
             case 1: // h2
-                if(random) {
-                    startX = 0;
-                    startY = board_dimen / 2;
-                    stopX = DrawLine.INCREMENT;
-                    stopY = board_dimen / 2;
-                } else {
-                    startX = board_dimen;
-                    startY = board_dimen / 2;
-                    stopX = DrawLine.DECREMENT;
-                    stopY = board_dimen / 2;
-                }
+                startX = 0;
+                startY = board_dimen / 2;
+                stopX = board_dimen;
+                stopY = board_dimen / 2;
                 break;
             case 2: // h3
-                if(random) {
-                    startX = 0;
-                    startY = board_dimen - (tile_dimen / 2);
-                    stopX = DrawLine.INCREMENT;
-                    stopY = board_dimen - (tile_dimen / 2);
-                } else {
-                    startX = board_dimen;
-                    startY = board_dimen - (tile_dimen / 2);
-                    stopX = DrawLine.DECREMENT;
-                    stopY = board_dimen - (tile_dimen / 2);
-                }
+                startX = 0;
+                startY = board_dimen - (tile_dimen / 2);
+                stopX = board_dimen;
+                stopY = board_dimen - (tile_dimen / 2);
                 break;
             case 3: // v1
-                if(!random) {
-                    startX = tile_dimen / 2;
-                    startY = 0;
-                    stopX = tile_dimen / 2;
-                    stopY = DrawLine.INCREMENT;
-                } else {
-                    startX = tile_dimen / 2;
-                    startY = board_dimen;
-                    stopX = tile_dimen / 2;
-                    stopY = DrawLine.DECREMENT;
-                }
+                startX = tile_dimen / 2;
+                startY = 0;
+                stopX = tile_dimen / 2;
+                stopY = board_dimen;
                 break;
             case 4: // v2
-                if(random) {
-                    startX = board_dimen / 2;
-                    startY = 0;
-                    stopX = board_dimen / 2;
-                    stopY = DrawLine.INCREMENT;
-                } else {
-                    startX = board_dimen / 2;
-                    startY = board_dimen;
-                    stopX = board_dimen / 2;
-                    stopY = DrawLine.DECREMENT;
-                }
+                startX = board_dimen / 2;
+                startY = 0;
+                stopX = board_dimen / 2;
+                stopY = board_dimen;
                 break;
             case 5: // v3
-                if(random) {
-                    startX = board_dimen - (tile_dimen / 2);
-                    startY = 0;
-                    stopX = board_dimen - (tile_dimen / 2);
-                    stopY = DrawLine.INCREMENT;
-                } else {
-                    startX = board_dimen - (tile_dimen / 2);
-                    startY = board_dimen;
-                    stopX = board_dimen - (tile_dimen / 2);
-                    stopY = DrawLine.DECREMENT;
-                }
+                startX = board_dimen - (tile_dimen / 2);
+                startY = 0;
+                stopX = board_dimen - (tile_dimen / 2);
+                stopY = board_dimen;
                 break;
             case 6: // nl
-                if(random) {
-                    startX = 0;
-                    startY = 0;
-                    stopX = DrawLine.INCREMENT;
-                    stopY = DrawLine.INCREMENT;
-                } else {
-                    startX = board_dimen;
-                    startY = board_dimen;
-                    stopX = DrawLine.DECREMENT;
-                    stopY = DrawLine.DECREMENT;
-                }
+                startX = 0;
+                startY = 0;
+                stopX = board_dimen;
+                stopY = board_dimen;
                 break;
             case 7: // nr
-                if(random) {
-                    startX = board_dimen;
-                    startY = 0;
-                    stopX = DrawLine.DECREMENT;
-                    stopY = DrawLine.INCREMENT;
-                } else {
-                    startX = 0;
-                    startY = board_dimen;
-                    stopX = DrawLine.INCREMENT;
-                    stopY = DrawLine.DECREMENT;
-                }
+                startX = board_dimen;
+                startY = 0;
+                stopX = 0;
+                stopY = board_dimen;
                 break;
         }
 
-        new DrawLine()
-                .setPoints(startX, startY, stopX, stopY)
+        new DrawLine(startX, startY, stopX, stopY, true)
                 .setDuration(animation_duration)
                 .setColor(colorLine)
                 .setThickness(line_thickness_dimen)

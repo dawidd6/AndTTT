@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/localButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_button"
+        android:text="@string/play_local"
+        android:textColor="@android:color/white"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/singleButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_button"
+        android:text="@string/play_single"
+        android:textColor="@android:color/white"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/settingsButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_button"
+        android:text="@string/settings"
+        android:textColor="@android:color/white"
+        android:textSize="16sp" />
+</LinearLayout>

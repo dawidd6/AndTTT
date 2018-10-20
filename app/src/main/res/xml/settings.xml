@@ -12,15 +12,17 @@
             android:defaultValue="true"
             android:key="animations"
             android:title="@string/animations" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="maximization"
+            android:title="@string/board_maximization"
+            android:summary="@string/board_maximization_summary"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/about">
         <Preference
             android:key="licenses"
             android:summary="@string/licenses_summary"
             android:title="@string/licenses">
-            <intent
-                android:targetClass="com.github.dawidd6.andttt.LicensesActivity"
-                android:targetPackage="com.github.dawidd6.andttt" />
         </Preference>
     </PreferenceCategory>
 </PreferenceScreen>

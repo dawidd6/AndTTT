@@ -4,4 +4,6 @@
     <dimen name="symbol_dimen">40dp</dimen>
     <dimen name="board_dimen">304dp</dimen>
     <dimen name="frame_dimen">2dp</dimen>
+    <dimen name="symbol_thickness_dimen">5dp</dimen>
+    <dimen name="line_thickness_dimen">10dp</dimen>
 </resources>

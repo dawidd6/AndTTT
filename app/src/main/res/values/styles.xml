@@ -1,28 +1,28 @@
 <resources>
-    <style name="theme_dark" parent="android:Theme.DeviceDefault.NoActionBar.Fullscreen">
-        <item name="colorPrimary">@color/color_black</item>
-        <item name="colorPrimaryDark">@color/color_black</item>
-        <item name="colorAccent">@color/color_black</item>
-        <item name="android:colorBackground">@color/color_black</item>
-        <item name="android:colorForeground">@color/color_white</item>
-        <item name="android:windowBackground">@color/color_black</item>
-        <item name="android:textColor">@color/color_white</item>
-        <item name="android:colorAccent">@color/color_green</item>
-        <item name="android:statusBarColor">@color/color_black</item>
-        <item name="android:listDivider">@null</item>
-    </style>
-
-    <style name="theme_light" parent="android:Theme.DeviceDefault.NoActionBar.Fullscreen">
-        <item name="colorPrimary">@color/color_light</item>
-        <item name="colorPrimaryDark">@color/color_light</item>
-        <item name="colorAccent">@color/color_light</item>
-        <item name="android:colorBackground">@color/color_light</item>
-        <item name="android:colorForeground">@color/color_black</item>
-        <item name="android:windowBackground">@color/color_light</item>
-        <item name="android:textColor">@color/color_black</item>
+    <style name="theme_common" parent="android:Theme.DeviceDefault.NoActionBar.Fullscreen">
         <item name="android:colorAccent">@color/color_green</item>
         <item name="android:statusBarColor">@color/color_black</item>
         <item name="android:textColorSecondary">@color/color_summary</item>
         <item name="android:listDivider">@null</item>
+    </style>
+
+    <style name="theme_dark" parent="theme_common">
+        <item name="colorPrimary">@color/color_black</item>
+        <item name="colorPrimaryDark">@color/color_black</item>
+        <item name="colorAccent">@color/color_white</item>
+        <item name="android:colorBackground">@color/color_black</item>
+        <item name="android:colorForeground">@color/color_white</item>
+        <item name="android:windowBackground">@color/color_black</item>
+        <item name="android:textColor">@color/color_white</item>
+    </style>
+
+    <style name="theme_light" parent="theme_common">
+        <item name="colorPrimary">@color/color_light</item>
+        <item name="colorPrimaryDark">@color/color_light</item>
+        <item name="colorAccent">@color/color_black</item>
+        <item name="android:colorBackground">@color/color_light</item>
+        <item name="android:colorForeground">@color/color_black</item>
+        <item name="android:windowBackground">@color/color_light</item>
+        <item name="android:textColor">@color/color_black</item>
     </style>
 </resources>

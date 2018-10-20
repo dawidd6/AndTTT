@@ -11,44 +11,39 @@ public class Player {
         return turn;
     }
 
-    public Player setTurn(boolean turn) {
+    public void setTurn(boolean turn) {
         this.turn = turn;
-        return this;
     }
 
     public Symbol getSymbol() {
         return symbol;
     }
 
-    public Player setSymbol(Symbol symbol) {
+    public void setSymbol(Symbol symbol) {
         this.symbol = symbol;
-        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public Player setName(String name) {
+    public void setName(String name) {
         this.name = name;
-        return this;
     }
 
     public int getWins() {
         return wins;
     }
 
-    public Player addWin() {
-        wins++;
-        return this;
+    public void addWin() {
+        this.wins++;
     }
 
     public int getColor() {
         return color;
     }
 
-    public Player setColor(int color) {
+    public void setColor(int color) {
         this.color = color;
-        return this;
     }
 }

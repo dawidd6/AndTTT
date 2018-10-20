@@ -1,5 +1,6 @@
 package com.github.dawidd6.andttt.fragments;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import com.github.dawidd6.andttt.MainActivity;
@@ -13,14 +14,14 @@ public class SingleFragment extends BaseGameFragment {
     private int delay;
 
     @Override
-    protected void onFirstStart() {
-        super.onFirstStart();
-
-        delay = getResources().getInteger(R.integer.ai_move_delay);
-        delay = ((MainActivity)getActivity()).isAnimationEnabled() ? delay : 0;
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         player1.setName(getString(R.string.player));
         player2.setName(getString(R.string.ai));
+
+        delay = getResources().getInteger(R.integer.ai_move_delay);
+        delay = ((MainActivity)getActivity()).isAnimationEnabled() ? delay : 0;
     }
 
     @Override

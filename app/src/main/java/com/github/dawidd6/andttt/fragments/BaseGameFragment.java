@@ -2,17 +2,13 @@ package com.github.dawidd6.andttt.fragments;
 
 import android.app.Fragment;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,9 +23,6 @@ import com.github.dawidd6.andttt.drawings.DrawLine;
 import com.github.dawidd6.andttt.game.Game;
 import com.github.dawidd6.andttt.game.Player;
 import com.github.dawidd6.andttt.game.Symbol;
-
-import java.util.Random;
-
 
 public abstract class BaseGameFragment extends Fragment {
     private final String TAG = "BaseGameFragment";
@@ -51,14 +44,8 @@ public abstract class BaseGameFragment extends Fragment {
     private int symbol_thickness_dimen;
     private int line_thickness_dimen;
 
-    protected Player player1;
-    protected Player player2;
-    private TextView player1Text;
-    private TextView player2Text;
-    private ImageView player1View;
-    private ImageView player2View;
-    private Bitmap player1Bitmap;
-    private Bitmap player2Bitmap;
+    protected PlayerGui player1;
+    protected PlayerGui player2;
     
     private int colorSymbol;
     private int colorLine;
@@ -121,28 +108,24 @@ public abstract class BaseGameFragment extends Fragment {
         line_thickness_dimen = getResources().getDimensionPixelSize(R.dimen.line_thickness_dimen);
 
         // initialize players
-        player1Text = view.findViewById(R.id.player1Text);
-        player2Text = view.findViewById(R.id.player2Text);
-        player1View = view.findViewById(R.id.player1View);
-        player2View = view.findViewById(R.id.player2View);
-
-        player1 = new Player()
-                .setColor(Color.GREEN)
-                .setName(getString(R.string.player1));
-        player2 = new Player()
-                .setColor(Color.RED)
-                .setName(getString(R.string.player2));
+        player1 = new PlayerGui(
+                view.findViewById(R.id.player1View),
+                view.findViewById(R.id.player1Text),
+                symbol_dimen);
+        player1.setColor(Color.GREEN);
+        player1.setName(getString(R.string.player1));
+        player2 = new PlayerGui(
+                view.findViewById(R.id.player2View),
+                view.findViewById(R.id.player2Text),
+                symbol_dimen);
+        player2.setColor(Color.RED);
+        player2.setName(getString(R.string.player2));
 
         // find views
         scoreText = view.findViewById(R.id.scoreText);
         conclusionFrame = view.findViewById(R.id.conclusionFrame);
         conclusionText = view.findViewById(R.id.conclusionText);
         boardView = view.findViewById(R.id.boardView);
-
-        // function meant to be override,
-        // if there is a need to do something before
-        // restarting the game for the first time
-        onFirstStart();
 
         // maximize board, tiles and other stuff
         DisplayMetrics metrics = new DisplayMetrics();
@@ -189,21 +172,9 @@ public abstract class BaseGameFragment extends Fragment {
         boardBitmap = Bitmap.createBitmap(board_dimen, board_dimen, Bitmap.Config.ARGB_4444);
         boardView.setImageBitmap(boardBitmap);
 
-        // init players' bitmaps
-        player1Bitmap = Bitmap.createBitmap(symbol_dimen, symbol_dimen, Bitmap.Config.ARGB_4444);
-        player2Bitmap = Bitmap.createBitmap(symbol_dimen, symbol_dimen, Bitmap.Config.ARGB_4444);
-        player1View.setImageBitmap(player1Bitmap);
-        player2View.setImageBitmap(player2Bitmap);
-
-        // set players' names to display
-        player1Text.setText(player1.getName());
-        player2Text.setText(player2.getName());
-
         // starting point
         restartGame();
     }
-
-    protected void onFirstStart() {}
 
     private void setViewSize(View view, int width, int height) {
         if(width != -1) {
@@ -332,8 +303,8 @@ public abstract class BaseGameFragment extends Fragment {
         player2.setSymbol(symbols[1]);
 
         // draw players' symbols on respective views
-        drawSymbol(player1View, player1Bitmap, player1.getSymbol());
-        drawSymbol(player2View, player2Bitmap, player2.getSymbol());
+        drawSymbol(player1.getImageView(), player1.getBitmap(), player1.getSymbol());
+        drawSymbol(player2.getImageView(), player2.getBitmap(), player2.getSymbol());
 
         // reset tiles
         for(int i = 0; i < 9; i++) {
@@ -341,30 +312,14 @@ public abstract class BaseGameFragment extends Fragment {
             tilesView[i].clearAnimation();
         }
 
-        // clear rest of bitmaps
+        // clear board
         boardBitmap.eraseColor(Color.TRANSPARENT);
-        player1Bitmap.eraseColor(Color.TRANSPARENT);
-        player2Bitmap.eraseColor(Color.TRANSPARENT);
 
         // set score
         scoreText.setText(getString(R.string.score, player1.getWins(), player2.getWins()));
 
-        // set font type for players
-        updateTurnFont(player1, player1Text);
-        updateTurnFont(player2, player2Text);
-
         // enable all tiles
         setAllTilesClickable(true);
-    }
-
-    private void updateTurnFont(Player player, TextView playerText) {
-        if(player.isTurn()) {
-            playerText.setTypeface(null, Typeface.BOLD);
-            playerText.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
-        } else {
-            playerText.setTypeface(null, Typeface.NORMAL);
-            playerText.setPaintFlags(0);
-        }
     }
 
     public void checkStatus() {
@@ -400,8 +355,6 @@ public abstract class BaseGameFragment extends Fragment {
                 tilesView[i].setClickable(clickable);
     }
 
-
-
     public void makeMove(Player playerWithTurn, Player playerWithoutTurn, int i) {
         game.setTile(i, playerWithTurn.getSymbol());
         tilesView[i].setClickable(false);
@@ -414,9 +367,6 @@ public abstract class BaseGameFragment extends Fragment {
             playerWithTurn.setTurn(false);
             playerWithoutTurn.setTurn(true);
         }
-
-        updateTurnFont(player1, player1Text);
-        updateTurnFont(player2, player2Text);
     }
 
     public void onClickTile(View view) {

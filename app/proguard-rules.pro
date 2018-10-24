@@ -24,5 +24,4 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class com.daimajia.easing.** { *; }
--keep interface com.daimajia.easing.** { *; }
+-dontwarn com.google.protobuf.**

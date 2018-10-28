@@ -6,4 +6,5 @@
     <dimen name="frame_dimen">2dp</dimen>
     <dimen name="symbol_thickness_dimen">5dp</dimen>
     <dimen name="line_thickness_dimen">10dp</dimen>
+    <dimen name="rounded_button_text_size">16sp</dimen>
 </resources>

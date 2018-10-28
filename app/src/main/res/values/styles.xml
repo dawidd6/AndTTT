@@ -3,7 +3,13 @@
         <item name="android:colorAccent">@color/color_green</item>
         <item name="android:statusBarColor">@color/color_black</item>
         <item name="android:textColorSecondary">@color/color_summary</item>
+        <item name="android:textColorTertiary">@color/color_white</item>
         <item name="android:listDivider">@null</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+        <item name="android:windowAnimationStyle">@style/theme_common</item>
     </style>
 
     <style name="theme_dark" parent="theme_common">
@@ -14,6 +20,7 @@
         <item name="android:colorForeground">@color/color_white</item>
         <item name="android:windowBackground">@color/color_black</item>
         <item name="android:textColor">@color/color_white</item>
+        <item name="android:dialogTheme">@style/theme_dark</item>
     </style>
 
     <style name="theme_light" parent="theme_common">
@@ -24,5 +31,6 @@
         <item name="android:colorForeground">@color/color_black</item>
         <item name="android:windowBackground">@color/color_light</item>
         <item name="android:textColor">@color/color_black</item>
+        <item name="android:dialogTheme">@style/theme_light</item>
     </style>
 </resources>

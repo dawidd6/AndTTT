@@ -250,8 +250,8 @@
         android:layout_marginStart="8dp"
         android:background="@drawable/rounded_button"
         android:text="@string/restart"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
+        android:textColor="?android:attr/textColorTertiary"
+        android:textSize="@dimen/rounded_button_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

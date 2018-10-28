@@ -1,6 +1,5 @@
 package com.github.dawidd6.andttt.fragments;
 
-
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,10 +10,9 @@ import com.github.dawidd6.andttt.MainActivity;
 import com.github.dawidd6.andttt.R;
 
 public class MenuFragment extends Fragment {
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.menu, parent, false);
+        return inflater.inflate(R.layout.fragment_menu, parent, false);
     }
 
     @Override
@@ -31,7 +29,6 @@ public class MenuFragment extends Fragment {
         Button singleButton = view.findViewById(R.id.singleButton);
         singleButton.setOnClickListener(v -> {
             activity.switchFragments(new SingleFragment(), true);
-
         });
 
         Button settingsButton = view.findViewById(R.id.settingsButton);

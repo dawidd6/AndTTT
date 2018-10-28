@@ -4,11 +4,9 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.github.dawidd6.andttt.R;
@@ -21,7 +19,7 @@ public class LicensesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.licenses, parent, false);
+        return inflater.inflate(R.layout.fragment_licenses, parent, false);
     }
 
     @Override

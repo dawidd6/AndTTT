@@ -12,8 +12,8 @@
         android:layout_margin="10dp"
         android:background="@drawable/rounded_button"
         android:text="@string/play_local"
-        android:textColor="@android:color/white"
-        android:textSize="16sp" />
+        android:textColor="?android:attr/textColorTertiary"
+        android:textSize="@dimen/rounded_button_text_size" />
 
     <Button
         android:id="@+id/singleButton"
@@ -22,8 +22,18 @@
         android:layout_margin="10dp"
         android:background="@drawable/rounded_button"
         android:text="@string/play_single"
-        android:textColor="@android:color/white"
-        android:textSize="16sp" />
+        android:textColor="?android:attr/textColorTertiary"
+        android:textSize="@dimen/rounded_button_text_size" />
+
+    <Button
+        android:id="@+id/onlineButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_button"
+        android:text="@string/play_online"
+        android:textColor="?android:attr/textColorTertiary"
+        android:textSize="@dimen/rounded_button_text_size" />
 
     <Button
         android:id="@+id/settingsButton"
@@ -32,6 +42,6 @@
         android:layout_margin="10dp"
         android:background="@drawable/rounded_button"
         android:text="@string/settings"
-        android:textColor="@android:color/white"
-        android:textSize="16sp" />
+        android:textColor="?android:attr/textColorTertiary"
+        android:textSize="@dimen/rounded_button_text_size" />
 </LinearLayout>

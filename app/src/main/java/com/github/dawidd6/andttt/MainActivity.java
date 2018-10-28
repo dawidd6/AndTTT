@@ -39,6 +39,7 @@ public class MainActivity extends Activity {
 
     public boolean isAnimationEnabled() {return isAnimationEnabled;}
     public boolean isMaximizationEnabled() {return isMaximizationEnabled;}
+    public boolean isStatusBarEnabled() {return isStatusBarEnabled;}
 
     public void setStatusBar(@Nullable Boolean enabled) {
         if(enabled != null)

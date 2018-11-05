@@ -1,5 +1,7 @@
 package com.github.dawidd6.andttt.fragments;
 
+
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import com.github.dawidd6.andttt.MainActivity;
 import com.github.dawidd6.andttt.R;
+import com.github.dawidd6.andttt.dialogs.LoadingDialogFragment;
+
+import static com.github.dawidd6.andttt.MainActivity.client;
 
 public class MenuFragment extends Fragment {
     @Override
@@ -29,6 +34,11 @@ public class MenuFragment extends Fragment {
         Button singleButton = view.findViewById(R.id.singleButton);
         singleButton.setOnClickListener(v -> {
             activity.switchFragments(new SingleFragment(), true);
+        });
+
+        Button onlineButton = view.findViewById(R.id.onlineButton);
+        onlineButton.setOnClickListener(v -> {
+            activity.switchFragments(new ConnectFragment(), true);
         });
 
         Button settingsButton = view.findViewById(R.id.settingsButton);

@@ -7,7 +7,7 @@
 
     <string name="play_single">Play Single</string>
     <string name="play_local">Play Local</string>
-    <string name="play_multi">Play Multi</string>
+    <string name="play_online">Play Online</string>
     <string name="settings">Settings</string>
 
     <string name="player1" translatable="false">%1$s</string>
@@ -28,7 +28,18 @@
 
     <string name="player">Player</string>
     <string name="ai">AI</string>
+
     <string name="board_maximization">Board maximization</string>
     <string name="board_maximization_summary">Dynamically maximize board basing on screen size</string>
-
+    <string name="ok">Ok</string>
+    <string name="error_unexpected">An unexpected error occured.</string>
+    <string name="create_room">Create room</string>
+    <string name="connect">Connect</string>
+    <string name="loading">Please wait...</string>
+    <string name="enter">Enter</string>
+    <string name="connection_failed">Connection failed.</string>
+    <string name="connecting">Connecting...</string>
+    <string name="no_rooms">No rooms available at the moment, create a new one.</string>
+    <string name="error_name_already_taken">Name already taken. Choose another one.</string>
+    <string name="error_name_must_not_be_empty">Name must not be empty.</string>
 </resources>

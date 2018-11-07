@@ -6,8 +6,12 @@ import android.view.animation.Transformation;
 public class PulseAnimation extends BaseAnimation {
     public PulseAnimation(View view, int duration) {
         super(view, duration);
-        this.setRepeatCount(1);
-        this.setRepeatMode(BaseAnimation.REVERSE);
+
+        if(duration != 0) {
+            setRepeatCount(1);
+            setRepeatMode(BaseAnimation.REVERSE);
+            start();
+        }
     }
 
     @Override

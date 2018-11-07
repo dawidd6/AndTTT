@@ -6,6 +6,7 @@ import android.view.animation.Transformation;
 public class LightenAnimation extends BaseAnimation {
     public LightenAnimation(View view, int duration) {
         super(view, duration);
+        start();
     }
 
     @Override

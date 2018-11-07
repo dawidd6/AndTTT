@@ -30,18 +30,21 @@ public class NamingFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        client.setOnRegisterNameListener((error) -> {
+        client.setOnMessageReceivedListener((message) -> {
+            if(message.getType() != TYPE.REGISTER_NAME)
+                return;
+
             try {
                 Thread.sleep(500);
-                if(error == ERROR.NONE) {
+                if(message.getErr() == ERROR.NONE) {
                     Log.i("REGISTER_NAME", "ok");
                     loadingDialogFragment.dismiss();
                     ((MainActivity)getActivity()).switchFragments(new RoomServiceFragment(), false);
                 } else {
                     Log.i("REGISTER_NAME", "fail");
-                    if(error == ERROR.NAME_ALREADY_TAKEN)
+                    if(message.getErr() == ERROR.NAME_ALREADY_TAKEN)
                         errorDialogFragment.setText(R.string.error_name_already_taken);
-                    else if(error == ERROR.NAME_MUST_NOT_BE_EMPTY)
+                    else if(message.getErr() == ERROR.NAME_MUST_NOT_BE_EMPTY)
                         errorDialogFragment.setText(R.string.error_name_must_not_be_empty);
                     else
                         errorDialogFragment.setText(R.string.error_unexpected);

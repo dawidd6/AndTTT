@@ -29,10 +29,6 @@ public class Client {
     private OnDisconnectListener onDisconnectListener;
     private OnMessageReceivedListener onMessageReceivedListener;
 
-    private OnUnrecognizedTypeListener onUnrecognizedTypeListener;
-    private OnRegisterNameListener onRegisterNameListener;
-    private OnGetRoomsListener onGetRoomsListener;
-
     public Client() {
         timeout = 5000;
         bufferSize = 4096;
@@ -45,10 +41,6 @@ public class Client {
         setOnConnectSuccessfulListener(null);
         setOnDisconnectListener(null);
         setOnMessageReceivedListener(null);
-
-        setOnUnrecognizedTypeListener(null);
-        setOnRegisterNameListener(null);
-        setOnGetRoomsListener(null);
     }
 
     public void connect(String host, int port) {
@@ -71,19 +63,6 @@ public class Client {
     public void send(Message message) {
         this.message = message;
         sendThread.start();
-    }
-
-    public void dispatch(Message message) {
-        switch(message.getType()) {
-            case REGISTER_NAME:
-                onRegisterNameListener.onRegisterName(message.getErr());
-                break;
-            case GET_ROOMS:
-                onGetRoomsListener.onGetRooms(message.getRoomsList().toArray(new Room[message.getRoomsCount()]));
-            default:
-                onUnrecognizedTypeListener.onUnrecognizedType();
-                break;
-        }
     }
 
     private class ClientSendThread extends Thread {
@@ -109,7 +88,6 @@ public class Client {
                         throw new IOException();
                     buffer = Arrays.copyOfRange(buffer, 0, length);
                     Message message = Message.parseFrom(buffer);
-                    dispatch(message);
                     onMessageReceivedListener.onMessageReceive(message);
                 } catch (IOException e) {
                     disconnect();
@@ -177,30 +155,5 @@ public class Client {
 
     public interface OnMessageReceivedListener {
         void onMessageReceive(Message message);
-    }
-
-    // DISPATCH LISTENERS
-    public void setOnUnrecognizedTypeListener(OnUnrecognizedTypeListener listener) {
-        onUnrecognizedTypeListener = listener == null ? () -> {} : listener;
-    }
-
-    public void setOnRegisterNameListener(OnRegisterNameListener listener) {
-        onRegisterNameListener = listener == null ? (msg) -> {} : listener;
-    }
-
-    public void setOnGetRoomsListener(OnGetRoomsListener listener) {
-        onGetRoomsListener = listener == null ? (r) -> {} : listener;
-    }
-
-    public interface OnUnrecognizedTypeListener {
-        void onUnrecognizedType();
-    }
-
-    public interface OnRegisterNameListener {
-        void onRegisterName(ERROR error);
-    }
-
-    public interface OnGetRoomsListener {
-        void onGetRooms(Room rooms[]);
     }
 }

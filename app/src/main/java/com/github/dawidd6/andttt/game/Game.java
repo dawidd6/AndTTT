@@ -1,12 +1,13 @@
 package com.github.dawidd6.andttt.game;
 
+import com.github.dawidd6.andttt.proto.Symbol;
+
 import java.util.Arrays;
 import java.util.Random;
 
 public class Game {
     private Status status;
     private Symbol tiles[];
-    private Random rand;
     private int noneCounter;
     private final int patterns[][] = {
             {0,1,2}, // 0 horizontal up
@@ -21,7 +22,6 @@ public class Game {
     private int pattern;
 
     public Game() {
-        rand = new Random();
         tiles = new Symbol[9];
 
         status = Status.PLAYING;
@@ -83,7 +83,7 @@ public class Game {
     }
 
     public void resetTiles() {
-        Arrays.fill(tiles, Symbol.NONE);
+        Arrays.fill(tiles, Symbol.NO);
     }
 
     public int getPattern() {
@@ -100,7 +100,7 @@ public class Game {
 
     public boolean[] getRandomTurns() {
         boolean turns[] = new boolean[2];
-        boolean random = rand.nextBoolean();
+        boolean random = new Random().nextBoolean();
 
         turns[0] = random;
         turns[1] = !random;
@@ -110,7 +110,7 @@ public class Game {
 
     public Symbol[] getRandomSymbols() {
         Symbol symbols[] = new Symbol[2];
-        boolean random = rand.nextBoolean();
+        boolean random = new Random().nextBoolean();
 
         symbols[0] = random ? Symbol.CROSS : Symbol.CIRCLE;
         symbols[1] = !random ? Symbol.CROSS : Symbol.CIRCLE;

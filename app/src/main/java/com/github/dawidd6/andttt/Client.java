@@ -1,8 +1,8 @@
-package com.github.dawidd6.andttt;
+package com.github.dawidd6.andttt.online;
 
 import android.util.Log;
-import com.github.dawidd6.andttt.proto.ERROR;
-import com.github.dawidd6.andttt.proto.Message;
+import com.github.dawidd6.andttt.proto.Request;
+import com.github.dawidd6.andttt.proto.Response;
 import com.github.dawidd6.andttt.proto.Room;
 
 import java.io.*;
@@ -17,7 +17,7 @@ public class Client {
     private int port;
     private int bufferSize;
     private int timeout;
-    private Message message;
+    private Request request;
 
     private ClientConnectThread connectThread;
     private ClientDisconnectThread disconnectThread;
@@ -27,7 +27,7 @@ public class Client {
     private OnConnectSuccessfulListener onConnectSuccessfulListener;
     private OnConnectFailedListener onConnectFailedListener;
     private OnDisconnectListener onDisconnectListener;
-    private OnMessageReceivedListener onMessageReceivedListener;
+    private OnResponseListener onResponseListener;
 
     public Client() {
         timeout = 5000;
@@ -40,7 +40,7 @@ public class Client {
         setOnConnectFailedListener(null);
         setOnConnectSuccessfulListener(null);
         setOnDisconnectListener(null);
-        setOnMessageReceivedListener(null);
+        setOnResponseListener(null);
     }
 
     public void connect(String host, int port) {
@@ -50,7 +50,8 @@ public class Client {
     }
 
     public void disconnect() {
-        disconnectThread.start();
+        if(socket != null)
+            disconnectThread.start();
     }
 
     public void destroy() {
@@ -60,16 +61,24 @@ public class Client {
         disconnectThread.interrupt();
     }
 
-    public void send(Message message) {
-        this.message = message;
+    public void send(Request request) {
+        this.request = request;
         sendThread.start();
+    }
+
+    public boolean isConnected() {
+        return socket != null && socket.isConnected();
+    }
+
+    public String getAddress() {
+        return isConnected() ? host + ":" + port : "";
     }
 
     private class ClientSendThread extends Thread {
         @Override
         public void run() {
             try {
-                socket.getOutputStream().write(message.toByteArray());
+                socket.getOutputStream().write(request.toByteArray());
                 socket.getOutputStream().flush();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -87,8 +96,8 @@ public class Client {
                     if(length < 0)
                         throw new IOException();
                     buffer = Arrays.copyOfRange(buffer, 0, length);
-                    Message message = Message.parseFrom(buffer);
-                    onMessageReceivedListener.onMessageReceive(message);
+                    Response response = Response.parseFrom(buffer);
+                    onResponseListener.onResponse(response);
                 } catch (IOException e) {
                     disconnect();
                     break;
@@ -117,6 +126,7 @@ public class Client {
         public void run() {
             try {
                 socket.close();
+                socket = null;
                 onDisconnectListener.onDisconnect();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -137,8 +147,8 @@ public class Client {
         onDisconnectListener = listener == null ? () -> {} : listener;
     }
 
-    public void setOnMessageReceivedListener(OnMessageReceivedListener listener) {
-        onMessageReceivedListener = listener == null ? (msg) -> {} : listener;
+    public void setOnResponseListener(OnResponseListener listener) {
+        onResponseListener = listener == null ? (msg) -> {} : listener;
     }
 
     public interface OnConnectSuccessfulListener {
@@ -153,7 +163,7 @@ public class Client {
         void onDisconnect();
     }
 
-    public interface OnMessageReceivedListener {
-        void onMessageReceive(Message message);
+    public interface OnResponseListener {
+        void onResponse(Response response);
     }
 }

@@ -2,17 +2,17 @@ package com.github.dawidd6.andttt.fragments;
 
 
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import com.github.dawidd6.andttt.MainActivity;
+import com.github.dawidd6.andttt.OnlineActivity;
 import com.github.dawidd6.andttt.R;
-import com.github.dawidd6.andttt.dialogs.LoadingDialogFragment;
-
-import static com.github.dawidd6.andttt.MainActivity.client;
 
 public class MenuFragment extends Fragment {
     @Override
@@ -38,7 +38,8 @@ public class MenuFragment extends Fragment {
 
         Button onlineButton = view.findViewById(R.id.onlineButton);
         onlineButton.setOnClickListener(v -> {
-            activity.switchFragments(new ConnectFragment(), true);
+            Intent intent = new Intent(getActivity(), OnlineActivity.class);
+            startActivity(intent);
         });
 
         Button settingsButton = view.findViewById(R.id.settingsButton);

@@ -20,7 +20,6 @@
     <string name="board_maximization_summary">Dynamicznie powiększ planszę bazując na wielkości wyświetlacza</string>
     <string name="play_online">Zagraj online</string>
     <string name="ok">Ok</string>
-    <string name="error_unexpected">Wystąpił niespodziewany błąd.</string>
     <string name="create_room">Stwórz pokój</string>
     <string name="connect">Połącz</string>
     <string name="loading">Proszę czekać...</string>
@@ -28,6 +27,11 @@
     <string name="connection_failed">Połączenie nieudane.</string>
     <string name="connecting">Łączenie...</string>
     <string name="no_rooms">Brak dostępnych pokoi w tym momencie, stwórz nowy.</string>
-    <string name="error_name_already_taken">Nazwa zajęta. Wybierz inną.</string>
-    <string name="error_name_must_not_be_empty">Nazwa nie może być pusta.</string>
+    <string name="yes">Tak</string>
+    <string name="no">Nie</string>
+    <string name="enter_address">Wprowadź adres serwera.</string>
+    <string name="enter_name">Wprowadź nazwę usera.</string>
+    <string name="enter_room">Wprowadź nazwę pokoju.</string>
+    <string name="disconnected">Odłączono od serwera.</string>
+    <string name="waiting_for_opponent">Oczekiwanie na przeciwnika</string>
 </resources>

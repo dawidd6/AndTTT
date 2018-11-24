@@ -7,7 +7,7 @@
     android:background="?android:attr/windowBackground">
 
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/addressText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -31,6 +31,6 @@
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text" />
+        app:layout_constraintTop_toBottomOf="@+id/addressText" />
 
 </android.support.constraint.ConstraintLayout>

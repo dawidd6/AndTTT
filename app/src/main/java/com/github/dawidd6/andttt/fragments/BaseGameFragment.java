@@ -22,7 +22,7 @@ import com.github.dawidd6.andttt.drawings.DrawCross;
 import com.github.dawidd6.andttt.drawings.DrawLine;
 import com.github.dawidd6.andttt.game.Game;
 import com.github.dawidd6.andttt.game.Player;
-import com.github.dawidd6.andttt.game.Symbol;
+import com.github.dawidd6.andttt.proto.Symbol;
 
 public abstract class BaseGameFragment extends Fragment {
     private final String TAG = "BaseGameFragment";
@@ -32,10 +32,10 @@ public abstract class BaseGameFragment extends Fragment {
     private Bitmap tilesBitmap[];
     private Bitmap boardBitmap;
 
-    private TextView scoreText;
-    private TextView conclusionText;
+    protected TextView scoreText;
+    protected TextView conclusionText;
 
-    private FrameLayout conclusionFrame;
+    protected FrameLayout conclusionFrame;
 
     private int tile_dimen;
     private int symbol_dimen;
@@ -50,9 +50,11 @@ public abstract class BaseGameFragment extends Fragment {
     private int colorSymbol;
     private int colorLine;
 
-    private int animation_duration;
+    protected int animation_duration;
 
     protected Game game;
+
+    protected Button restartButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,7 +72,13 @@ public abstract class BaseGameFragment extends Fragment {
         super.onDetach();
 
         // unlock orientation
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        lockOrientation(false);
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        lockOrientation(!hidden);
     }
 
     @Override
@@ -78,14 +86,14 @@ public abstract class BaseGameFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // lock to portrait only
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        lockOrientation(true);
 
         // set animation duration
         animation_duration = getResources().getInteger(R.integer.animation_duration);
         animation_duration = ((MainActivity)getActivity()).isAnimationEnabled() ? animation_duration : 0;
 
         // set on clicks listeners
-        Button restartButton = view.findViewById(R.id.restartButton);
+        restartButton = view.findViewById(R.id.restartButton);
         restartButton.setOnClickListener(this::onClickRestart);
 
         // get colorSymbol and colorLine
@@ -172,8 +180,17 @@ public abstract class BaseGameFragment extends Fragment {
         boardBitmap = Bitmap.createBitmap(board_dimen, board_dimen, Bitmap.Config.ARGB_4444);
         boardView.setImageBitmap(boardBitmap);
 
+        // hide conclusion stuff
+        conclusionText.setAlpha(0);
+        conclusionFrame.setAlpha(0);
+
         // starting point
         restartGame();
+    }
+
+    protected void lockOrientation(boolean lock) {
+        int info = lock ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
+        getActivity().setRequestedOrientation(info);
     }
 
     private void setViewSize(View view, int width, int height) {
@@ -277,21 +294,21 @@ public abstract class BaseGameFragment extends Fragment {
         }
     }
 
-    public void restartGame() {
-        // determine if game is started for first time or restarted
-        if(game.isPlaying()) {
-            conclusionText.setAlpha(0);
-            conclusionFrame.setAlpha(0);
-        } else {
+    public void showConclusion(String text, int color) {
+        conclusionText.setText(text);
+        conclusionText.setTextColor(color);
+        new DarkenAnimation(conclusionFrame, animation_duration*2);
+        new DarkenAnimation(conclusionText, animation_duration*2);
+    }
+
+    public void hideConclusion() {
+        if(conclusionText.getAlpha() > 0)
             new LightenAnimation(conclusionText, animation_duration);
+        if(conclusionFrame.getAlpha() > 0)
             new LightenAnimation(conclusionFrame, animation_duration);
-        }
+    }
 
-        // game stuff
-        game.resetStatus();
-        game.resetNoneCounter();
-        game.resetTiles();
-
+    public void randomize() {
         // randomize players' turns
         boolean turns[] = game.getRandomTurns();
         player1.setTurn(turns[0]);
@@ -301,6 +318,17 @@ public abstract class BaseGameFragment extends Fragment {
         Symbol symbols[] = game.getRandomSymbols();
         player1.setSymbol(symbols[0]);
         player2.setSymbol(symbols[1]);
+    }
+
+    public void restartGame() {
+        hideConclusion();
+
+        // game stuff
+        game.resetStatus();
+        game.resetNoneCounter();
+        game.resetTiles();
+
+        randomize();
 
         // draw players' symbols on respective views
         drawSymbol(player1.getImageView(), player1.getBitmap(), player1.getSymbol());
@@ -326,36 +354,30 @@ public abstract class BaseGameFragment extends Fragment {
         if(game.isWin()) {
             if(player1.isTurn()) {
                 player1.addWin();
-                conclusionText.setText(getString(R.string.player_won, player1.getName()));
-                conclusionText.setTextColor(player1.getColor());
+                showConclusion(getString(R.string.player_won, player1.getName()), player1.getColor());
             } else {
                 player2.addWin();
-                conclusionText.setText(getString(R.string.player_won, player2.getName()));
-                conclusionText.setTextColor(player2.getColor());
+                showConclusion(getString(R.string.player_won, player2.getName()), player2.getColor());
             }
             new PulseAnimation(scoreText, animation_duration);
             scoreText.setText(getString(R.string.score, player1.getWins(), player2.getWins()));
             drawLine();
         } else if(game.isDraw()) {
-            conclusionText.setText(getString(R.string.nobody_won));
-            conclusionText.setTextColor(Color.BLUE);
+            showConclusion(getString(R.string.nobody_won), Color.BLUE);
         } else {
             return;
         }
-
-        new DarkenAnimation(conclusionFrame, animation_duration*2);
-        new DarkenAnimation(conclusionText, animation_duration*2);
 
         setAllTilesClickable(false);
     }
 
     protected void setAllTilesClickable(boolean clickable) {
         for(int i = 0; i < 9; i++)
-            if(game.getTile(i) == Symbol.NONE)
+            if(game.getTile(i) == Symbol.NO)
                 tilesView[i].setClickable(clickable);
     }
 
-    public void makeMove(Player playerWithTurn, Player playerWithoutTurn, int i) {
+    protected void makeMove(Player playerWithTurn, Player playerWithoutTurn, int i) {
         game.setTile(i, playerWithTurn.getSymbol());
         tilesView[i].setClickable(false);
 

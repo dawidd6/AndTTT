@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.view.View;
 import com.github.dawidd6.andttt.MainActivity;
 import com.github.dawidd6.andttt.R;
-import com.github.dawidd6.andttt.game.Symbol;
+import com.github.dawidd6.andttt.proto.Symbol;
 
 import java.util.Random;
 import java.util.Vector;
@@ -60,7 +60,7 @@ public class SingleFragment extends BaseGameFragment {
                 for(int j = 0; j < 3; j++) {
                     if(game.getTile(p[j]) == s)
                         counter++;
-                    else if(game.getTile(p[j]) == Symbol.NONE) {
+                    else if(game.getTile(p[j]) == Symbol.NO) {
                         counter = counter + 8;
                         nonePositions.add(p[j]);
                     }

@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.view.WindowManager;
-import com.github.dawidd6.andttt.dialogs.ErrorDialogFragment;
-import com.github.dawidd6.andttt.dialogs.LoadingDialogFragment;
 import com.github.dawidd6.andttt.fragments.MenuFragment;
 
 public class MainActivity extends Activity {
@@ -17,9 +15,6 @@ public class MainActivity extends Activity {
     private boolean isAnimationEnabled;
     private boolean isStatusBarEnabled;
     private boolean isMaximizationEnabled;
-    public static Client client;
-    public static LoadingDialogFragment loadingDialogFragment;
-    public static ErrorDialogFragment errorDialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +27,6 @@ public class MainActivity extends Activity {
         isNightModeEnabled = prefs.getBoolean("night_mode", false);
         isAnimationEnabled = prefs.getBoolean("animations", true);
         isMaximizationEnabled = prefs.getBoolean("maximization", true);
-
-        client = new Client();
-        loadingDialogFragment = new LoadingDialogFragment();
-        errorDialogFragment = new ErrorDialogFragment();
 
         setStatusBar(null);
         setTheme(isNightModeEnabled ? R.style.theme_dark : R.style.theme_light);

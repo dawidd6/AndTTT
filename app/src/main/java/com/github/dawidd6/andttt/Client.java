@@ -1,5 +1,7 @@
-package com.github.dawidd6.andttt.online;
+package com.github.dawidd6.andttt;
 
+import android.app.Fragment;
+import android.os.Bundle;
 import android.util.Log;
 import com.github.dawidd6.andttt.proto.Request;
 import com.github.dawidd6.andttt.proto.Response;
@@ -11,12 +13,11 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.util.Arrays;
 
-public class Client {
+public class Client extends Fragment {
     private Socket socket;
     private String host;
     private int port;
     private int bufferSize;
-    private int timeout;
     private Request request;
 
     private ClientConnectThread connectThread;
@@ -29,8 +30,13 @@ public class Client {
     private OnDisconnectListener onDisconnectListener;
     private OnResponseListener onResponseListener;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
     public Client() {
-        timeout = 5000;
         bufferSize = 4096;
         connectThread = new ClientConnectThread();
         disconnectThread = new ClientDisconnectThread();
@@ -55,6 +61,11 @@ public class Client {
     }
 
     public void destroy() {
+        setOnConnectFailedListener(null);
+        setOnConnectSuccessfulListener(null);
+        setOnDisconnectListener(null);
+        setOnResponseListener(null);
+
         receiveThread.interrupt();
         sendThread.interrupt();
         connectThread.interrupt();
@@ -77,6 +88,11 @@ public class Client {
     private class ClientSendThread extends Thread {
         @Override
         public void run() {
+            setName("send-thread");
+
+            if(socket == null)
+                return;
+
             try {
                 socket.getOutputStream().write(request.toByteArray());
                 socket.getOutputStream().flush();
@@ -89,6 +105,8 @@ public class Client {
     private class ClientReceiveThread extends Thread {
         @Override
         public void run() {
+            setName("receive-thread");
+
             while(true) {
                 try {
                     byte buffer[] = new byte[bufferSize];
@@ -109,9 +127,10 @@ public class Client {
     private class ClientConnectThread extends Thread {
         @Override
         public void run() {
+            setName("connect-thread");
+
             try {
                 socket = new Socket(host, port);
-                //socket.setSoTimeout(timeout);
                 onConnectSuccessfulListener.onConnectSuccess();
                 receiveThread.start();
             } catch (IOException e) {
@@ -124,6 +143,11 @@ public class Client {
     private class ClientDisconnectThread extends Thread {
         @Override
         public void run() {
+            setName("disconnect-thread");
+
+            if(socket == null)
+                return;
+
             try {
                 socket.close();
                 socket = null;
@@ -134,7 +158,6 @@ public class Client {
         }
     }
 
-    // CONNECTION LISTENERS
     public void setOnConnectSuccessfulListener(OnConnectSuccessfulListener listener) {
         onConnectSuccessfulListener = listener == null ? () -> {} : listener;
     }

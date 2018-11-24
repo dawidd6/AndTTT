@@ -1,11 +1,22 @@
 package com.github.dawidd6.andttt.game;
 
+import android.graphics.Color;
+import com.github.dawidd6.andttt.proto.Symbol;
+
 public class Player {
     private boolean turn;
     private Symbol symbol;
     private String name;
     private int wins;
     private int color;
+
+    public Player() {
+        turn = false;
+        symbol = Symbol.NO;
+        name = "";
+        wins = 0;
+        color = Color.GRAY;
+    }
     
     public boolean isTurn() {
         return turn;

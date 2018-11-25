@@ -19,17 +19,11 @@ import com.github.dawidd6.andttt.proto.Response;
 import static com.github.dawidd6.andttt.OnlineActivity.client;
 import static com.github.dawidd6.andttt.OnlineActivity.name;
 
-public class ConnectFragment extends Fragment {
+public class ConnectFragment extends BaseFragment {
     private Button okButton;
     private EditText addressEdit;
     private EditText nameEdit;
     private ErrorDialogFragment errorDialogFragment;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {

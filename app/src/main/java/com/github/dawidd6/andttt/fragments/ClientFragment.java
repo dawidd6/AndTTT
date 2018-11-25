@@ -13,7 +13,7 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.util.Arrays;
 
-public class ClientFragment extends Fragment {
+public class ClientFragment extends BaseFragment {
     private Socket socket;
     private String host;
     private int port;
@@ -29,12 +29,6 @@ public class ClientFragment extends Fragment {
     private OnConnectFailedListener onConnectFailedListener;
     private OnDisconnectListener onDisconnectListener;
     private OnResponseListener onResponseListener;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-    }
 
     public ClientFragment() {
         bufferSize = 4096;

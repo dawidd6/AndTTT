@@ -14,7 +14,7 @@ import com.github.dawidd6.andttt.MainActivity;
 import com.github.dawidd6.andttt.OnlineActivity;
 import com.github.dawidd6.andttt.R;
 
-public class MenuFragment extends Fragment {
+public class MenuFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_menu, parent, false);

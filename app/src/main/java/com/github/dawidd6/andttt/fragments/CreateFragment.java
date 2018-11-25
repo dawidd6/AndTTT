@@ -17,7 +17,7 @@ import com.github.dawidd6.andttt.proto.Response;
 
 import static com.github.dawidd6.andttt.OnlineActivity.client;
 
-public class CreateFragment extends Fragment {
+public class CreateFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_create, parent, false);

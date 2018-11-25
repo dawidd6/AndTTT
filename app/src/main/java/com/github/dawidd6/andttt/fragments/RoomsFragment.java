@@ -19,17 +19,11 @@ import java.util.ArrayList;
 
 import static com.github.dawidd6.andttt.OnlineActivity.client;
 
-public class RoomsFragment extends Fragment {
+public class RoomsFragment extends BaseFragment {
     private SwipeRefreshLayout layout;
     private TextView noRoomsText;
     private ListView roomList;
     private ErrorDialogFragment errorDialogFragment;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

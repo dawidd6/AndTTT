@@ -24,7 +24,7 @@ import com.github.dawidd6.andttt.game.Game;
 import com.github.dawidd6.andttt.game.Player;
 import com.github.dawidd6.andttt.proto.Symbol;
 
-public abstract class BaseGameFragment extends Fragment {
+public abstract class BaseGameFragment extends BaseFragment {
     private final String TAG = "BaseGameFragment";
 
     private ImageView tilesView[];
@@ -55,12 +55,6 @@ public abstract class BaseGameFragment extends Fragment {
     protected Game game;
 
     protected Button restartButton;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {

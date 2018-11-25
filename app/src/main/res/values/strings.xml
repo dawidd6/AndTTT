@@ -70,4 +70,5 @@
     <string name="denied_restart">Your enemy does not want to restart the game.</string>
     <string name="waiting">Waiting</string>
     <string name="connected">Connected</string>
+    <string name="rooms">Rooms</string>
 </resources>

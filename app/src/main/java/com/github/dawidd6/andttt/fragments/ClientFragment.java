@@ -15,15 +15,6 @@ import java.util.Arrays;
 
 public class ClientFragment extends BaseFragment {
     private Socket socket;
-    private String host;
-    private int port;
-    private int bufferSize;
-    private Request request;
-
-    private ClientConnectThread connectThread;
-    private ClientDisconnectThread disconnectThread;
-    private ClientReceiveThread receiveThread;
-    private ClientSendThread sendThread;
 
     private OnConnectSuccessfulListener onConnectSuccessfulListener;
     private OnConnectFailedListener onConnectFailedListener;
@@ -31,12 +22,6 @@ public class ClientFragment extends BaseFragment {
     private OnResponseListener onResponseListener;
 
     public ClientFragment() {
-        bufferSize = 4096;
-        connectThread = new ClientConnectThread();
-        disconnectThread = new ClientDisconnectThread();
-        receiveThread = new ClientReceiveThread();
-        sendThread = new ClientSendThread();
-
         setOnConnectFailedListener(null);
         setOnConnectSuccessfulListener(null);
         setOnDisconnectListener(null);
@@ -44,14 +29,18 @@ public class ClientFragment extends BaseFragment {
     }
 
     public void connect(String host, int port) {
-        this.host = host;
-        this.port = port;
-        connectThread.start();
+        new ClientConnectThread(host, port)
+                .start();
     }
 
     public void disconnect() {
-        if(socket != null)
-            disconnectThread.start();
+        new ClientDisconnectThread()
+                .start();
+    }
+
+    public void send(Request request) {
+        new ClientSendThread(request)
+                .start();
     }
 
     public void destroy() {
@@ -59,16 +48,6 @@ public class ClientFragment extends BaseFragment {
         setOnConnectSuccessfulListener(null);
         setOnDisconnectListener(null);
         setOnResponseListener(null);
-
-        receiveThread.interrupt();
-        sendThread.interrupt();
-        connectThread.interrupt();
-        disconnectThread.interrupt();
-    }
-
-    public void send(Request request) {
-        this.request = request;
-        sendThread.start();
     }
 
     public boolean isConnected() {
@@ -76,10 +55,19 @@ public class ClientFragment extends BaseFragment {
     }
 
     public String getAddress() {
-        return isConnected() ? host + ":" + port : "";
+        if(!isConnected())
+            return "";
+
+        return socket.getRemoteSocketAddress().toString();
     }
 
     private class ClientSendThread extends Thread {
+        private Request request;
+
+        ClientSendThread(Request request) {
+            this.request = request;
+        }
+
         @Override
         public void run() {
             setName("send-thread");
@@ -97,13 +85,15 @@ public class ClientFragment extends BaseFragment {
     }
 
     private class ClientReceiveThread extends Thread {
+        private final int BUFFER_SIZE = 4096;
+
         @Override
         public void run() {
             setName("receive-thread");
 
             while(true) {
                 try {
-                    byte buffer[] = new byte[bufferSize];
+                    byte buffer[] = new byte[BUFFER_SIZE];
                     int length = socket.getInputStream().read(buffer);
                     if(length < 0)
                         throw new IOException();
@@ -119,14 +109,22 @@ public class ClientFragment extends BaseFragment {
     }
 
     private class ClientConnectThread extends Thread {
+        private String host;
+        private int port;
+
+        ClientConnectThread(String host, int port) {
+            this.host = host;
+            this.port = port;
+        }
+
         @Override
         public void run() {
             setName("connect-thread");
 
             try {
-                socket = new Socket(host, port);
+                socket = new Socket(this.host, this.port);
                 onConnectSuccessfulListener.onConnectSuccess();
-                receiveThread.start();
+                new ClientReceiveThread().start();
             } catch (IOException e) {
                 e.printStackTrace();
                 onConnectFailedListener.onConnectFail();

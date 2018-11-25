@@ -20,6 +20,7 @@
         <item name="android:colorForeground">@color/color_white</item>
         <item name="android:windowBackground">@color/color_black</item>
         <item name="android:textColor">@color/color_white</item>
+        <item name="android:editTextColor">@color/color_white</item>
         <item name="android:dialogTheme">@style/theme_dark</item>
     </style>
 
@@ -30,6 +31,7 @@
         <item name="android:colorForeground">@color/color_black</item>
         <item name="android:windowBackground">@color/color_light</item>
         <item name="android:textColor">@color/color_black</item>
+        <item name="android:editTextColor">@color/color_black</item>
         <item name="android:dialogTheme">@style/theme_light</item>
     </style>
 </resources>

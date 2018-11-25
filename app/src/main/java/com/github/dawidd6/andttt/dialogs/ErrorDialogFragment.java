@@ -26,11 +26,11 @@ public class ErrorDialogFragment extends BaseDialogFragment {
         Button okButton = view.findViewById(R.id.okButton);
         okButton.setOnClickListener(okButtonListener);
 
-        TextView errorText = view.findViewById(R.id.addressText);
-        TextView errorCode = view.findViewById(R.id.error_code);
+        TextView errorText = view.findViewById(R.id.errorText);
+        TextView codeText = view.findViewById(R.id.codeText);
 
         if(code != null) {
-            errorCode.setText(code.toString());
+            codeText.setText(code.toString());
             errorText.setText(getError(code));
         }
 

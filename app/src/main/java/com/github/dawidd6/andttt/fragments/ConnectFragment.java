@@ -61,7 +61,7 @@ public class ConnectFragment extends BaseFragment {
             }
 
             name = response.getRegisterName().getName();
-            ((MainActivity)getActivity()).switchFragments(new RoomsFragment(), false);
+            MainActivity.switchFragments(getFragmentManager(), new RoomsFragment(), false);
         });
 
         okButton = view.findViewById(R.id.okButton);

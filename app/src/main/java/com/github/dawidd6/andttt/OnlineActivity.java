@@ -42,7 +42,7 @@ public class OnlineActivity extends MainActivity {
 
             name = "";
 
-            switchFragments(new ConnectFragment(), false);
+            switchFragments(getFragmentManager(), new ConnectFragment(), false);
         }
 
         Log.i("name", name);

@@ -58,7 +58,7 @@ public class RoomsFragment extends BaseFragment {
 
         Button createButton = view.findViewById(R.id.createButton);
         createButton.setOnClickListener((v) -> {
-            ((MainActivity)getActivity()).switchFragments(new CreateFragment(), true);
+            MainActivity.switchFragments(getFragmentManager(), new CreateFragment(), true);
         });
 
         onRefresh();
@@ -98,7 +98,7 @@ public class RoomsFragment extends BaseFragment {
                 getActivity().runOnUiThread(() -> layout.setRefreshing(false));
                 break;
             case JOIN_ROOM:
-                ((MainActivity)getActivity()).switchFragments(new OnlineFragment(), true);
+                MainActivity.switchFragments(getFragmentManager(), new OnlineFragment(), true);
         }
     }
 }

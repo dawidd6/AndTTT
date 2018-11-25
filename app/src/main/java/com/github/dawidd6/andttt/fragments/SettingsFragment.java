@@ -32,25 +32,25 @@ public class SettingsFragment extends PreferenceFragment {
 
         assert status_bar != null;
         status_bar.setOnPreferenceChangeListener((preference, newValue) -> {
-            ((MainActivity)getActivity()).setStatusBar((boolean)newValue);
+            new Handler().postDelayed(() -> getActivity().recreate(), delay);
             return true;
         });
 
         assert animations != null;
         animations.setOnPreferenceChangeListener((preference, newValue) -> {
-            ((MainActivity)getActivity()).setAnimations((boolean)newValue);
+            MainActivity.isAnimationEnabled = (boolean)newValue;
             return true;
         });
 
         assert maximization != null;
         maximization.setOnPreferenceChangeListener((preference, newValue) -> {
-            ((MainActivity)getActivity()).setMaximization((boolean)newValue);
+            MainActivity.isMaximizationEnabled = (boolean)newValue;
             return true;
         });
 
         assert licenses != null;
         licenses.setOnPreferenceClickListener(preference -> {
-            ((MainActivity)getActivity()).switchFragments(new LicensesFragment(),true);
+            MainActivity.switchFragments(getFragmentManager(), new LicensesFragment(),true);
             return true;
         });
     }

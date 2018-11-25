@@ -84,7 +84,7 @@ public abstract class BaseGameFragment extends BaseFragment {
 
         // set animation duration
         animation_duration = getResources().getInteger(R.integer.animation_duration);
-        animation_duration = ((MainActivity)getActivity()).isAnimationEnabled() ? animation_duration : 0;
+        animation_duration = MainActivity.isAnimationEnabled ? animation_duration : 0;
 
         // set on clicks listeners
         restartButton = view.findViewById(R.id.restartButton);
@@ -92,9 +92,10 @@ public abstract class BaseGameFragment extends BaseFragment {
 
         // get colorSymbol and colorLine
         TypedValue typedValue = new TypedValue();
-        getActivity().getTheme().resolveAttribute(R.attr.colorAccent, typedValue, true);
+        getActivity().getTheme().resolveAttribute(android.R.attr.colorForeground, typedValue, true);
         colorSymbol = typedValue.data;
-        colorLine = ContextCompat.getColor(getActivity(), R.color.color_green);
+        getActivity().getTheme().resolveAttribute(android.R.attr.colorAccent, typedValue, true);
+        colorLine = typedValue.data;
         
         // init stuff
         game = new Game();
@@ -145,7 +146,7 @@ public abstract class BaseGameFragment extends BaseFragment {
             }
         }
 
-        if(((MainActivity)getActivity()).isMaximizationEnabled()) {
+        if(MainActivity.isMaximizationEnabled) {
             board_dimen = boardWidth;
             tile_dimen = tileWidth;
         }

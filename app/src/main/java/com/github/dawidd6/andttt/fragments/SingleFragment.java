@@ -21,7 +21,7 @@ public class SingleFragment extends BaseGameFragment {
         player2.setName(getString(R.string.ai));
 
         delay = getResources().getInteger(R.integer.ai_move_delay);
-        delay = ((MainActivity)getActivity()).isAnimationEnabled() ? delay : 0;
+        delay = MainActivity.isAnimationEnabled ? delay : 0;
     }
 
     @Override

@@ -24,16 +24,14 @@ public class MenuFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        MainActivity activity = (MainActivity)getActivity();
-
         Button localButton = view.findViewById(R.id.localButton);
         localButton.setOnClickListener(v -> {
-            activity.switchFragments(new LocalFragment(), true);
+            MainActivity.switchFragments(getFragmentManager(), new LocalFragment(), true);
         });
 
         Button singleButton = view.findViewById(R.id.singleButton);
         singleButton.setOnClickListener(v -> {
-            activity.switchFragments(new SingleFragment(), true);
+            MainActivity.switchFragments(getFragmentManager(), new SingleFragment(), true);
         });
 
         Button onlineButton = view.findViewById(R.id.onlineButton);
@@ -44,7 +42,7 @@ public class MenuFragment extends BaseFragment {
 
         Button settingsButton = view.findViewById(R.id.settingsButton);
         settingsButton.setOnClickListener(v -> {
-            activity.switchFragments(new SettingsFragment(), true);
+            MainActivity.switchFragments(getFragmentManager(), new SettingsFragment(), true);
         });
     }
 }

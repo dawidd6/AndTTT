@@ -12,7 +12,7 @@ public class BaseDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
-        if(((MainActivity) getActivity()).isStatusBarEnabled()) {
+        if(MainActivity.isStatusBarEnabled) {
             Objects.requireNonNull(dialog.getWindow()).clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         } else {
             Objects.requireNonNull(dialog.getWindow()).addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);

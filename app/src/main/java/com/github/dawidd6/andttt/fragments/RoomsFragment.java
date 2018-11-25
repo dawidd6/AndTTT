@@ -2,6 +2,7 @@ package com.github.dawidd6.andttt.fragments;
 
 
 import android.app.Fragment;
+import android.graphics.Movie;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.*;
 import com.github.dawidd6.andttt.MainActivity;
 import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.dialogs.ErrorDialogFragment;
+import com.github.dawidd6.andttt.gui.RoomAdapter;
 import com.github.dawidd6.andttt.proto.*;
 import com.github.dawidd6.andttt.proto.Error;
 
@@ -51,7 +53,7 @@ public class RoomsFragment extends BaseFragment {
         roomList.setOnItemClickListener((AdapterView<?> parent, View v, int position, long id) -> {
             Request request = Request.newBuilder()
                     .setJoinRoom(JoinRoomRequest.newBuilder()
-                            .setName(parent.getItemAtPosition(position).toString()))
+                            .setName(((Room)parent.getItemAtPosition(position)).getName()))
                     .build();
             client.send(request);
         });
@@ -60,6 +62,11 @@ public class RoomsFragment extends BaseFragment {
         createButton.setOnClickListener((v) -> {
             MainActivity.switchFragments(getFragmentManager(), new CreateFragment(), true);
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         onRefresh();
     }
@@ -84,18 +91,20 @@ public class RoomsFragment extends BaseFragment {
 
         switch (response.getTypeCase()) {
             case GET_ROOMS:
-                if(response.getGetRooms().getRoomsCount() == 0) {
-                    getActivity().runOnUiThread(() -> noRoomsText.setVisibility(View.VISIBLE));
-                } else {
-                    getActivity().runOnUiThread(() -> noRoomsText.setVisibility(View.GONE));
-                    ArrayList<String> array = new ArrayList<>();
-                    for(Room room : response.getGetRooms().getRoomsList())
-                        array.add(room.getName());
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, array);
-                    getActivity().runOnUiThread(() -> roomList.setAdapter(adapter));
-                }
+                getActivity().runOnUiThread(() -> {
+                    if(response.getGetRooms().getRoomsCount() == 0) {
+                        noRoomsText.setVisibility(View.VISIBLE);
+                        roomList.setVisibility(View.GONE);
+                    } else {
+                        noRoomsText.setVisibility(View.GONE);
+                        roomList.setVisibility(View.VISIBLE);
+                        ArrayList<Room> array = new ArrayList<>(response.getGetRooms().getRoomsList());
+                        RoomAdapter adapter = new RoomAdapter(getActivity(), array);
+                        roomList.setAdapter(adapter);
+                    }
 
-                getActivity().runOnUiThread(() -> layout.setRefreshing(false));
+                    layout.setRefreshing(false);
+                });
                 break;
             case JOIN_ROOM:
                 MainActivity.switchFragments(getFragmentManager(), new OnlineFragment(), true);

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.dialogs.ErrorDialogFragment;
+import com.github.dawidd6.andttt.dialogs.LoadingDialogFragment;
 import com.github.dawidd6.andttt.dialogs.YesNoDialogFragment;
 import com.github.dawidd6.andttt.game.Player;
 import com.github.dawidd6.andttt.proto.Error;
@@ -16,12 +17,15 @@ import static com.github.dawidd6.andttt.OnlineActivity.name;
 public class OnlineFragment extends BaseGameFragment {
     private ErrorDialogFragment errorDialogFragment;
     private YesNoDialogFragment yesNoDialogFragment;
+    private LoadingDialogFragment loadingDialogFragment;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setAllTilesClickable(false);
 
+        loadingDialogFragment = new LoadingDialogFragment();
+        loadingDialogFragment.setText(R.string.waiting_for_opponent);
         yesNoDialogFragment = new YesNoDialogFragment();
         errorDialogFragment = new ErrorDialogFragment();
         errorDialogFragment.setOnOkClickListener((v) -> {
@@ -32,6 +36,7 @@ public class OnlineFragment extends BaseGameFragment {
         player2.setName("");
 
         showConclusion(getString(R.string.waiting), Color.BLUE);
+        restartButton.setClickable(false);
 
         client.setOnResponseListener(this::dispatch);
 
@@ -63,16 +68,12 @@ public class OnlineFragment extends BaseGameFragment {
             case STARTER_PACK:
                 StarterPackResponse starter = response.getStarterPack();
                 getActivity().runOnUiThread(() -> {
-                    hideConclusion();
                     player1.setSymbol(starter.getMySymbol());
                     player1.setTurn(starter.getMyTurn());
 
                     player2.setName(starter.getEnemyName());
                     player2.setSymbol(starter.getEnemySymbol());
                     player2.setTurn(starter.getEnemyTurn());
-
-                    if(player2.isTurn())
-                        showConclusion(getString(R.string.waiting), Color.BLUE);
 
                     restartGame();
                 });
@@ -102,13 +103,7 @@ public class OnlineFragment extends BaseGameFragment {
                     });
                     yesNoDialogFragment.show(getFragmentManager(),null);
                     break;
-                    
             case RESTART:
-                getActivity().runOnUiThread(() -> {
-                    hideConclusion();
-                    restartButton.setClickable(true);
-                });
-
                 switch (response.getRestart().getRestart()) {
                     case REQUESTED:
                         yesNoDialogFragment.setText(R.string.question_restart);
@@ -137,11 +132,13 @@ public class OnlineFragment extends BaseGameFragment {
                         yesNoDialogFragment.show(getFragmentManager(),null);
                         break;
                     case APPROVED:
+                        loadingDialogFragment.dismiss();
                         Request request = Request.newBuilder()
                                 .setStarterPack(StarterPackRequest.newBuilder()).build();
                         client.send(request);
                         break;
                     case DENIED:
+                        loadingDialogFragment.dismiss();
                         errorDialogFragment.setText(R.string.denied_restart);
                         errorDialogFragment.show(getFragmentManager(), null);
                         break;
@@ -159,6 +156,12 @@ public class OnlineFragment extends BaseGameFragment {
         super.restartGame();
         
         setAllTilesClickable(player1.isTurn());
+        restartButton.setClickable(false);
+
+        if(player1.isTurn())
+            hideConclusion();
+        else
+            showConclusion(getString(R.string.waiting), Color.BLUE);
     }
 
     @Override
@@ -170,6 +173,8 @@ public class OnlineFragment extends BaseGameFragment {
 
             if (player2.isTurn())
                 showConclusion(getString(R.string.waiting), Color.BLUE);
+        } else {
+            restartButton.setClickable(true);
         }
     }
 
@@ -187,8 +192,7 @@ public class OnlineFragment extends BaseGameFragment {
 
     @Override
     public void onClickRestart(View view) {
-        restartButton.setClickable(false);
-        showConclusion(getString(R.string.waiting), Color.BLUE);
+        loadingDialogFragment.show(getFragmentManager(), null);
 
         Request request = Request.newBuilder()
                 .setRestart(RestartRequest.newBuilder()

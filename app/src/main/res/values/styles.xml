@@ -3,6 +3,7 @@
         <item name="android:colorAccent">@color/color_green</item>
         <item name="android:statusBarColor">@color/color_black</item>
         <item name="android:textColorSecondary">@color/color_summary</item>
+        <item name="android:textColorHint">@color/color_summary</item>
         <item name="android:textColorTertiary">@color/color_white</item>
         <item name="android:listDivider">@null</item>
         <item name="android:windowIsFloating">false</item>

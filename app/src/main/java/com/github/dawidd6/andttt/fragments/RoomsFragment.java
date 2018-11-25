@@ -4,6 +4,7 @@ package com.github.dawidd6.andttt.fragments;
 import android.app.Fragment;
 import android.graphics.Movie;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import com.github.dawidd6.andttt.gui.RoomAdapter;
 import com.github.dawidd6.andttt.proto.*;
 import com.github.dawidd6.andttt.proto.Error;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 
 import static com.github.dawidd6.andttt.OnlineActivity.client;
@@ -26,6 +28,28 @@ public class RoomsFragment extends BaseFragment {
     private TextView noRoomsText;
     private ListView roomList;
     private ErrorDialogFragment errorDialogFragment;
+    private long lastRefreshed;
+    private long refreshInterval;
+    private PeriodicRefresh periodicRunnable;
+
+    private class PeriodicRefresh extends Thread {
+        @Override
+        public void run() {
+            setName("periodic-refresh-thread");
+
+            while(!isInterrupted()) {
+                try {
+                    Thread.sleep(refreshInterval);
+                    if(System.currentTimeMillis()-lastRefreshed > refreshInterval) {
+                        getActivity().runOnUiThread(RoomsFragment.this::onRefresh);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    break;
+                }
+            }
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,6 +59,9 @@ public class RoomsFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        periodicRunnable = new PeriodicRefresh();
+        refreshInterval = 5*1000;
 
         errorDialogFragment = new ErrorDialogFragment();
         errorDialogFragment.setOnOkClickListener((v) -> {
@@ -69,10 +96,21 @@ public class RoomsFragment extends BaseFragment {
         super.onResume();
 
         onRefresh();
+
+        periodicRunnable.start();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        periodicRunnable.interrupt();
     }
 
     private void onRefresh() {
         layout.setRefreshing(true);
+
+        lastRefreshed = System.currentTimeMillis();
 
         Request request = Request.newBuilder()
                 .setGetRooms(GetRoomsRequest.newBuilder())

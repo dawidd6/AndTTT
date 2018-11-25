@@ -28,7 +28,7 @@ public class YesNoDialogFragment extends BaseDialogFragment {
         Button noButton = view.findViewById(R.id.noButton);
         noButton.setOnClickListener(noButtonListener);
 
-        TextView questionText = view.findViewById(R.id.addressText);
+        TextView questionText = view.findViewById(R.id.questionText);
         questionText.setText(text);
     }
 

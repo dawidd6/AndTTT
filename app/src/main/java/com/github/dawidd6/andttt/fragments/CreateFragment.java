@@ -1,7 +1,6 @@
 package com.github.dawidd6.andttt.fragments;
 
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,7 +47,7 @@ public class CreateFragment extends BaseFragment {
 
         Button okButton = view.findViewById(R.id.okButton);
         okButton.setOnClickListener((v) -> {
-            EditText editText = view.findViewById(R.id.addressEdit);
+            EditText editText = view.findViewById(R.id.roomEdit);
             Request request = Request.newBuilder()
                     .setCreateRoom(CreateRoomRequest.newBuilder()
                             .setName(editText.getText().toString()))

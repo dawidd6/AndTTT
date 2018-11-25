@@ -1,4 +1,4 @@
-package com.github.dawidd6.andttt;
+package com.github.dawidd6.andttt.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.util.Arrays;
 
-public class Client extends Fragment {
+public class ClientFragment extends Fragment {
     private Socket socket;
     private String host;
     private int port;
@@ -36,7 +36,7 @@ public class Client extends Fragment {
         setRetainInstance(true);
     }
 
-    public Client() {
+    public ClientFragment() {
         bufferSize = 4096;
         connectThread = new ClientConnectThread();
         disconnectThread = new ClientDisconnectThread();

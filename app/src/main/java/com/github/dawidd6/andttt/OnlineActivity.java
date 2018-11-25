@@ -1,27 +1,20 @@
 package com.github.dawidd6.andttt;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.Notification;
 import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
-import android.view.View;
 import com.github.dawidd6.andttt.dialogs.*;
+import com.github.dawidd6.andttt.fragments.ClientFragment;
 import com.github.dawidd6.andttt.fragments.ConnectFragment;
-import com.github.dawidd6.andttt.proto.Error;
-import com.github.dawidd6.andttt.proto.Response;
 
 import java.util.Objects;
 
 public class OnlineActivity extends MainActivity {
-    public static Client client;
+    public static ClientFragment client;
     public static String name;
     private NotificationManagerCompat notificationManager;
     private ErrorDialogFragment errorDialogFragment;
@@ -34,7 +27,7 @@ public class OnlineActivity extends MainActivity {
         notificationManager = NotificationManagerCompat.from(this);
 
         if(savedInstanceState == null) {
-            client = new Client();
+            client = new ClientFragment();
             client.setOnDisconnectListener(() -> {
                 if (isFinishing())
                     return;

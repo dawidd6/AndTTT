@@ -61,7 +61,7 @@ public class RoomsFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         periodicRunnable = new PeriodicRefresh();
-        refreshInterval = 5*1000;
+        refreshInterval = 10*1000;
 
         errorDialogFragment = new ErrorDialogFragment();
         errorDialogFragment.setOnOkClickListener((v) -> {

@@ -16,6 +16,7 @@
         android:ems="10"
         android:hint="nick"
         android:inputType="textPersonName"
+        android:maxLength="@integer/name_max_length"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"

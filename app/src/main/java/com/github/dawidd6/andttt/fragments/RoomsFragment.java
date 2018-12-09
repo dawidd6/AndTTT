@@ -2,46 +2,47 @@ package com.github.dawidd6.andttt.fragments;
 
 
 import android.app.Fragment;
-import android.graphics.Movie;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.github.dawidd6.andttt.MainActivity;
+import com.github.dawidd6.andttt.ClientService;
 import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.dialogs.ErrorDialogFragment;
+import com.github.dawidd6.andttt.events.SendEvent;
 import com.github.dawidd6.andttt.gui.RoomAdapter;
 import com.github.dawidd6.andttt.proto.*;
 import com.github.dawidd6.andttt.proto.Error;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 
-import static com.github.dawidd6.andttt.OnlineActivity.client;
 
-public class RoomsFragment extends BaseFragment {
+public class RoomsFragment extends BaseOnlineFragment {
     private SwipeRefreshLayout layout;
     private TextView noRoomsText;
     private ListView roomList;
-    private ErrorDialogFragment errorDialogFragment;
     private long lastRefreshed;
-    private long refreshInterval;
-    private PeriodicRefresh periodicRunnable;
-
-    private class PeriodicRefresh extends Thread {
+    private String name;
+    private Thread periodicRunnable = new Thread() {
         @Override
         public void run() {
             setName("periodic-refresh-thread");
+
+            long refreshInterval = 10 * 1000;
 
             while(!isInterrupted()) {
                 try {
                     Thread.sleep(refreshInterval);
                     if(System.currentTimeMillis()-lastRefreshed > refreshInterval) {
-                        getActivity().runOnUiThread(RoomsFragment.this::onRefresh);
+                        getActivity().runOnUiThread(RoomsFragment.this::refresh);
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -49,7 +50,7 @@ public class RoomsFragment extends BaseFragment {
                 }
             }
         }
-    }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,18 +61,10 @@ public class RoomsFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        periodicRunnable = new PeriodicRefresh();
-        refreshInterval = 10*1000;
-
-        errorDialogFragment = new ErrorDialogFragment();
-        errorDialogFragment.setOnOkClickListener((v) -> {
-            errorDialogFragment.dismiss();
-        });
-
-        client.setOnResponseListener(this::dispatch);
+        name = getArguments().getString("name");
 
         layout = view.findViewById(R.id.swiperefresh);
-        layout.setOnRefreshListener(this::onRefresh);
+        layout.setOnRefreshListener(this::refresh);
 
         noRoomsText = view.findViewById(R.id.noRoomsText);
         noRoomsText.setVisibility(View.GONE);
@@ -82,7 +75,7 @@ public class RoomsFragment extends BaseFragment {
                     .setJoinRoom(JoinRoomRequest.newBuilder()
                             .setName(((Room)parent.getItemAtPosition(position)).getName()))
                     .build();
-            client.send(request);
+            EventBus.getDefault().post(new SendEvent(request));
         });
 
         Button createButton = view.findViewById(R.id.createButton);
@@ -95,7 +88,7 @@ public class RoomsFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
 
-        onRefresh();
+        refresh();
 
         periodicRunnable.start();
     }
@@ -107,7 +100,7 @@ public class RoomsFragment extends BaseFragment {
         periodicRunnable.interrupt();
     }
 
-    private void onRefresh() {
+    private void refresh() {
         layout.setRefreshing(true);
 
         lastRefreshed = System.currentTimeMillis();
@@ -115,37 +108,31 @@ public class RoomsFragment extends BaseFragment {
         Request request = Request.newBuilder()
                 .setGetRooms(GetRoomsRequest.newBuilder())
                 .build();
-
-        client.send(request);
+        EventBus.getDefault().post(new SendEvent(request));
     }
 
-    private void dispatch(Response response) {
-        if(response.getError() != Error.NONE) {
-            errorDialogFragment.setText(null);
-            errorDialogFragment.setErrorCode(response.getError());
-            errorDialogFragment.show(getFragmentManager(), null);
-            return;
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onJoinRoom(JoinRoomResponse response) {
+        OnlineFragment onlineFragment = new OnlineFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("name", name);
+        onlineFragment.setArguments(bundle);
+        MainActivity.switchFragments(getFragmentManager(), onlineFragment, true);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onGetRooms(GetRoomsResponse response) {
+        if(response.getRoomsCount() == 0) {
+            noRoomsText.setVisibility(View.VISIBLE);
+            roomList.setVisibility(View.GONE);
+        } else {
+            noRoomsText.setVisibility(View.GONE);
+            roomList.setVisibility(View.VISIBLE);
+            ArrayList<Room> array = new ArrayList<>(response.getRoomsList());
+            RoomAdapter adapter = new RoomAdapter(getActivity(), array);
+            roomList.setAdapter(adapter);
         }
 
-        switch (response.getTypeCase()) {
-            case GET_ROOMS:
-                getActivity().runOnUiThread(() -> {
-                    if(response.getGetRooms().getRoomsCount() == 0) {
-                        noRoomsText.setVisibility(View.VISIBLE);
-                        roomList.setVisibility(View.GONE);
-                    } else {
-                        noRoomsText.setVisibility(View.GONE);
-                        roomList.setVisibility(View.VISIBLE);
-                        ArrayList<Room> array = new ArrayList<>(response.getGetRooms().getRoomsList());
-                        RoomAdapter adapter = new RoomAdapter(getActivity(), array);
-                        roomList.setAdapter(adapter);
-                    }
-
-                    layout.setRefreshing(false);
-                });
-                break;
-            case JOIN_ROOM:
-                MainActivity.switchFragments(getFragmentManager(), new OnlineFragment(), true);
-        }
+        layout.setRefreshing(false);
     }
 }

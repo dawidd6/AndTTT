@@ -13,7 +13,7 @@ import com.github.dawidd6.andttt.R;
 
 import java.util.Vector;
 
-public class LicensesFragment extends BaseFragment {
+public class LicensesFragment extends Fragment {
     private LinearLayout layout;
     private Vector<View> libraries = new Vector<>();
 

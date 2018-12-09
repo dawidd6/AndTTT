@@ -1,5 +1,6 @@
 package com.github.dawidd6.andttt.fragments;
 
+import android.app.Fragment;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -24,7 +25,7 @@ import com.github.dawidd6.andttt.game.Player;
 import com.github.dawidd6.andttt.gui.PlayerGui;
 import com.github.dawidd6.andttt.proto.Symbol;
 
-public abstract class BaseGameFragment extends BaseFragment {
+public abstract class BaseGameFragment extends Fragment {
     private final String TAG = "BaseGameFragment";
 
     private ImageView tilesView[];

@@ -31,14 +31,14 @@ public class ErrorDialogFragment extends BaseDialogFragment {
 
         if(code != null) {
             codeText.setText(code.toString());
-            errorText.setText(getError(code));
+            errorText.setText(getErrorStringRes(code));
         }
 
         if(text != null)
             errorText.setText(text);
     }
 
-    public int getError(Error error) {
+    public int getErrorStringRes(Error error) {
         switch (error) {
             case CLIENT_NAME_EMPTY:
                 return R.string.error_client_name_empty;

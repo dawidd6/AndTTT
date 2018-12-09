@@ -27,6 +27,8 @@ public class LicensesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         layout = view.findViewById(R.id.licenses_layout);
+
+        addLibrary("EventBus", "Markus Junginger (greenrobot)", "Apache-2.0", "https://github.com/greenrobot/EventBus");
     }
 
     public void onClickLibrary(View v) {

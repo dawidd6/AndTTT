@@ -43,6 +43,9 @@ public class MainActivity extends Activity {
         setTheme(isNightModeEnabled ? R.style.theme_dark : R.style.theme_light);
         setContentView(R.layout.activity);
 
+        if(savedInstanceState != null)
+            return;
+
         getFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(

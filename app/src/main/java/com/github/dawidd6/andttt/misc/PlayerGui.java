@@ -1,4 +1,4 @@
-package com.github.dawidd6.andttt.gui;
+package com.github.dawidd6.andttt.misc;
 
 import android.graphics.Bitmap;
 import android.graphics.Paint;

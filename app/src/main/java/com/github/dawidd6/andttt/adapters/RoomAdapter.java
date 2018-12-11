@@ -1,4 +1,4 @@
-package com.github.dawidd6.andttt.gui;
+package com.github.dawidd6.andttt.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

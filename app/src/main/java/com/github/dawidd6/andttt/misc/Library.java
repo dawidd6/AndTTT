@@ -1,4 +1,4 @@
-package com.github.dawidd6.andttt.gui;
+package com.github.dawidd6.andttt.misc;
 
 public class Library {
     private String name;

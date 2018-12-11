@@ -1,4 +1,4 @@
-package com.github.dawidd6.andttt.gui;
+package com.github.dawidd6.andttt.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,10 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.github.dawidd6.andttt.R;
-import com.github.dawidd6.andttt.proto.Room;
+import com.github.dawidd6.andttt.misc.Library;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class LibraryAdapter extends ArrayAdapter<Library> {

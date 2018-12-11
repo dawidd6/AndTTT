@@ -5,16 +5,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.widget.Adapter;
 import android.widget.ListView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.github.dawidd6.andttt.R;
-import com.github.dawidd6.andttt.gui.Library;
-import com.github.dawidd6.andttt.gui.LibraryAdapter;
-import com.github.dawidd6.andttt.gui.RoomAdapter;
-import com.github.dawidd6.andttt.proto.Room;
+import com.github.dawidd6.andttt.misc.Library;
+import com.github.dawidd6.andttt.adapters.LibraryAdapter;
 
 import java.util.ArrayList;
 

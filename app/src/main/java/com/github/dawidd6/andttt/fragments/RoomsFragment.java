@@ -1,10 +1,7 @@
 package com.github.dawidd6.andttt.fragments;
 
 
-import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +11,10 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 import com.github.dawidd6.andttt.MainActivity;
-import com.github.dawidd6.andttt.ClientService;
 import com.github.dawidd6.andttt.R;
-import com.github.dawidd6.andttt.dialogs.ErrorDialogFragment;
 import com.github.dawidd6.andttt.events.SendEvent;
-import com.github.dawidd6.andttt.gui.RoomAdapter;
+import com.github.dawidd6.andttt.adapters.RoomAdapter;
 import com.github.dawidd6.andttt.proto.*;
-import com.github.dawidd6.andttt.proto.Error;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

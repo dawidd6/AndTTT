@@ -5,8 +5,6 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.AttrRes;
-import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -25,10 +23,9 @@ import com.github.dawidd6.andttt.drawings.DrawCross;
 import com.github.dawidd6.andttt.drawings.DrawLine;
 import com.github.dawidd6.andttt.game.Game;
 import com.github.dawidd6.andttt.game.Player;
-import com.github.dawidd6.andttt.gui.PlayerGui;
+import com.github.dawidd6.andttt.misc.PlayerGui;
 import com.github.dawidd6.andttt.proto.Symbol;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseGameFragment extends Fragment {

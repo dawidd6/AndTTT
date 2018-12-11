@@ -15,6 +15,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.github.dawidd6.andttt.MainActivity;
 import com.github.dawidd6.andttt.ClientService;
 import com.github.dawidd6.andttt.R;
@@ -28,10 +31,10 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+
 public class ConnectFragment extends BaseOnlineFragment {
-    private Button okButton;
-    private EditText addressEdit;
-    private EditText nameEdit;
+    @BindView(R.id.addressEdit) EditText addressEdit;
+    @BindView(R.id.nameEdit) EditText nameEdit;
     private final String TAG = "ConnectFragment";
     private boolean isConnected;
 
@@ -44,16 +47,13 @@ public class ConnectFragment extends BaseOnlineFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        addressEdit = view.findViewById(R.id.addressEdit);
-        nameEdit = view.findViewById(R.id.nameEdit);
-
         getActivity().startService(new Intent(getActivity(), ClientService.class));
+    }
 
-        okButton = view.findViewById(R.id.okButton);
-        okButton.setOnClickListener((v) -> {
-            connect();
-            register();
-        });
+    @OnClick(R.id.okButton)
+    public void onOkButtonClick() {
+        connect();
+        register();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

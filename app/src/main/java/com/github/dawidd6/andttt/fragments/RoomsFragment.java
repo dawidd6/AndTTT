@@ -10,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import butterknife.BindView;
+import butterknife.OnClick;
+import butterknife.OnItemClick;
 import com.github.dawidd6.andttt.MainActivity;
 import com.github.dawidd6.andttt.ClientService;
 import com.github.dawidd6.andttt.R;
@@ -26,9 +29,9 @@ import java.util.ArrayList;
 
 
 public class RoomsFragment extends BaseOnlineFragment {
-    private SwipeRefreshLayout layout;
-    private TextView noRoomsText;
-    private ListView roomList;
+    @BindView(R.id.noRoomsText) TextView noRoomsText;
+    @BindView(R.id.roomList) ListView roomList;
+    @BindView(R.id.swiperefresh) SwipeRefreshLayout layout;
     private long lastRefreshed;
     private String name;
     private Thread periodicRunnable = new Thread() {
@@ -62,26 +65,22 @@ public class RoomsFragment extends BaseOnlineFragment {
         super.onViewCreated(view, savedInstanceState);
 
         name = getArguments().getString("name");
-
-        layout = view.findViewById(R.id.swiperefresh);
         layout.setOnRefreshListener(this::refresh);
-
-        noRoomsText = view.findViewById(R.id.noRoomsText);
         noRoomsText.setVisibility(View.GONE);
+    }
 
-        roomList = view.findViewById(R.id.roomList);
-        roomList.setOnItemClickListener((AdapterView<?> parent, View v, int position, long id) -> {
-            Request request = Request.newBuilder()
-                    .setJoinRoom(JoinRoomRequest.newBuilder()
-                            .setName(((Room)parent.getItemAtPosition(position)).getName()))
-                    .build();
-            EventBus.getDefault().post(new SendEvent(request));
-        });
+    @OnClick(R.id.createButton)
+    public void onCreateButtonClick() {
+        MainActivity.switchFragments(getFragmentManager(), new CreateFragment(), true);
+    }
 
-        Button createButton = view.findViewById(R.id.createButton);
-        createButton.setOnClickListener((v) -> {
-            MainActivity.switchFragments(getFragmentManager(), new CreateFragment(), true);
-        });
+    @OnItemClick(R.id.roomList)
+    public void onRoomListClick(AdapterView<?> parent, View v, int position, long id) {
+        Request request = Request.newBuilder()
+                .setJoinRoom(JoinRoomRequest.newBuilder()
+                        .setName(((Room)parent.getItemAtPosition(position)).getName()))
+                .build();
+        EventBus.getDefault().post(new SendEvent(request));
     }
 
     @Override

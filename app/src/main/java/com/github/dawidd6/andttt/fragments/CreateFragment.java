@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import butterknife.BindView;
+import butterknife.OnClick;
 import com.github.dawidd6.andttt.ClientService;
 import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.dialogs.ErrorDialogFragment;
@@ -23,25 +25,21 @@ import org.greenrobot.eventbus.ThreadMode;
 
 
 public class CreateFragment extends BaseOnlineFragment {
+    @BindView(R.id.roomEdit) EditText roomEdit;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_create, parent, false);
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    @OnClick(R.id.okButton)
+    public void onOkButtonClick() {
+        Request request = Request.newBuilder()
+                .setCreateRoom(CreateRoomRequest.newBuilder()
+                        .setName(roomEdit.getText().toString()))
+                .build();
 
-        Button okButton = view.findViewById(R.id.okButton);
-        okButton.setOnClickListener((v) -> {
-            EditText editText = view.findViewById(R.id.roomEdit);
-            Request request = Request.newBuilder()
-                    .setCreateRoom(CreateRoomRequest.newBuilder()
-                            .setName(editText.getText().toString()))
-                    .build();
-
-            EventBus.getDefault().post(new SendEvent(request));
-        });
+        EventBus.getDefault().post(new SendEvent(request));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

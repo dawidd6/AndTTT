@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import butterknife.BindView;
+import butterknife.OnClick;
 import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.proto.Error;
 
@@ -13,6 +15,8 @@ public class ErrorDialogFragment extends BaseDialogFragment {
     private View.OnClickListener okButtonListener;
     private Integer text;
     private Error code;
+    @BindView(R.id.errorText) TextView errorText;
+    @BindView(R.id.codeText) TextView codeText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -22,12 +26,6 @@ public class ErrorDialogFragment extends BaseDialogFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        Button okButton = view.findViewById(R.id.okButton);
-        okButton.setOnClickListener(okButtonListener);
-
-        TextView errorText = view.findViewById(R.id.errorText);
-        TextView codeText = view.findViewById(R.id.codeText);
 
         if(code != null) {
             codeText.setText(code.toString());
@@ -82,6 +80,13 @@ public class ErrorDialogFragment extends BaseDialogFragment {
         }
 
         return R.string.error_undefined;
+    }
+
+    @OnClick(R.id.okButton)
+    public void onOkButtonClick(View v) {
+        if(okButtonListener != null)
+            okButtonListener.onClick(v);
+        dismiss();
     }
 
     public void setOnOkClickListener(View.OnClickListener listener) {

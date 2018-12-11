@@ -3,10 +3,12 @@ package com.github.dawidd6.andttt.dialogs;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.TextView;
+import butterknife.BindView;
 import com.github.dawidd6.andttt.R;
 
 public class LoadingDialogFragment extends BaseDialogFragment {
     private int text;
+    @BindView(R.id.waitText) TextView waitText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -17,7 +19,6 @@ public class LoadingDialogFragment extends BaseDialogFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TextView waitText = view.findViewById(R.id.waitText);
         waitText.setText(text);
     }
 

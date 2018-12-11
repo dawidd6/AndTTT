@@ -4,7 +4,10 @@ import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
+import butterknife.ButterKnife;
 import com.github.dawidd6.andttt.MainActivity;
 import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.dialogs.ErrorDialogFragment;
@@ -30,6 +33,13 @@ public abstract class BaseOnlineFragment extends Fragment {
         errorDialogFragment.setOnOkClickListener((v) -> {
             errorDialogFragment.dismiss();
         });
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        ButterKnife.bind(this, view);
     }
 
     @Override

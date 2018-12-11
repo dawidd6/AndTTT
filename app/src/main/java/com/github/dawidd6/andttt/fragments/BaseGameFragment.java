@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.AttrRes;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -13,7 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import butterknife.*;
 import com.github.dawidd6.andttt.*;
+import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.animations.DarkenAnimation;
 import com.github.dawidd6.andttt.animations.LightenAnimation;
 import com.github.dawidd6.andttt.animations.PulseAnimation;
@@ -25,25 +28,32 @@ import com.github.dawidd6.andttt.game.Player;
 import com.github.dawidd6.andttt.gui.PlayerGui;
 import com.github.dawidd6.andttt.proto.Symbol;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class BaseGameFragment extends Fragment {
     private final String TAG = "BaseGameFragment";
 
     private ImageView tilesView[];
-    private ImageView boardView;
     private Bitmap tilesBitmap[];
     private Bitmap boardBitmap;
 
-    protected TextView scoreText;
-    protected TextView conclusionText;
+    @BindView(R.id.player1Text) TextView player1Text;
+    @BindView(R.id.player2Text) TextView player2Text;
+    @BindView(R.id.player1View) ImageView player1View;
+    @BindView(R.id.player2View) ImageView player2View;
+    @BindView(R.id.scoreText) TextView scoreText;
+    @BindView(R.id.conclusionText) TextView conclusionText;
+    @BindView(R.id.conclusionFrame) FrameLayout conclusionFrame;
+    @BindView(R.id.boardView) ImageView boardView;
+    @BindViews({R.id.b0, R.id.b1, R.id.b2, R.id.b3, R.id.b4, R.id.b5, R.id.b6, R.id.b7, R.id.b8}) List<ImageView> tilesList;
 
-    protected FrameLayout conclusionFrame;
-
-    private int tile_dimen;
-    private int symbol_dimen;
-    private int board_dimen;
-    private int frame_dimen;
-    private int symbol_thickness_dimen;
-    private int line_thickness_dimen;
+    @BindDimen(R.dimen.tile_dimen) int tile_dimen;
+    @BindDimen(R.dimen.symbol_dimen) int symbol_dimen;
+    @BindDimen(R.dimen.board_dimen) int board_dimen;
+    @BindDimen(R.dimen.frame_dimen) int frame_dimen;
+    @BindDimen(R.dimen.symbol_thickness_dimen) int symbol_thickness_dimen;
+    @BindDimen(R.dimen.line_thickness_dimen) int line_thickness_dimen;
 
     protected PlayerGui player1;
     protected PlayerGui player2;
@@ -55,7 +65,7 @@ public abstract class BaseGameFragment extends Fragment {
 
     protected Game game;
 
-    protected Button restartButton;
+    @BindView(R.id.restartButton) Button restartButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -80,16 +90,14 @@ public abstract class BaseGameFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ButterKnife.bind(this, view);
+
         // lock to portrait only
         lockOrientation(true);
 
         // set animation duration
         animation_duration = getResources().getInteger(R.integer.animation_duration);
         animation_duration = MainActivity.isAnimationEnabled ? animation_duration : 0;
-
-        // set on clicks listeners
-        restartButton = view.findViewById(R.id.restartButton);
-        restartButton.setOnClickListener(this::onClickRestart);
 
         // get colorSymbol and colorLine
         TypedValue typedValue = new TypedValue();
@@ -100,36 +108,16 @@ public abstract class BaseGameFragment extends Fragment {
         
         // init stuff
         game = new Game();
-        tilesView = new ImageView[9];
         tilesBitmap = new Bitmap[9];
-
-        // get dimens
-        tile_dimen = getResources().getDimensionPixelSize(R.dimen.tile_dimen);
-        symbol_dimen = getResources().getDimensionPixelSize(R.dimen.symbol_dimen);
-        board_dimen = getResources().getDimensionPixelSize(R.dimen.board_dimen);
-        frame_dimen = getResources().getDimensionPixelSize(R.dimen.frame_dimen);
-        symbol_thickness_dimen = getResources().getDimensionPixelSize(R.dimen.symbol_thickness_dimen);
-        line_thickness_dimen = getResources().getDimensionPixelSize(R.dimen.line_thickness_dimen);
+        tilesView = tilesList.toArray(new ImageView[9]);
 
         // initialize players
-        player1 = new PlayerGui(
-                view.findViewById(R.id.player1View),
-                view.findViewById(R.id.player1Text),
-                symbol_dimen);
+        player1 = new PlayerGui(player1View, player1Text, symbol_dimen);
         player1.setColor(Color.GREEN);
         player1.setName(getString(R.string.player1));
-        player2 = new PlayerGui(
-                view.findViewById(R.id.player2View),
-                view.findViewById(R.id.player2Text),
-                symbol_dimen);
+        player2 = new PlayerGui(player2View, player2Text, symbol_dimen);
         player2.setColor(Color.RED);
         player2.setName(getString(R.string.player2));
-
-        // find views
-        scoreText = view.findViewById(R.id.scoreText);
-        conclusionFrame = view.findViewById(R.id.conclusionFrame);
-        conclusionText = view.findViewById(R.id.conclusionText);
-        boardView = view.findViewById(R.id.boardView);
 
         // maximize board, tiles and other stuff
         DisplayMetrics metrics = new DisplayMetrics();
@@ -165,8 +153,6 @@ public abstract class BaseGameFragment extends Fragment {
         // init tiles + their bitmaps
         for(int i = 0; i < 9; i++) {
             tilesBitmap[i] = Bitmap.createBitmap(tile_dimen, tile_dimen, Bitmap.Config.ARGB_4444);
-            tilesView[i] = view.findViewById(getResources().getIdentifier("b" + i, "id", getActivity().getPackageName()));
-            tilesView[i].setOnClickListener(this::onClickTile);
             tilesView[i].setImageBitmap(tilesBitmap[i]);
 
             setViewSize(tilesView[i], tile_dimen, tile_dimen);
@@ -387,6 +373,7 @@ public abstract class BaseGameFragment extends Fragment {
         }
     }
 
+    @OnClick({R.id.b0, R.id.b1, R.id.b2, R.id.b3, R.id.b4, R.id.b5, R.id.b6, R.id.b7, R.id.b8})
     public void onClickTile(View view) {
         int i = Character.getNumericValue(getResources().getResourceEntryName(view.getId()).charAt(1));
         makeMove(player1.isTurn() ? player1 : player2,
@@ -394,6 +381,7 @@ public abstract class BaseGameFragment extends Fragment {
                 i);
     }
 
+    @OnClick(R.id.restartButton)
     public void onClickRestart(View view) {
         restartGame();
     }

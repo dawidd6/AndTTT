@@ -5,14 +5,12 @@
     android:id="@+id/library_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
     android:background="@drawable/rectangular_button"
     android:clickable="true"
-    android:focusable="true"
-    android:padding="5dp">
+    android:focusable="true">
 
     <TextView
-        android:id="@+id/library_name"
+        android:id="@+id/nameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
@@ -22,12 +20,12 @@
         android:textColor="@color/color_white"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/library_license"
+        app:layout_constraintBottom_toTopOf="@+id/licenseText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/library_license"
+        android:id="@+id/licenseText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -40,7 +38,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/library_author"
+        android:id="@+id/authorText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -50,7 +48,7 @@
         android:textAlignment="textEnd"
         android:textColor="@color/color_white"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/library_license"
+        app:layout_constraintBottom_toTopOf="@+id/licenseText"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
@@ -60,13 +58,13 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:background="@color/color_light"
-        app:layout_constraintBottom_toTopOf="@+id/library_author"
+        app:layout_constraintBottom_toTopOf="@+id/authorText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/library_name" />
+        app:layout_constraintTop_toBottomOf="@+id/nameText" />
 
     <TextView
-        android:id="@+id/library_url"
+        android:id="@+id/urlText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/color_white"

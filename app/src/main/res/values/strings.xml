@@ -23,8 +23,8 @@
     <string name="appearance">Appearance</string>
     <string name="about">About</string>
 
-    <string name="licenses">Licenses</string>
-    <string name="licenses_summary">Libraries used by this project</string>
+    <string name="libraries">Libraries</string>
+    <string name="libraries_summary">used by this project</string>
 
     <string name="player">Player</string>
     <string name="ai">AI</string>

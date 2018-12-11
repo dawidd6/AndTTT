@@ -12,8 +12,8 @@
     <string name="night_mode">Tryb nocny</string>
     <string name="appearance">Wygląd</string>
     <string name="about">O</string>
-    <string name="licenses">Licencje</string>
-    <string name="licenses_summary">Biblioteki użyte w tym projekcie</string>
+    <string name="libraries">Biblioteki</string>
+    <string name="libraries_summary">użyte w tym projekcie</string>
     <string name="player">Gracz</string>
     <string name="ai">SI</string>
     <string name="board_maximization">Maksymalizacja planszy</string>

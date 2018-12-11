@@ -20,9 +20,8 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/about">
         <Preference
-            android:key="licenses"
-            android:summary="@string/licenses_summary"
-            android:title="@string/licenses">
-        </Preference>
+            android:key="libraries"
+            android:summary="@string/libraries_summary"
+            android:title="@string/libraries" />
     </PreferenceCategory>
 </PreferenceScreen>

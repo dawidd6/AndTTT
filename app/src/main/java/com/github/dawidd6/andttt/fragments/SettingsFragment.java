@@ -22,7 +22,7 @@ public class SettingsFragment extends PreferenceFragment {
         Preference status_bar = manager.findPreference("show_status_bar");
         Preference animations = manager.findPreference("animations");
         Preference maximization = manager.findPreference("maximization");
-        Preference licenses = manager.findPreference("licenses");
+        Preference libraries = manager.findPreference("libraries");
 
         assert night_mode != null;
         night_mode.setOnPreferenceChangeListener((preference, newValue) -> {
@@ -48,9 +48,9 @@ public class SettingsFragment extends PreferenceFragment {
             return true;
         });
 
-        assert licenses != null;
-        licenses.setOnPreferenceClickListener(preference -> {
-            MainActivity.switchFragments(getFragmentManager(), new LicensesFragment(),true);
+        assert libraries != null;
+        libraries.setOnPreferenceClickListener(preference -> {
+            MainActivity.switchFragments(getFragmentManager(), new LibrariesFragment(),true);
             return true;
         });
     }

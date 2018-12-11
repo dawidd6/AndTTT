@@ -37,24 +37,14 @@ public class MainActivity extends Activity {
         setTheme(isNightModeEnabled ? R.style.theme_dark : R.style.theme_light);
         setContentView(R.layout.activity);
 
-        if(savedInstanceState == null)
-            switchFragments(getFragmentManager(), new MenuFragment(), false);
-    }
-
-    public static void switchFragments(FragmentManager fm, Fragment fragment, boolean addToBackStack) {
-        FragmentTransaction t = fm.beginTransaction();
-
-        if(addToBackStack)
-            t.addToBackStack(null);
-
-        if(isAnimationEnabled)
-            t.setCustomAnimations(
-                    android.R.animator.fade_in,
-                    android.R.animator.fade_out,
-                    android.R.animator.fade_in,
-                    android.R.animator.fade_out);
-
-        t.replace(R.id.placeholder, fragment);
-        t.commit();
+        getFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(
+                        android.R.animator.fade_in,
+                        android.R.animator.fade_out,
+                        android.R.animator.fade_in,
+                        android.R.animator.fade_out)
+                .replace(R.id.placeholder, new MenuFragment(), MenuFragment.TAG)
+                .commit();
     }
 }

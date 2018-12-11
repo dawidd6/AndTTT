@@ -25,7 +25,7 @@ public class ClientService extends Service {
     private NotificationManagerCompat notificationManager;
     private int notificationsInc;
     private final int NOTIFICATION_ID = 1;
-    private final String TAG = "Service";
+    public static final String TAG = "Service";
     private final int BUFFER_SIZE = 4096;
 
     @Override

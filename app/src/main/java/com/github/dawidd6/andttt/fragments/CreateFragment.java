@@ -25,6 +25,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 
 public class CreateFragment extends BaseOnlineFragment {
+    public static final String TAG = "CreateFragment";
     @BindView(R.id.roomEdit) EditText roomEdit;
 
     @Override

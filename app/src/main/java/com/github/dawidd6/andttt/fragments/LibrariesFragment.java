@@ -15,6 +15,7 @@ import com.github.dawidd6.andttt.adapters.LibraryAdapter;
 import java.util.ArrayList;
 
 public class LibrariesFragment extends Fragment {
+    public static final String TAG = "LibrariesFragment";
     @BindView(R.id.list) ListView list;
 
     @Override

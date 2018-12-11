@@ -76,7 +76,15 @@ public abstract class BaseOnlineFragment extends Fragment {
         errorDialogFragment.setText(R.string.disconnected);
         errorDialogFragment.setOnOkClickListener((v) -> {
             errorDialogFragment.dismiss();
-            MainActivity.switchFragments(getFragmentManager(), new MenuFragment(), false);
+            getFragmentManager()
+                    .beginTransaction()
+                    .setCustomAnimations(
+                            android.R.animator.fade_in,
+                            android.R.animator.fade_out,
+                            android.R.animator.fade_in,
+                            android.R.animator.fade_out)
+                    .replace(R.id.placeholder, new MenuFragment(), MenuFragment.TAG)
+                    .commit();
         });
 
         if(isResumed()) {

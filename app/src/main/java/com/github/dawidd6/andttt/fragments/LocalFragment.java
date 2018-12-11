@@ -5,6 +5,8 @@ import android.view.View;
 import com.github.dawidd6.andttt.R;
 
 public class LocalFragment extends BaseGameFragment {
+    public static final String TAG = "LocalFragment";
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

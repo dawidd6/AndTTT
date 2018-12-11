@@ -33,9 +33,9 @@ import org.greenrobot.eventbus.ThreadMode;
 
 
 public class ConnectFragment extends BaseOnlineFragment {
+    public static final String TAG = "ConnectFragment";
     @BindView(R.id.addressEdit) EditText addressEdit;
     @BindView(R.id.nameEdit) EditText nameEdit;
-    private final String TAG = "ConnectFragment";
     private boolean isConnected;
 
     @Override
@@ -62,7 +62,15 @@ public class ConnectFragment extends BaseOnlineFragment {
         Bundle bundle = new Bundle();
         bundle.putString("name", response.getName());
         roomsFragment.setArguments(bundle);
-        MainActivity.switchFragments(getFragmentManager(), roomsFragment, true);
+        getFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(
+                        android.R.animator.fade_in,
+                        android.R.animator.fade_out,
+                        android.R.animator.fade_in,
+                        android.R.animator.fade_out)
+                .replace(R.id.placeholder, roomsFragment, RoomsFragment.TAG)
+                .commit();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

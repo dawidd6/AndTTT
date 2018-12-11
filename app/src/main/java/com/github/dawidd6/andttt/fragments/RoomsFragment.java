@@ -3,6 +3,7 @@ package com.github.dawidd6.andttt.fragments;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 
 
 public class RoomsFragment extends BaseOnlineFragment {
+    public static final String TAG = "RoomsFragment";
     @BindView(R.id.noRoomsText) TextView noRoomsText;
     @BindView(R.id.roomList) ListView roomList;
     @BindView(R.id.swiperefresh) SwipeRefreshLayout layout;
@@ -65,7 +67,16 @@ public class RoomsFragment extends BaseOnlineFragment {
 
     @OnClick(R.id.createButton)
     public void onCreateButtonClick() {
-        MainActivity.switchFragments(getFragmentManager(), new CreateFragment(), true);
+        getFragmentManager()
+                .beginTransaction()
+                .addToBackStack(CreateFragment.TAG)
+                .setCustomAnimations(
+                        android.R.animator.fade_in,
+                        android.R.animator.fade_out,
+                        android.R.animator.fade_in,
+                        android.R.animator.fade_out)
+                .replace(R.id.placeholder, new CreateFragment(), CreateFragment.TAG)
+                .commit();
     }
 
     @OnItemClick(R.id.roomList)
@@ -110,7 +121,16 @@ public class RoomsFragment extends BaseOnlineFragment {
         Bundle bundle = new Bundle();
         bundle.putString("name", name);
         onlineFragment.setArguments(bundle);
-        MainActivity.switchFragments(getFragmentManager(), onlineFragment, true);
+        getFragmentManager()
+                .beginTransaction()
+                .addToBackStack(OnlineFragment.TAG)
+                .setCustomAnimations(
+                        android.R.animator.fade_in,
+                        android.R.animator.fade_out,
+                        android.R.animator.fade_in,
+                        android.R.animator.fade_out)
+                .replace(R.id.placeholder, onlineFragment, OnlineFragment.TAG)
+                .commit();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

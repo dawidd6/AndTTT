@@ -29,8 +29,6 @@ import com.github.dawidd6.andttt.proto.Symbol;
 import java.util.List;
 
 public abstract class BaseGameFragment extends Fragment {
-    private final String TAG = "BaseGameFragment";
-
     private ImageView tilesView[];
     private Bitmap tilesBitmap[];
     private Bitmap boardBitmap;
@@ -142,10 +140,6 @@ public abstract class BaseGameFragment extends Fragment {
         setViewSize(view.findViewById(R.id.frame_vertical_1), -1, board_dimen);
         setViewSize(view.findViewById(R.id.frame_vertical_2), -1, board_dimen);
         setViewSize(boardView, board_dimen, board_dimen);
-
-        Log.i(TAG, "frame_dimen = " + frame_dimen);
-        Log.i(TAG, "board_dimen = " + board_dimen);
-        Log.i(TAG, "tile_dimen = " + tile_dimen);
 
         // init tiles + their bitmaps
         for(int i = 0; i < 9; i++) {

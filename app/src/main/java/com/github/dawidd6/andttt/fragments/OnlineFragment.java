@@ -23,6 +23,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 public class OnlineFragment extends BaseGameFragment {
+    public static final String TAG = "OnlineFragment";
     private YesNoDialogFragment yesNoDialogFragment;
     private LoadingDialogFragment loadingDialogFragment;
     private ErrorDialogFragment errorDialogFragment;
@@ -99,7 +100,15 @@ public class OnlineFragment extends BaseGameFragment {
         errorDialogFragment.setText(R.string.disconnected);
         errorDialogFragment.setOnOkClickListener((v) -> {
             errorDialogFragment.dismiss();
-            MainActivity.switchFragments(getFragmentManager(), new MenuFragment(), false);
+            getFragmentManager()
+                    .beginTransaction()
+                    .setCustomAnimations(
+                            android.R.animator.fade_in,
+                            android.R.animator.fade_out,
+                            android.R.animator.fade_in,
+                            android.R.animator.fade_out)
+                    .replace(R.id.placeholder, new MenuFragment(), MenuFragment.TAG)
+                    .commit();
         });
 
         if(isResumed()) {

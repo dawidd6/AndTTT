@@ -9,6 +9,8 @@ import com.github.dawidd6.andttt.MainActivity;
 import com.github.dawidd6.andttt.R;
 
 public class SettingsFragment extends PreferenceFragment {
+    public static final String TAG = "SettingsFragment";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +52,16 @@ public class SettingsFragment extends PreferenceFragment {
 
         assert libraries != null;
         libraries.setOnPreferenceClickListener(preference -> {
-            MainActivity.switchFragments(getFragmentManager(), new LibrariesFragment(),true);
+            getFragmentManager()
+                    .beginTransaction()
+                    .addToBackStack(LibrariesFragment.TAG)
+                    .setCustomAnimations(
+                            android.R.animator.fade_in,
+                            android.R.animator.fade_out,
+                            android.R.animator.fade_in,
+                            android.R.animator.fade_out)
+                    .replace(R.id.placeholder, new LibrariesFragment(), LibrariesFragment.TAG)
+                    .commit();
             return true;
         });
     }

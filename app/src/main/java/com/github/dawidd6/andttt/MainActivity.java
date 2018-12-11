@@ -16,6 +16,7 @@ public class MainActivity extends Activity {
     public static boolean isAnimationEnabled;
     public static boolean isStatusBarEnabled;
     public static boolean isMaximizationEnabled;
+    public static int animation_duration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,11 @@ public class MainActivity extends Activity {
         isNightModeEnabled = prefs.getBoolean("night_mode", false);
         isAnimationEnabled = prefs.getBoolean("animations", true);
         isMaximizationEnabled = prefs.getBoolean("maximization", true);
+
+        if(isAnimationEnabled)
+            animation_duration = getResources().getInteger(R.integer.animation_duration);
+        else
+            animation_duration = 0;
 
         if(isStatusBarEnabled)
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);

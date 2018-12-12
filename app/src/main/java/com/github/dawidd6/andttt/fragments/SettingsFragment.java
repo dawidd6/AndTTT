@@ -54,7 +54,7 @@ public class SettingsFragment extends PreferenceFragment {
         libraries.setOnPreferenceClickListener(preference -> {
             getFragmentManager()
                     .beginTransaction()
-                    .addToBackStack(LibrariesFragment.TAG)
+                    .addToBackStack(null)
                     .setCustomAnimations(
                             android.R.animator.fade_in,
                             android.R.animator.fade_out,

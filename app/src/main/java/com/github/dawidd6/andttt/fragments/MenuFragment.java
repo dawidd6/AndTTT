@@ -37,7 +37,7 @@ public class MenuFragment extends Fragment {
     public void onLocalButtonClick() {
         getFragmentManager()
                 .beginTransaction()
-                .addToBackStack(LocalFragment.TAG)
+                .addToBackStack(null)
                 .setCustomAnimations(
                         android.R.animator.fade_in,
                         android.R.animator.fade_out,
@@ -51,7 +51,7 @@ public class MenuFragment extends Fragment {
     public void onSingleButtonClick() {
         getFragmentManager()
                 .beginTransaction()
-                .addToBackStack(SingleFragment.TAG)
+                .addToBackStack(null)
                 .setCustomAnimations(
                         android.R.animator.fade_in,
                         android.R.animator.fade_out,
@@ -65,7 +65,7 @@ public class MenuFragment extends Fragment {
     public void onOnlineButtonClick() {
         getFragmentManager()
                 .beginTransaction()
-                .addToBackStack(ConnectFragment.TAG)
+                .addToBackStack(null)
                 .setCustomAnimations(
                         android.R.animator.fade_in,
                         android.R.animator.fade_out,
@@ -79,7 +79,7 @@ public class MenuFragment extends Fragment {
     public void onSettingsButtonClick() {
         getFragmentManager()
                 .beginTransaction()
-                .addToBackStack(SettingsFragment.TAG)
+                .addToBackStack(null)
                 .setCustomAnimations(
                         android.R.animator.fade_in,
                         android.R.animator.fade_out,

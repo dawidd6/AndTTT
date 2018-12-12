@@ -69,7 +69,7 @@ public class RoomsFragment extends BaseOnlineFragment {
     public void onCreateButtonClick() {
         getFragmentManager()
                 .beginTransaction()
-                .addToBackStack(CreateFragment.TAG)
+                .addToBackStack(null)
                 .setCustomAnimations(
                         android.R.animator.fade_in,
                         android.R.animator.fade_out,
@@ -123,7 +123,7 @@ public class RoomsFragment extends BaseOnlineFragment {
         onlineFragment.setArguments(bundle);
         getFragmentManager()
                 .beginTransaction()
-                .addToBackStack(OnlineFragment.TAG)
+                .addToBackStack(null)
                 .setCustomAnimations(
                         android.R.animator.fade_in,
                         android.R.animator.fade_out,

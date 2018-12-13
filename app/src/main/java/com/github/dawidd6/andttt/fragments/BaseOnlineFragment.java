@@ -3,6 +3,10 @@ package com.github.dawidd6.andttt.fragments;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkRequest;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -40,6 +44,18 @@ public abstract class BaseOnlineFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ButterKnife.bind(this, view);
+
+        ConnectivityManager connManager = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkRequest.Builder builder = new NetworkRequest.Builder();
+        assert connManager != null;
+        connManager.registerNetworkCallback(builder.build(), new ConnectivityManager.NetworkCallback() {
+            @Override
+            public void onLost(Network network) {
+                super.onLost(network);
+
+                onDisconnect(null);
+            }
+        });
     }
 
     @Override

@@ -1,8 +1,12 @@
 package com.github.dawidd6.andttt.fragments;
 
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkRequest;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -51,6 +55,18 @@ public class OnlineFragment extends BaseGameFragment {
                 .setStarterPack(StarterPackRequest.newBuilder())
                 .build();
         EventBus.getDefault().post(new SendEvent(request));
+
+        ConnectivityManager connManager = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkRequest.Builder builder = new NetworkRequest.Builder();
+        assert connManager != null;
+        connManager.registerNetworkCallback(builder.build(), new ConnectivityManager.NetworkCallback() {
+            @Override
+            public void onLost(Network network) {
+                super.onLost(network);
+
+                onDisconnect(null);
+            }
+        });
     }
 
     @Override

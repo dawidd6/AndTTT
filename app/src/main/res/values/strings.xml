@@ -71,4 +71,9 @@
     <string name="waiting">Waiting</string>
     <string name="connected">Connected</string>
     <string name="rooms">Rooms</string>
+    <string name="error_client_name_too_long">Client name is too long. Max 20 characters.</string>
+    <string name="error_room_name_too_long">Room name is too long. Max 20 characters.</string>
+    <string name="error_room_password_too_long">Room password is too long. Max 20 characters.</string>
+    <string name="error_room_password_mismatch">Incorrect room password.</string>
+    <string name="error_room_password_not_found">Room password not found.</string>
 </resources>

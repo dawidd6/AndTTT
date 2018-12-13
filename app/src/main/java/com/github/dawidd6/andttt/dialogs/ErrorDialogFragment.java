@@ -42,6 +42,8 @@ public class ErrorDialogFragment extends BaseDialogFragment {
                 return R.string.error_client_name_empty;
             case CLIENT_NAME_TAKEN:
                 return R.string.error_client_name_taken;
+            case CLIENT_NAME_TOO_LONG:
+                return R.string.error_client_name_too_long;
             case CLIENT_HAS_A_ROOM:
                 return R.string.error_client_has_a_room;
             case CLIENT_HAS_NO_ROOM:
@@ -59,12 +61,20 @@ public class ErrorDialogFragment extends BaseDialogFragment {
                 return R.string.error_room_name_empty;
             case ROOM_NAME_TAKEN:
                 return R.string.error_room_name_taken;
+            case ROOM_NAME_TOO_LONG:
+                return R.string.error_room_name_too_long;
             case ROOM_FULL:
                 return R.string.error_room_full;
             case ROOM_NOT_FOUND:
                 return R.string.error_room_not_found;
             case ROOM_NOT_EMPTY:
                 return R.string.error_room_not_empty;
+            case ROOM_PASSWORD_MISMATCH:
+                return R.string.error_room_password_mismatch;
+            case ROOM_PASSWORD_TOO_LONG:
+                return R.string.error_room_password_too_long;
+            case ROOM_PASSWORD_NOT_FOUND:
+                return R.string.error_room_password_not_found;
 
             case ENEMY_NOT_FOUND_BUT_SHOULD_BE:
                 return R.string.error_enemy_not_found_but_should_be;

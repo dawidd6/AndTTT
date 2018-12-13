@@ -59,4 +59,9 @@
     <string name="waiting">Oczekiwanie</string>
     <string name="connected">Połączono</string>
     <string name="rooms">Pokoje</string>
+    <string name="error_client_name_too_long">Nazwa klienta jest za długa. Maksymalna długość to 20 znaków.</string>
+    <string name="error_room_name_too_long">Nazwa pokoju jest za długa. Maksymalna długość to 20 znaków.</string>
+    <string name="error_room_password_too_long">Hasło pokoju jest za długie. Maksymalna długość to 20 znaków.</string>
+    <string name="error_room_password_mismatch">Nieprawidłowe hasło pokoju.</string>
+    <string name="error_room_password_not_found">Nie znaleziono hasła pokoju.</string>
 </resources>

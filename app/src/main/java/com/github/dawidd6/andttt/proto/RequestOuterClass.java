@@ -86,13 +86,14 @@ public final class RequestOuterClass {
       ".RestartRequestH\000\0221\n\014starter_pack\030\010 \001(\0132" +
       "\031.proto.StarterPackRequestH\000B\006\n\004Type\"\025\n\023" +
       "UnrecognizedRequest\"#\n\023RegisterNameReque" +
-      "st\022\014\n\004name\030\001 \001(\t\"!\n\021CreateRoomRequest\022\014\n" +
-      "\004name\030\001 \001(\t\"\037\n\017JoinRoomRequest\022\014\n\004name\030\001" +
-      " \001(\t\"\022\n\020LeaveRoomRequest\"\021\n\017GetRoomsRequ" +
-      "est\"\037\n\013MoveRequest\022\020\n\010position\030\001 \001(\005\"1\n\016" +
-      "RestartRequest\022\037\n\007restart\030\001 \001(\0162\016.proto." +
-      "Restart\"\024\n\022StarterPackRequestB#\n\037com.git" +
-      "hub.dawidd6.andttt.protoP\001b\006proto3"
+      "st\022\014\n\004name\030\001 \001(\t\"3\n\021CreateRoomRequest\022\014\n" +
+      "\004name\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\"1\n\017JoinRoo" +
+      "mRequest\022\014\n\004name\030\001 \001(\t\022\020\n\010password\030\002 \001(\t" +
+      "\"\022\n\020LeaveRoomRequest\"\021\n\017GetRoomsRequest\"" +
+      "\037\n\013MoveRequest\022\020\n\010position\030\001 \001(\005\"1\n\016Rest" +
+      "artRequest\022\037\n\007restart\030\001 \001(\0162\016.proto.Rest" +
+      "art\"\024\n\022StarterPackRequestB#\n\037com.github.",
+      "dawidd6.andttt.protoP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -130,13 +131,13 @@ public final class RequestOuterClass {
     internal_static_proto_CreateRoomRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_CreateRoomRequest_descriptor,
-        new java.lang.String[] { "Name", });
+        new java.lang.String[] { "Name", "Password", });
     internal_static_proto_JoinRoomRequest_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_proto_JoinRoomRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_JoinRoomRequest_descriptor,
-        new java.lang.String[] { "Name", });
+        new java.lang.String[] { "Name", "Password", });
     internal_static_proto_LeaveRoomRequest_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_proto_LeaveRoomRequest_fieldAccessorTable = new

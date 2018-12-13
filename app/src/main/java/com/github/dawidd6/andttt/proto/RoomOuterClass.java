@@ -30,12 +30,12 @@ public final class RoomOuterClass {
     java.lang.String[] descriptorData = {
       "\n\nroom.proto\022\005proto\032\037google/protobuf/tim" +
       "estamp.proto\032\014client.proto\032\013enums.proto\"" +
-      "\250\001\n\004Room\022\014\n\004name\030\001 \001(\t\022#\n\014first_client\030\002" +
+      "\276\001\n\004Room\022\014\n\004name\030\001 \001(\t\022#\n\014first_client\030\002" +
       " \001(\0132\r.proto.Client\022$\n\rsecond_client\030\003 \001" +
       "(\0132\r.proto.Client\022\034\n\005state\030\004 \003(\0162\r.proto" +
       ".Symbol\022)\n\005since\030\005 \001(\0132\032.google.protobuf" +
-      ".TimestampB#\n\037com.github.dawidd6.andttt." +
-      "protoP\001b\006proto3"
+      ".Timestamp\022\024\n\014is_protected\030\006 \001(\010B#\n\037com." +
+      "github.dawidd6.andttt.protoP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -57,7 +57,7 @@ public final class RoomOuterClass {
     internal_static_proto_Room_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_Room_descriptor,
-        new java.lang.String[] { "Name", "FirstClient", "SecondClient", "State", "Since", });
+        new java.lang.String[] { "Name", "FirstClient", "SecondClient", "State", "Since", "IsProtected", });
     com.google.protobuf.TimestampProto.getDescriptor();
     com.github.dawidd6.andttt.proto.ClientOuterClass.getDescriptor();
     com.github.dawidd6.andttt.proto.Enums.getDescriptor();

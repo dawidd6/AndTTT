@@ -77,4 +77,9 @@ public interface RoomOrBuilder extends
    * <code>.google.protobuf.Timestamp since = 5;</code>
    */
   com.google.protobuf.TimestampOrBuilder getSinceOrBuilder();
+
+  /**
+   * <code>bool is_protected = 6;</code>
+   */
+  boolean getIsProtected();
 }

@@ -17,6 +17,10 @@ public enum Error
    */
   UNDEFINED(1),
   /**
+   * <code>CLIENT_NAME_TOO_LONG = 21;</code>
+   */
+  CLIENT_NAME_TOO_LONG(21),
+  /**
    * <code>CLIENT_NAME_EMPTY = 2;</code>
    */
   CLIENT_NAME_EMPTY(2),
@@ -49,6 +53,10 @@ public enum Error
    */
   CLIENT_HAS_NO_SYMBOL(9),
   /**
+   * <code>ROOM_NAME_TOO_LONG = 20;</code>
+   */
+  ROOM_NAME_TOO_LONG(20),
+  /**
    * <code>ROOM_NAME_EMPTY = 10;</code>
    */
   ROOM_NAME_EMPTY(10),
@@ -68,6 +76,18 @@ public enum Error
    * <code>ROOM_NOT_EMPTY = 14;</code>
    */
   ROOM_NOT_EMPTY(14),
+  /**
+   * <code>ROOM_PASSWORD_NOT_FOUND = 22;</code>
+   */
+  ROOM_PASSWORD_NOT_FOUND(22),
+  /**
+   * <code>ROOM_PASSWORD_MISMATCH = 23;</code>
+   */
+  ROOM_PASSWORD_MISMATCH(23),
+  /**
+   * <code>ROOM_PASSWORD_TOO_LONG = 24;</code>
+   */
+  ROOM_PASSWORD_TOO_LONG(24),
   /**
    * <code>ENEMY_NOT_FOUND_BUT_SHOULD_BE = 15;</code>
    */
@@ -99,6 +119,10 @@ public enum Error
    * <code>UNDEFINED = 1;</code>
    */
   public static final int UNDEFINED_VALUE = 1;
+  /**
+   * <code>CLIENT_NAME_TOO_LONG = 21;</code>
+   */
+  public static final int CLIENT_NAME_TOO_LONG_VALUE = 21;
   /**
    * <code>CLIENT_NAME_EMPTY = 2;</code>
    */
@@ -132,6 +156,10 @@ public enum Error
    */
   public static final int CLIENT_HAS_NO_SYMBOL_VALUE = 9;
   /**
+   * <code>ROOM_NAME_TOO_LONG = 20;</code>
+   */
+  public static final int ROOM_NAME_TOO_LONG_VALUE = 20;
+  /**
    * <code>ROOM_NAME_EMPTY = 10;</code>
    */
   public static final int ROOM_NAME_EMPTY_VALUE = 10;
@@ -151,6 +179,18 @@ public enum Error
    * <code>ROOM_NOT_EMPTY = 14;</code>
    */
   public static final int ROOM_NOT_EMPTY_VALUE = 14;
+  /**
+   * <code>ROOM_PASSWORD_NOT_FOUND = 22;</code>
+   */
+  public static final int ROOM_PASSWORD_NOT_FOUND_VALUE = 22;
+  /**
+   * <code>ROOM_PASSWORD_MISMATCH = 23;</code>
+   */
+  public static final int ROOM_PASSWORD_MISMATCH_VALUE = 23;
+  /**
+   * <code>ROOM_PASSWORD_TOO_LONG = 24;</code>
+   */
+  public static final int ROOM_PASSWORD_TOO_LONG_VALUE = 24;
   /**
    * <code>ENEMY_NOT_FOUND_BUT_SHOULD_BE = 15;</code>
    */
@@ -193,6 +233,7 @@ public enum Error
     switch (value) {
       case 0: return NONE;
       case 1: return UNDEFINED;
+      case 21: return CLIENT_NAME_TOO_LONG;
       case 2: return CLIENT_NAME_EMPTY;
       case 3: return CLIENT_NAME_TAKEN;
       case 4: return CLIENT_HAS_A_ROOM;
@@ -201,11 +242,15 @@ public enum Error
       case 7: return CLIENT_NOT_FOUND;
       case 8: return CLIENT_HAS_NO_TURN;
       case 9: return CLIENT_HAS_NO_SYMBOL;
+      case 20: return ROOM_NAME_TOO_LONG;
       case 10: return ROOM_NAME_EMPTY;
       case 11: return ROOM_NAME_TAKEN;
       case 12: return ROOM_FULL;
       case 13: return ROOM_NOT_FOUND;
       case 14: return ROOM_NOT_EMPTY;
+      case 22: return ROOM_PASSWORD_NOT_FOUND;
+      case 23: return ROOM_PASSWORD_MISMATCH;
+      case 24: return ROOM_PASSWORD_TOO_LONG;
       case 15: return ENEMY_NOT_FOUND_BUT_SHOULD_BE;
       case 16: return ENEMY_NOT_FOUND;
       case 17: return POSITION_ALREADY_OCCUPIED;

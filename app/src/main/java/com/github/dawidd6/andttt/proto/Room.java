@@ -17,6 +17,7 @@ public  final class Room extends
   private Room() {
     name_ = "";
     state_ = java.util.Collections.emptyList();
+    isProtected_ = false;
   }
 
   @java.lang.Override
@@ -110,6 +111,11 @@ public  final class Room extends
               since_ = subBuilder.buildPartial();
             }
 
+            break;
+          }
+          case 48: {
+
+            isProtected_ = input.readBool();
             break;
           }
         }
@@ -281,6 +287,15 @@ public  final class Room extends
     return getSince();
   }
 
+  public static final int IS_PROTECTED_FIELD_NUMBER = 6;
+  private boolean isProtected_;
+  /**
+   * <code>bool is_protected = 6;</code>
+   */
+  public boolean getIsProtected() {
+    return isProtected_;
+  }
+
   private byte memoizedIsInitialized = -1;
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
@@ -312,6 +327,9 @@ public  final class Room extends
     }
     if (since_ != null) {
       output.writeMessage(5, getSince());
+    }
+    if (isProtected_ != false) {
+      output.writeBool(6, isProtected_);
     }
   }
 
@@ -347,6 +365,10 @@ public  final class Room extends
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(5, getSince());
     }
+    if (isProtected_ != false) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeBoolSize(6, isProtected_);
+    }
     memoizedSize = size;
     return size;
   }
@@ -381,6 +403,8 @@ public  final class Room extends
       result = result && getSince()
           .equals(other.getSince());
     }
+    result = result && (getIsProtected()
+        == other.getIsProtected());
     return result;
   }
 
@@ -409,6 +433,9 @@ public  final class Room extends
       hash = (37 * hash) + SINCE_FIELD_NUMBER;
       hash = (53 * hash) + getSince().hashCode();
     }
+    hash = (37 * hash) + IS_PROTECTED_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+        getIsProtected());
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -560,6 +587,8 @@ public  final class Room extends
         since_ = null;
         sinceBuilder_ = null;
       }
+      isProtected_ = false;
+
       return this;
     }
 
@@ -605,6 +634,7 @@ public  final class Room extends
       } else {
         result.since_ = sinceBuilder_.build();
       }
+      result.isProtected_ = isProtected_;
       result.bitField0_ = to_bitField0_;
       onBuilt();
       return result;
@@ -669,6 +699,9 @@ public  final class Room extends
       }
       if (other.hasSince()) {
         mergeSince(other.getSince());
+      }
+      if (other.getIsProtected() != false) {
+        setIsProtected(other.getIsProtected());
       }
       onChanged();
       return this;
@@ -1233,6 +1266,32 @@ public  final class Room extends
         since_ = null;
       }
       return sinceBuilder_;
+    }
+
+    private boolean isProtected_ ;
+    /**
+     * <code>bool is_protected = 6;</code>
+     */
+    public boolean getIsProtected() {
+      return isProtected_;
+    }
+    /**
+     * <code>bool is_protected = 6;</code>
+     */
+    public Builder setIsProtected(boolean value) {
+      
+      isProtected_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>bool is_protected = 6;</code>
+     */
+    public Builder clearIsProtected() {
+      
+      isProtected_ = false;
+      onChanged();
+      return this;
     }
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {

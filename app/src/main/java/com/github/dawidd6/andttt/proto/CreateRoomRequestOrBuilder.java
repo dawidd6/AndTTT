@@ -16,4 +16,14 @@ public interface CreateRoomRequestOrBuilder extends
    */
   com.google.protobuf.ByteString
       getNameBytes();
+
+  /**
+   * <code>string password = 2;</code>
+   */
+  java.lang.String getPassword();
+  /**
+   * <code>string password = 2;</code>
+   */
+  com.google.protobuf.ByteString
+      getPasswordBytes();
 }

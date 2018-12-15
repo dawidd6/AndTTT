@@ -76,4 +76,6 @@
     <string name="error_room_password_too_long">Room password is too long. Max 20 characters.</string>
     <string name="error_room_password_mismatch">Incorrect room password.</string>
     <string name="error_room_password_not_found">Room password not found.</string>
+    <string name="protected_with_password">Protected with password</string>
+    <string name="enter_password">Enter password.</string>
 </resources>

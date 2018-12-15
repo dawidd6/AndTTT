@@ -64,4 +64,6 @@
     <string name="error_room_password_too_long">Hasło pokoju jest za długie. Maksymalna długość to 20 znaków.</string>
     <string name="error_room_password_mismatch">Nieprawidłowe hasło pokoju.</string>
     <string name="error_room_password_not_found">Nie znaleziono hasła pokoju.</string>
+    <string name="protected_with_password">Chroniony hasłem</string>
+    <string name="enter_password">Wprowadź hasło.</string>
 </resources>

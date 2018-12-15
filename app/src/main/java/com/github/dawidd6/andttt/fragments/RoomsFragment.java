@@ -7,12 +7,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 import com.github.dawidd6.andttt.MainActivity;
 import com.github.dawidd6.andttt.R;
+import com.github.dawidd6.andttt.dialogs.InputDialogFragment;
 import com.github.dawidd6.andttt.events.SendEvent;
 import com.github.dawidd6.andttt.adapters.RoomAdapter;
 import com.github.dawidd6.andttt.proto.*;
@@ -81,11 +83,30 @@ public class RoomsFragment extends BaseOnlineFragment {
 
     @OnItemClick(R.id.roomList)
     public void onRoomListClick(AdapterView<?> parent, View v, int position, long id) {
-        Request request = Request.newBuilder()
-                .setJoinRoom(JoinRoomRequest.newBuilder()
-                        .setName(((Room)parent.getItemAtPosition(position)).getName()))
-                .build();
-        EventBus.getDefault().post(new SendEvent(request));
+        Room room = (Room)parent.getItemAtPosition(position);
+
+        if(room.getIsProtected()) {
+            InputDialogFragment inputDialogFragment = new InputDialogFragment();
+            inputDialogFragment.set(
+                    R.string.enter_password,
+                    EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_PASSWORD,
+                    (vv, input) -> {
+                        inputDialogFragment.dismiss();
+                        Request request = Request.newBuilder()
+                                .setJoinRoom(JoinRoomRequest.newBuilder()
+                                        .setName(room.getName())
+                                        .setPassword(input))
+                                .build();
+                        EventBus.getDefault().post(new SendEvent(request));
+                    });
+            inputDialogFragment.show(getFragmentManager(), null);
+        } else {
+            Request request = Request.newBuilder()
+                    .setJoinRoom(JoinRoomRequest.newBuilder()
+                            .setName(room.getName()))
+                    .build();
+            EventBus.getDefault().post(new SendEvent(request));
+        }
     }
 
     @Override

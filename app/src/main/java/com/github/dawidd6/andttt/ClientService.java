@@ -21,12 +21,11 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class ClientService extends Service {
-    private Socket socket;
-    private NotificationManagerCompat notificationManager;
-    private int notificationsInc;
-    private final int NOTIFICATION_ID = 1;
     public static final String TAG = "Service";
     private final int BUFFER_SIZE = 4096;
+
+    private Socket socket;
+    private NotificationManagerCompat notificationManager;
 
     @Override
     public void onDestroy() {
@@ -78,6 +77,7 @@ public class ClientService extends Service {
         try {
             socket = new Socket(event.getHost(), event.getPort());
             EventBus.getDefault().post(new ConnectSuccessEvent(socket.getRemoteSocketAddress().toString()));
+            showNotification();
 
             while(true) {
                 try {
@@ -107,8 +107,7 @@ public class ClientService extends Service {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onNotify(NotifyEvent event) {
+    private void showNotification() {
         Intent i = Objects.requireNonNull(getPackageManager()
                 .getLaunchIntentForPackage(getPackageName()))
                 .setPackage(null)
@@ -118,19 +117,15 @@ public class ClientService extends Service {
 
         Notification notification = new NotificationCompat.Builder(ClientService.this, "default")
                 .setContentIntent(pendingIntent)
-                .setContentTitle(event.getTitle())
-                .setContentText(event.getText())
+                .setContentTitle(getString(R.string.connected))
+                .setContentText(socket.getRemoteSocketAddress().toString())
                 .setSmallIcon(R.drawable.ic_status_icon)
-                .setAutoCancel(!event.isPersistent())
-                .setOngoing(event.isPersistent())
+                .setAutoCancel(false)
+                .setOngoing(true)
                 .build();
 
-        if(event.isPersistent()) {
-            notificationManager.cancel(0);
-            notificationManager.notify(0, notification);
-        } else {
-            notificationManager.notify(++notificationsInc, notification);
-        }
+        notificationManager.cancel(0);
+        notificationManager.notify(0, notification);
     }
 
     private void dispatch(Response response) {

@@ -68,7 +68,6 @@ public class ConnectFragment extends BaseFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onConnectSuccess(ConnectSuccessEvent event) {
-        EventBus.getDefault().post(new NotifyEvent(getString(R.string.connected), event.getAddress(), true));
         isConnected = true;
         register();
     }

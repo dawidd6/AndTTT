@@ -28,7 +28,7 @@ import com.github.dawidd6.andttt.proto.Symbol;
 
 import java.util.List;
 
-public abstract class BaseGameFragment extends Fragment {
+public abstract class BaseGameFragment extends BaseFragment {
     private ImageView tilesView[];
     private Bitmap tilesBitmap[];
     private Bitmap boardBitmap;
@@ -84,8 +84,6 @@ public abstract class BaseGameFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        ButterKnife.bind(this, view);
 
         // lock to portrait only
         lockOrientation(true);

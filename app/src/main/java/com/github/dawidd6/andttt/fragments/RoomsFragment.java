@@ -3,7 +3,6 @@ package com.github.dawidd6.andttt.fragments;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +11,7 @@ import android.widget.*;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
-import com.github.dawidd6.andttt.MainActivity;
 import com.github.dawidd6.andttt.R;
-import com.github.dawidd6.andttt.dialogs.InputDialogFragment;
 import com.github.dawidd6.andttt.events.SendEvent;
 import com.github.dawidd6.andttt.adapters.RoomAdapter;
 import com.github.dawidd6.andttt.proto.*;
@@ -25,7 +22,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 
 
-public class RoomsFragment extends BaseOnlineFragment {
+public class RoomsFragment extends BaseFragment {
     public static final String TAG = "RoomsFragment";
     @BindView(R.id.noRoomsText) TextView noRoomsText;
     @BindView(R.id.roomList) ListView roomList;
@@ -52,6 +49,13 @@ public class RoomsFragment extends BaseOnlineFragment {
             }
         }
     };
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        isOnline = true;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -86,20 +90,15 @@ public class RoomsFragment extends BaseOnlineFragment {
         Room room = (Room)parent.getItemAtPosition(position);
 
         if(room.getIsProtected()) {
-            InputDialogFragment inputDialogFragment = new InputDialogFragment();
-            inputDialogFragment.set(
-                    R.string.enter_password,
-                    EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_PASSWORD,
-                    (vv, input) -> {
-                        inputDialogFragment.dismiss();
-                        Request request = Request.newBuilder()
-                                .setJoinRoom(JoinRoomRequest.newBuilder()
-                                        .setName(room.getName())
-                                        .setPassword(input))
-                                .build();
-                        EventBus.getDefault().post(new SendEvent(request));
-                    });
-            inputDialogFragment.show(getFragmentManager(), null);
+            showInput(R.string.enter_password, EditorInfo.TYPE_CLASS_TEXT|EditorInfo.TYPE_TEXT_VARIATION_PASSWORD, ((dialog, which) -> {
+                dialog.dismiss();
+                Request request = Request.newBuilder()
+                        .setJoinRoom(JoinRoomRequest.newBuilder()
+                                .setName(room.getName())
+                                .setPassword(dialog.getInputEditText().getText().toString()))
+                        .build();
+                EventBus.getDefault().post(new SendEvent(request));
+            }));
         } else {
             Request request = Request.newBuilder()
                     .setJoinRoom(JoinRoomRequest.newBuilder()

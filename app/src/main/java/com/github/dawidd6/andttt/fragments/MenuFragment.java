@@ -16,14 +16,14 @@ import com.github.dawidd6.andttt.MainActivity;
 import com.github.dawidd6.andttt.ClientService;
 import com.github.dawidd6.andttt.R;
 
-public class MenuFragment extends Fragment {
+public class MenuFragment extends BaseFragment {
     public static final String TAG = "MenuFragment";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu, parent, false);
+
         getActivity().stopService(new Intent(getActivity(), ClientService.class));
-        ButterKnife.bind(this, view);
 
         // workaround for destroying RoomsFragment
         Fragment f = getFragmentManager().findFragmentByTag(RoomsFragment.TAG);

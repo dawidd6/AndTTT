@@ -66,4 +66,8 @@
     <string name="error_room_password_not_found">Nie znaleziono hasła pokoju.</string>
     <string name="protected_with_password">Chroniony hasłem</string>
     <string name="enter_password">Wprowadź hasło.</string>
+    <string name="question">Pytanie</string>
+    <string name="please_wait">Proszę czekać</string>
+    <string name="input">Wprowadzanie</string>
+    <string name="error">Błąd</string>
 </resources>

@@ -14,7 +14,7 @@ import com.github.dawidd6.andttt.adapters.LibraryAdapter;
 
 import java.util.ArrayList;
 
-public class LibrariesFragment extends Fragment {
+public class LibrariesFragment extends BaseFragment {
     public static final String TAG = "LibrariesFragment";
     @BindView(R.id.list) ListView list;
 
@@ -26,8 +26,6 @@ public class LibrariesFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        ButterKnife.bind(this, view);
 
         ArrayList<Library> array = new ArrayList<>();
 

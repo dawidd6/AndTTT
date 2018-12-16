@@ -1,42 +1,35 @@
 package com.github.dawidd6.andttt.fragments;
 
 
-import android.app.Fragment;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.github.dawidd6.andttt.MainActivity;
 import com.github.dawidd6.andttt.ClientService;
 import com.github.dawidd6.andttt.R;
-import com.github.dawidd6.andttt.dialogs.BaseDialogFragment;
-import com.github.dawidd6.andttt.dialogs.ErrorDialogFragment;
 import com.github.dawidd6.andttt.events.*;
 import com.github.dawidd6.andttt.proto.*;
-import com.github.dawidd6.andttt.proto.Error;
-import com.google.protobuf.InvalidProtocolBufferException;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 
-public class ConnectFragment extends BaseOnlineFragment {
+public class ConnectFragment extends BaseFragment {
     public static final String TAG = "ConnectFragment";
     @BindView(R.id.addressEdit) EditText addressEdit;
     @BindView(R.id.nameEdit) EditText nameEdit;
     private boolean isConnected;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        isOnline = true;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -82,13 +75,9 @@ public class ConnectFragment extends BaseOnlineFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onConnectFail(ConnectFailEvent event) {
-        errorDialogFragment.setText(R.string.connection_failed);
-
-        if(isResumed()) {
-            errorDialogFragment.show(getFragmentManager(), null);
-        } else {
-            savedDialogFragment = errorDialogFragment;
-        }
+        showError(R.string.connection_failed, ((dialog, which) -> {
+            dialog.dismiss();
+        }));
 
         isConnected = false;
     }

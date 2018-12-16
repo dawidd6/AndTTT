@@ -82,4 +82,6 @@
     <string name="input">Input</string>
     <string name="question">Question</string>
     <string name="please_wait">Please wait</string>
+    <string name="wrong_format">Wrong address format.</string>
+    <string name="custom_server">Custom server</string>
 </resources>

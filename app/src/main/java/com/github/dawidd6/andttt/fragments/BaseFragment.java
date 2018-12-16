@@ -30,6 +30,7 @@ public abstract class BaseFragment extends Fragment {
     private MaterialDialog dialogToDismiss;
 
     protected boolean isOnline;
+    private boolean isDisconnected;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,7 @@ public abstract class BaseFragment extends Fragment {
             public void onLost(Network network) {
                 super.onLost(network);
 
-                onDisconnect(null);
+                EventBus.getDefault().post(new DisconnectEvent());
             }
         });
     }
@@ -168,6 +169,11 @@ public abstract class BaseFragment extends Fragment {
     public void onDisconnect(DisconnectEvent event) {
         if(isRemoving())
             return;
+
+        if(isDisconnected)
+            return;
+
+        isDisconnected = true;
 
         showError(R.string.disconnected, ((dialog, which) -> {
             dialog.dismiss();

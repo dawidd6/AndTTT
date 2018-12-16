@@ -6,8 +6,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 import butterknife.BindView;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import com.github.dawidd6.andttt.ClientService;
 import com.github.dawidd6.andttt.R;
@@ -20,9 +24,13 @@ import org.greenrobot.eventbus.ThreadMode;
 
 public class ConnectFragment extends BaseFragment {
     public static final String TAG = "ConnectFragment";
-    @BindView(R.id.addressEdit) EditText addressEdit;
     @BindView(R.id.nameEdit) EditText nameEdit;
+    @BindView(R.id.serverCheck) CheckBox serverCheck;
+    @BindView(R.id.addressText) TextView addressText;
+    @BindView(R.id.addressEdit) EditText addressEdit;
     private boolean isConnected;
+    private boolean isCustomServer;
+    private String server = "srv02.mikr.us:20564";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,12 +49,23 @@ public class ConnectFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         getActivity().startService(new Intent(getActivity(), ClientService.class));
+
+        addressEdit.setVisibility(View.GONE);
+        addressText.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.okButton)
     public void onOkButtonClick() {
         connect();
         register();
+    }
+
+    @OnCheckedChanged(R.id.serverCheck)
+    public void onCustomServerChecked(CompoundButton button, boolean checked) {
+        isCustomServer = checked;
+
+        addressText.setVisibility(checked ? View.VISIBLE : View.GONE);
+        addressEdit.setVisibility(checked ? View.VISIBLE : View.GONE);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -83,13 +102,17 @@ public class ConnectFragment extends BaseFragment {
 
     private void connect() {
         if(!isConnected) {
-            String address = addressEdit.getText().toString();
-            if(address.isEmpty())
-                address = addressEdit.getHint().toString();
+            String address = isCustomServer ? addressEdit.getText().toString() : server;
             String split[] = address.split(":");
             String host = split[0];
-            int port = Integer.valueOf(split[1]);
-            EventBus.getDefault().post(new ConnectEvent(host, port));
+            try {
+                int port = Integer.valueOf(split[1]);
+                EventBus.getDefault().post(new ConnectEvent(host, port));
+            } catch(ArrayIndexOutOfBoundsException | NumberFormatException e) {
+                showError(R.string.wrong_format, ((dialog, which) -> {
+                    dialog.dismiss();
+                }));
+            }
         }
     }
 

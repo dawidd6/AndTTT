@@ -70,4 +70,6 @@
     <string name="please_wait">Proszę czekać</string>
     <string name="input">Wprowadzanie</string>
     <string name="error">Błąd</string>
+    <string name="wrong_format">Zły format adresu.</string>
+    <string name="custom_server">Własny server</string>
 </resources>

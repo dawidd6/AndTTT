@@ -2,10 +2,10 @@ package listeners
 
 import (
 	"fmt"
-	"github.com/dawidd6/AndTTT-server/pkg/handlers"
 	"github.com/gorilla/mux"
 	"net"
 	"net/http"
+	"server/handlers"
 )
 
 func StartListeningHTTP(host string, port int) (*http.Server, error) {

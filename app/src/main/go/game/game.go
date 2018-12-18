@@ -1,8 +1,8 @@
 package game
 
 import (
-	"github.com/dawidd6/AndTTT-server/pkg/proto"
 	"math/rand"
+	"server/proto"
 )
 
 var patterns = [][]int{

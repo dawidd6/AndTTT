@@ -2,8 +2,8 @@ package service
 
 import (
 	"fmt"
-	"github.com/dawidd6/AndTTT-server/pkg/proto"
 	"math/rand"
+	"server/proto"
 	"strings"
 	"testing"
 	"time"

@@ -1,9 +1,9 @@
 package msg
 
 import (
-	"github.com/dawidd6/AndTTT-server/pkg/proto"
 	pb "github.com/golang/protobuf/proto"
 	"net"
+	"server/proto"
 )
 
 // Send writes []byte to *net.TCPConn and returns error

@@ -1,8 +1,8 @@
 package service
 
 import (
-	"github.com/dawidd6/AndTTT-server/pkg/proto"
 	"net"
+	"server/proto"
 	"testing"
 )
 

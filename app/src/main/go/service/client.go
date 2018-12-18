@@ -1,10 +1,10 @@
 package service
 
 import (
-	"github.com/dawidd6/AndTTT-server/pkg/mmap"
-	"github.com/dawidd6/AndTTT-server/pkg/proto"
+	"github.com/dawidd6/mmap"
 	"github.com/golang/protobuf/ptypes"
 	"net"
+	"server/proto"
 	"strings"
 )
 

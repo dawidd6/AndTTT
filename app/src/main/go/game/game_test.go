@@ -1,7 +1,7 @@
 package game
 
 import (
-	"github.com/dawidd6/AndTTT-server/pkg/proto"
+	"server/proto"
 	"testing"
 )
 

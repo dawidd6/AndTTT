@@ -1,10 +1,10 @@
 package handlers
 
 import (
-	"github.com/dawidd6/AndTTT-server/pkg/game"
-	"github.com/dawidd6/AndTTT-server/pkg/proto"
-	"github.com/dawidd6/AndTTT-server/pkg/service"
 	"net"
+	"server/game"
+	"server/proto"
+	"server/service"
 )
 
 type Dispatch struct {

@@ -2,17 +2,17 @@ package main
 
 import (
 	"flag"
-	"github.com/dawidd6/AndTTT-server/pkg/handlers"
-	"github.com/dawidd6/AndTTT-server/pkg/listeners"
-	"github.com/dawidd6/AndTTT-server/pkg/msg"
-	"github.com/dawidd6/AndTTT-server/pkg/proto"
-	"github.com/dawidd6/AndTTT-server/pkg/service"
 	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
 	"os"
 	"os/signal"
+	"server/handlers"
+	"server/listeners"
+	"server/msg"
+	"server/proto"
+	"server/service"
 	"syscall"
 	"time"
 )

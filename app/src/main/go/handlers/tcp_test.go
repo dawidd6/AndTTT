@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"github.com/dawidd6/AndTTT-server/pkg/proto"
-	"github.com/dawidd6/AndTTT-server/pkg/service"
+	"server/proto"
+	"server/service"
 	"testing"
 )
 

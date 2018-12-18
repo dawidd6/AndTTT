@@ -3,10 +3,10 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/dawidd6/AndTTT-server/pkg/service"
 	"github.com/gorilla/mux"
 	"net/http"
 	"runtime"
+	"server/service"
 )
 
 var OnApiRequest = func(request *http.Request) {}

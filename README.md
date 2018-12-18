@@ -23,15 +23,11 @@ It's mostly playable and usable now, but it is still in beta or maybe even alpha
 
 ### Screenshots (version 0.5.0)
 
-![1](screenshots/Screenshot_20181218-172029.png)
+<img src="screenshots/Screenshot_20181218-172029.png" width="300">
+<img src="screenshots/Screenshot_20181218-172044.png" width="300">
 
-![2](screenshots/Screenshot_20181218-172044.png)
-
-![3](screenshots/Screenshot_20181218-172057.png)
-
-![4](screenshots/Screenshot_20181218-172107.png)
-
-![5](screenshots/Screenshot_20181218-172152.png)
+<img src="screenshots/Screenshot_20181218-172057.png" width="300">
+<img src="screenshots/Screenshot_20181218-172107.png" width="300">
 
 ### Public server instance
 

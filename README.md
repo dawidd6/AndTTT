@@ -25,7 +25,9 @@ It's mostly playable and usable now, but it is still in beta or maybe even alpha
 
 <p align="center">
 <img src="screenshots/Screenshot_20181218-172029.png" width="300"> <img src="screenshots/Screenshot_20181218-172044.png" width="300">
+</p>
 
+<p align="center">
 <img src="screenshots/Screenshot_20181218-172057.png" width="300"> <img src="screenshots/Screenshot_20181218-172107.png" width="300">
 </p>
 

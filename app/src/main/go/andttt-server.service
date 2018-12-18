@@ -1,0 +1,12 @@
+[Unit]
+Description=AndTTT server
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/server -host-tcp 0.0.0.0 -port-tcp 1234 -host-http 0.0.0.0 -port-http 80
+Restart=always
+RestartSec=10
+Type=idle
+
+[Install]
+WantedBy=multi-user.target

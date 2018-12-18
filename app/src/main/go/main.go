@@ -18,7 +18,7 @@ import (
 )
 
 var (
-	commit string
+	version string = "0.4.1+git"
 	logger *log.Logger
 )
 
@@ -66,7 +66,7 @@ func main() {
 		}
 	}()
 
-	logger.Println("commit", commit)
+	logger.Println("version", version)
 	logger.Println("cleaning at interval", *cleanInterval)
 	logger.Println("listening TCP", *hostTCP, *portTCP)
 	logger.Println("listening HTTP", *hostHTTP, *portHTTP)

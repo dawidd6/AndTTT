@@ -1,3 +1,0 @@
-#!/bin/bash
-
-go install -ldflags "-X main.commit=$(git rev-parse --short HEAD)" ./...

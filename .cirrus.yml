@@ -8,7 +8,7 @@ go_task:
     container:
         image: golang:1.11
     go_script:
-        - cd /app/src/main/go
+        - cd app/src/main/go
         - go install ./...
         - go test -v ./...
 

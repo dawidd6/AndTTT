@@ -1,4 +1,4 @@
-task:
+java_task:
     container:
         image: cirrusci/android-sdk:26
     build_script:
@@ -7,3 +7,18 @@ task:
         PASS: ENCRYPTED[49e5aee377ad05958ef551894a7363deee7b4b9aee779b122b7f37ae6d6f810f62ae26982dea73c1e05d62c3d54ccf3d]
     upload_script:
         - curl -k -u "S2YMF26NAK8Ls8L:$PASS" -T app/build/outputs/apk/debug/app-debug.apk "https://cloud.disroot.org/public.php/webdav/AndTTT-$CIRRUS_CHANGE_IN_REPO.apk"
+
+go_task:
+    container:
+        image: golang:11
+    test_script:
+        - go test -v -count 3 ./...
+    build_script:
+        - go build
+
+proto_task:
+    container:
+        dawidd6/protobuf:latest
+    gen_script:
+        - cd app/src/main/proto
+        - ./gen-proto.sh

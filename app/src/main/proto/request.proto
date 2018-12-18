@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package proto;
+
+import "enums.proto";
+
+option java_package = "com.github.dawidd6.andttt.proto";
+option java_multiple_files = true;
+
+message Request {
+    oneof Type {
+        UnrecognizedRequest unrecognized = 9999;
+
+        RegisterNameRequest register_name = 1;
+        CreateRoomRequest create_room = 2;
+        JoinRoomRequest join_room = 3;
+        LeaveRoomRequest leave_room = 4;
+        GetRoomsRequest get_rooms = 5;
+        MoveRequest move = 6;
+        RestartRequest restart = 7;
+        StarterPackRequest starter_pack = 8;
+    }
+}
+
+message UnrecognizedRequest {}
+
+message RegisterNameRequest {
+    string name = 1;
+}
+
+message CreateRoomRequest {
+    string name = 1;
+    string password = 2;
+}
+
+message JoinRoomRequest {
+    string name = 1;
+    string password = 2;
+}
+
+message LeaveRoomRequest {}
+
+message GetRoomsRequest {}
+
+message MoveRequest {
+    int32 position = 1;
+}
+
+message RestartRequest {
+    Restart restart = 1;
+}
+
+message StarterPackRequest {}

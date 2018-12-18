@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package proto;
+
+import "room.proto";
+import "enums.proto";
+
+option java_package = "com.github.dawidd6.andttt.proto";
+option java_multiple_files = true;
+
+message Response {
+    Error error = 1000;
+
+    oneof Type {
+        UnrecognizedResponse unrecognized = 9999;
+
+        RegisterNameResponse register_name = 1;
+        CreateRoomResponse create_room = 2;
+        JoinRoomResponse join_room = 3;
+        LeaveRoomResponse leave_room = 4;
+        GetRoomsResponse get_rooms = 5;
+        MoveResponse move = 6;
+        RestartResponse restart = 7;
+        StarterPackResponse starter_pack = 8;
+
+        EnemyDisconnectedResponse enemy_disconnected = 101;
+        EnemyLeftResponse enemy_left = 102;
+        EnemyMovedResponse enemy_moved = 103;
+    }
+}
+
+message UnrecognizedResponse {}
+
+message RegisterNameResponse {
+    string name = 1;
+}
+
+message CreateRoomResponse {
+    string name = 1;
+}
+
+message JoinRoomResponse {
+    string name = 1;
+}
+
+message LeaveRoomResponse {}
+
+message GetRoomsResponse {
+    repeated Room rooms = 1;
+}
+
+message MoveResponse {
+    int32 position = 1;
+}
+
+message RestartResponse {
+    Restart restart = 1;
+}
+
+message StarterPackResponse {
+     Symbol my_symbol = 1;
+     Symbol enemy_symbol = 2;
+     bool my_turn = 3;
+     bool enemy_turn = 4;
+     string enemy_name = 5;
+}
+
+
+message EnemyDisconnectedResponse {}
+
+message EnemyLeftResponse {}
+
+message EnemyMovedResponse {
+    int32 position = 1;
+}

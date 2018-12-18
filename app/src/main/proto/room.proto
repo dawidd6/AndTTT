@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package proto;
+
+import "google/protobuf/timestamp.proto";
+import "client.proto";
+import "enums.proto";
+
+option java_package = "com.github.dawidd6.andttt.proto";
+option java_multiple_files = true;
+
+message Room {
+    string name = 1;
+    Client first_client = 2;
+    Client second_client = 3;
+    repeated Symbol state = 4;
+    google.protobuf.Timestamp since = 5;
+    bool is_protected = 6;
+}

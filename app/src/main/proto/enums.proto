@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package proto;
+
+option java_package = "com.github.dawidd6.andttt.proto";
+option java_multiple_files = true;
+
+enum Error {
+    NONE = 0;
+    UNDEFINED = 1;
+
+    CLIENT_NAME_TOO_LONG = 21;
+    CLIENT_NAME_EMPTY = 2;
+    CLIENT_NAME_TAKEN = 3;
+    CLIENT_HAS_A_ROOM = 4;
+    CLIENT_HAS_NO_ROOM = 5;
+    CLIENT_NOT_FOUND_IN_ROOM = 6;
+    CLIENT_NOT_FOUND = 7;
+    CLIENT_HAS_NO_TURN = 8;
+    CLIENT_HAS_NO_SYMBOL = 9;
+
+    ROOM_NAME_TOO_LONG = 20;
+    ROOM_NAME_EMPTY = 10;
+    ROOM_NAME_TAKEN = 11;
+    ROOM_FULL = 12;
+    ROOM_NOT_FOUND = 13;
+    ROOM_NOT_EMPTY = 14;
+    ROOM_PASSWORD_NOT_FOUND = 22;
+    ROOM_PASSWORD_MISMATCH = 23;
+    ROOM_PASSWORD_TOO_LONG = 24;
+
+    ENEMY_NOT_FOUND_BUT_SHOULD_BE = 15;
+    ENEMY_NOT_FOUND = 16;
+
+    POSITION_ALREADY_OCCUPIED = 17;
+    POSITION_OUT_OF_BOUND = 18;
+
+    THERE_IS_A_WINNER = 19;
+}
+
+enum Restart {
+    UNSPECIFIED = 0;
+    REQUESTED = 1;
+    APPROVED = 2;
+    DENIED = 3;
+}
+
+enum Symbol {
+    NO = 0;
+    CROSS = 1;
+    CIRCLE = 2;
+}

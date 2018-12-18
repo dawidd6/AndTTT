@@ -18,7 +18,7 @@ go_task:
 
 proto_task:
     container:
-        dawidd6/protobuf:latest
+        image: dawidd6/protobuf:latest
     gen_script:
         - cd app/src/main/proto
         - ./gen-proto.sh

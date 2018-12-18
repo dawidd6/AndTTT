@@ -1,20 +1,20 @@
 java_task:
     container:
         image: cirrusci/android-sdk:26
-    build_script:
+    java_script:
         - ./gradlew build
 
 go_task:
     container:
         image: golang:1.11
-    test_script:
-        - go test -v -count 3 ./...
-    build_script:
-        - go build
+    go_script:
+        - cd /app/src/main/go
+        - go install ./...
+        - go test -v ./...
 
 proto_task:
     container:
         image: dawidd6/protobuf:latest
-    gen_script:
+    proto_script:
         - cd app/src/main/proto
         - ./gen-proto.sh

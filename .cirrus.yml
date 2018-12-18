@@ -6,7 +6,7 @@ java_task:
 
 go_task:
     container:
-        image: golang:11
+        image: golang:1.11
     test_script:
         - go test -v -count 3 ./...
     build_script:

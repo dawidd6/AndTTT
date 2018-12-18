@@ -1,3 +1,0 @@
-[submodule "proto"]
-	path = app/src/main/proto
-	url = git@github.com:dawidd6/AndTTT-proto.git

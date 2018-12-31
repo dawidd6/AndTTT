@@ -52,16 +52,7 @@ public class SettingsFragment extends PreferenceFragment {
 
         assert libraries != null;
         libraries.setOnPreferenceClickListener(preference -> {
-            getFragmentManager()
-                    .beginTransaction()
-                    .addToBackStack(null)
-                    .setCustomAnimations(
-                            android.R.animator.fade_in,
-                            android.R.animator.fade_out,
-                            android.R.animator.fade_in,
-                            android.R.animator.fade_out)
-                    .replace(R.id.placeholder, new LibrariesFragment(), LibrariesFragment.TAG)
-                    .commit();
+            MainActivity.switchFragment(getFragmentManager(), new LibrariesFragment(), true);
             return true;
         });
     }

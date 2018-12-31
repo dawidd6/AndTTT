@@ -64,7 +64,7 @@
     <string name="error_position_already_occupied">Position already occupied.</string>
     <string name="error_position_out_of_bound">Position out of bound.</string>
     <string name="error_there_is_a_winner">There is a winner. Cannot move.</string>
-    <string name="error_undefined">An undefined error occured.</string>
+    <string name="error_undefined">An undefined error occurred.</string>
     <string name="enemy_left">Enemy left. Do you want to stay in current room?</string>
     <string name="question_restart">Your enemy requested restart. Do you want to do it too?</string>
     <string name="denied_restart">Your enemy does not want to restart the game.</string>
@@ -84,4 +84,8 @@
     <string name="please_wait">Please wait</string>
     <string name="wrong_format">Wrong address format.</string>
     <string name="custom_server">Custom server</string>
+    <string name="connection_timeout">Connection timed out.</string>
+    <string name="registering">Registering...</string>
+    <string name="creating">Creating...</string>
+    <string name="joining">Joining...</string>
 </resources>

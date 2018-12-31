@@ -1,6 +1,7 @@
 package com.github.dawidd6.andttt.fragments;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import static com.github.dawidd6.andttt.OnlineActivity.bus;
+import static com.github.dawidd6.andttt.OnlineActivity.dialogManager;
+
 
 public class CreateFragment extends BaseFragment {
     public static final String TAG = "CreateFragment";
@@ -25,13 +29,6 @@ public class CreateFragment extends BaseFragment {
     @BindView(R.id.roomEdit) EditText roomEdit;
     @BindView(R.id.passwordEdit) EditText passwordEdit;
     @BindView(R.id.passwordText) TextView passwordText;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        isOnline = true;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -46,15 +43,29 @@ public class CreateFragment extends BaseFragment {
         passwordText.setVisibility(View.GONE);
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        bus.register(this);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        bus.unregister(this);
+    }
+
     @OnClick(R.id.okButton)
     public void onOkButtonClick() {
+        dialogManager.showLoading(getActivity(), R.string.creating);
+
         Request request = Request.newBuilder()
                 .setCreateRoom(CreateRoomRequest.newBuilder()
                         .setName(roomEdit.getText().toString())
                         .setPassword(isProtectedChecked ? passwordEdit.getText().toString() : ""))
                 .build();
 
-        EventBus.getDefault().post(new SendEvent(request));
+        bus.post(new SendEvent(request));
     }
 
     @OnCheckedChanged(R.id.protectedCheck)
@@ -67,6 +78,7 @@ public class CreateFragment extends BaseFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onCreateRoom(CreateRoomResponse response) {
+        dialogManager.dismiss();
         getActivity().onBackPressed();
     }
 }

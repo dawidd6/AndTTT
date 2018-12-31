@@ -72,4 +72,8 @@
     <string name="error">Błąd</string>
     <string name="wrong_format">Zły format adresu.</string>
     <string name="custom_server">Własny server</string>
+    <string name="connection_timeout">Połączenie trwało za długo.</string>
+    <string name="registering">Rejestrowanie...</string>
+    <string name="creating">Tworzenie...</string>
+    <string name="joining">Dołączanie...</string>
 </resources>

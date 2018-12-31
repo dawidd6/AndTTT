@@ -16,13 +16,18 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.Arrays;
 import java.util.Objects;
+
+import static com.github.dawidd6.andttt.OnlineActivity.bus;
 
 public class ClientService extends Service {
     public static final String TAG = "Service";
     private final int BUFFER_SIZE = 4096;
+    private final int timeout = 5000;
 
     private Socket socket;
     private NotificationManagerCompat notificationManager;
@@ -33,11 +38,12 @@ public class ClientService extends Service {
 
         notificationManager.cancelAll();
 
-        EventBus.getDefault().unregister(this);
+        bus.unregister(this);
 
         if(socket != null) {
             try {
                 socket.close();
+                socket = null;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -50,7 +56,7 @@ public class ClientService extends Service {
 
         notificationManager = NotificationManagerCompat.from(this);
 
-        EventBus.getDefault().register(this);
+        bus.register(this);
     }
 
     @Override
@@ -75,35 +81,36 @@ public class ClientService extends Service {
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onConnect(ConnectEvent event) {
         try {
-            socket = new Socket(event.getHost(), event.getPort());
-            EventBus.getDefault().post(new ConnectSuccessEvent(socket.getRemoteSocketAddress().toString()));
+            socket = new Socket();
+            socket.connect(new InetSocketAddress(event.getHost(), event.getPort()), timeout);
+            bus.post(new ConnectSuccessEvent(socket.getRemoteSocketAddress().toString()));
             showNotification();
 
-            while(true) {
+            while (true) {
                 try {
                     byte buffer[] = new byte[BUFFER_SIZE];
                     int length = socket.getInputStream().read(buffer);
-                    if(length < 0)
+                    if (length < 0)
                         throw new IOException();
                     buffer = Arrays.copyOfRange(buffer, 0, length);
                     Response response = Response.parseFrom(buffer);
                     dispatch(response);
                 } catch (IOException e) {
                     e.printStackTrace();
-                    if(socket == null)
-                        return;
-
-                    socket.close();
-                    socket = null;
-                    EventBus.getDefault().post(new DisconnectEvent());
+                    if(socket != null) {
+                        socket.close();
+                        socket = null;
+                        bus.post(new DisconnectEvent());
+                    }
                     break;
                 }
             }
-
-            Log.i(TAG, "disconnect");
-        } catch (IOException e) {
-            EventBus.getDefault().post(new ConnectFailEvent());
+        } catch (SocketTimeoutException e) {
             e.printStackTrace();
+            bus.post(new ConnectTimeoutEvent());
+        } catch (IOException e) {
+            e.printStackTrace();
+            bus.post(new ConnectFailEvent());
         }
     }
 
@@ -130,46 +137,46 @@ public class ClientService extends Service {
 
     private void dispatch(Response response) {
         if(response.getError() != Error.NONE) {
-            EventBus.getDefault().post(response.getError());
+            bus.post(response.getError());
             return;
         }
 
         switch(response.getTypeCase()) {
             case REGISTER_NAME:
-                EventBus.getDefault().post(response.getRegisterName());
+                bus.post(response.getRegisterName());
                 break;
             case CREATE_ROOM:
-                EventBus.getDefault().post(response.getCreateRoom());
+                bus.post(response.getCreateRoom());
                 break;
             case JOIN_ROOM:
-                EventBus.getDefault().post(response.getJoinRoom());
+                bus.post(response.getJoinRoom());
                 break;
             case STARTER_PACK:
-                EventBus.getDefault().post(response.getStarterPack());
+                bus.post(response.getStarterPack());
                 break;
             case MOVE:
-                EventBus.getDefault().post(response.getMove());
+                bus.post(response.getMove());
                 break;
             case ENEMY_DISCONNECTED:
-                EventBus.getDefault().post(response.getEnemyDisconnected());
+                bus.post(response.getEnemyDisconnected());
                 break;
             case ENEMY_LEFT:
-                EventBus.getDefault().post(response.getEnemyLeft());
+                bus.post(response.getEnemyLeft());
                 break;
             case ENEMY_MOVED:
-                EventBus.getDefault().post(response.getEnemyMoved());
+                bus.post(response.getEnemyMoved());
                 break;
             case RESTART:
-                EventBus.getDefault().post(response.getRestart());
+                bus.post(response.getRestart());
                 break;
             case GET_ROOMS:
-                EventBus.getDefault().post(response.getGetRooms());
+                bus.post(response.getGetRooms());
                 break;
             case LEAVE_ROOM:
-                EventBus.getDefault().post(response.getLeaveRoom());
+                bus.post(response.getLeaveRoom());
                 break;
             case UNRECOGNIZED:
-                EventBus.getDefault().post(response.getUnrecognized());
+                bus.post(response.getUnrecognized());
                 break;
         }
 

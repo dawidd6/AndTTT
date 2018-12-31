@@ -1,6 +1,7 @@
 package com.github.dawidd6.andttt.fragments;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.*;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
+import com.github.dawidd6.andttt.OnlineActivity;
 import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.events.SendEvent;
 import com.github.dawidd6.andttt.adapters.RoomAdapter;
@@ -21,6 +23,9 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
+import static com.github.dawidd6.andttt.OnlineActivity.bus;
+import static com.github.dawidd6.andttt.OnlineActivity.dialogManager;
+
 
 public class RoomsFragment extends BaseFragment {
     public static final String TAG = "RoomsFragment";
@@ -28,8 +33,7 @@ public class RoomsFragment extends BaseFragment {
     @BindView(R.id.roomList) ListView roomList;
     @BindView(R.id.swiperefresh) SwipeRefreshLayout layout;
     private long lastRefreshed;
-    private String name;
-    private Thread periodicRunnable = new Thread() {
+    private Thread periodicRefreshThread = new Thread() {
         @Override
         public void run() {
             setName("periodic-refresh-thread");
@@ -51,13 +55,6 @@ public class RoomsFragment extends BaseFragment {
     };
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        isOnline = true;
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_rooms, container, false);
     }
@@ -66,23 +63,25 @@ public class RoomsFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        name = getArguments().getString("name");
         layout.setOnRefreshListener(this::refresh);
         noRoomsText.setVisibility(View.GONE);
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        bus.register(this);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        bus.unregister(this);
+    }
+
     @OnClick(R.id.createButton)
     public void onCreateButtonClick() {
-        getFragmentManager()
-                .beginTransaction()
-                .addToBackStack(null)
-                .setCustomAnimations(
-                        android.R.animator.fade_in,
-                        android.R.animator.fade_out,
-                        android.R.animator.fade_in,
-                        android.R.animator.fade_out)
-                .replace(R.id.placeholder, new CreateFragment(), CreateFragment.TAG)
-                .commit();
+        OnlineActivity.switchFragment(getFragmentManager(), new CreateFragment(), true);
     }
 
     @OnItemClick(R.id.roomList)
@@ -90,21 +89,25 @@ public class RoomsFragment extends BaseFragment {
         Room room = (Room)parent.getItemAtPosition(position);
 
         if(room.getIsProtected()) {
-            showInput(R.string.enter_password, EditorInfo.TYPE_CLASS_TEXT|EditorInfo.TYPE_TEXT_VARIATION_PASSWORD, ((dialog, which) -> {
+            int inputType = EditorInfo.TYPE_CLASS_TEXT|EditorInfo.TYPE_TEXT_VARIATION_PASSWORD;
+
+            dialogManager.showInput(getActivity(), R.string.enter_password, inputType, ((dialog, which) -> {
                 dialog.dismiss();
+                dialogManager.showLoading(getActivity(), R.string.joining);
                 Request request = Request.newBuilder()
                         .setJoinRoom(JoinRoomRequest.newBuilder()
                                 .setName(room.getName())
                                 .setPassword(dialog.getInputEditText().getText().toString()))
                         .build();
-                EventBus.getDefault().post(new SendEvent(request));
+                bus.post(new SendEvent(request));
             }));
         } else {
+            dialogManager.showLoading(getActivity(), R.string.joining);
             Request request = Request.newBuilder()
                     .setJoinRoom(JoinRoomRequest.newBuilder()
                             .setName(room.getName()))
                     .build();
-            EventBus.getDefault().post(new SendEvent(request));
+            bus.post(new SendEvent(request));
         }
     }
 
@@ -114,14 +117,14 @@ public class RoomsFragment extends BaseFragment {
 
         refresh();
 
-        periodicRunnable.start();
+        periodicRefreshThread.start();
     }
 
     @Override
     public void onPause() {
         super.onPause();
 
-        periodicRunnable.interrupt();
+        periodicRefreshThread.interrupt();
     }
 
     private void refresh() {
@@ -132,25 +135,13 @@ public class RoomsFragment extends BaseFragment {
         Request request = Request.newBuilder()
                 .setGetRooms(GetRoomsRequest.newBuilder())
                 .build();
-        EventBus.getDefault().post(new SendEvent(request));
+        bus.post(new SendEvent(request));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onJoinRoom(JoinRoomResponse response) {
-        OnlineFragment onlineFragment = new OnlineFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("name", name);
-        onlineFragment.setArguments(bundle);
-        getFragmentManager()
-                .beginTransaction()
-                .addToBackStack(null)
-                .setCustomAnimations(
-                        android.R.animator.fade_in,
-                        android.R.animator.fade_out,
-                        android.R.animator.fade_in,
-                        android.R.animator.fade_out)
-                .replace(R.id.placeholder, onlineFragment, OnlineFragment.TAG)
-                .commit();
+        dialogManager.dismiss();
+        OnlineActivity.switchFragment(getFragmentManager(), new OnlineFragment(), true);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

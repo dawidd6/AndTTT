@@ -21,6 +21,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".OnlineActivity"
+            android:configChanges="orientation|screenSize">
+        </activity>
+
         <service
             android:name=".ClientService"
             android:enabled="true"

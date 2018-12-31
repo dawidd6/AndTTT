@@ -1,6 +1,7 @@
 package com.github.dawidd6.andttt.fragments;
 
 
+import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.github.dawidd6.andttt.MainActivity;
 import com.github.dawidd6.andttt.ClientService;
+import com.github.dawidd6.andttt.OnlineActivity;
 import com.github.dawidd6.andttt.R;
 
 public class MenuFragment extends BaseFragment {
@@ -21,71 +23,26 @@ public class MenuFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_menu, parent, false);
-
-        getActivity().stopService(new Intent(getActivity(), ClientService.class));
-
-        // workaround for destroying RoomsFragment
-        Fragment f = getFragmentManager().findFragmentByTag(RoomsFragment.TAG);
-        if(f != null)
-            getFragmentManager().beginTransaction().remove(f).commit();
-
-        return view;
+        return inflater.inflate(R.layout.fragment_menu, parent, false);
     }
 
     @OnClick(R.id.localButton)
     public void onLocalButtonClick() {
-        getFragmentManager()
-                .beginTransaction()
-                .addToBackStack(null)
-                .setCustomAnimations(
-                        android.R.animator.fade_in,
-                        android.R.animator.fade_out,
-                        android.R.animator.fade_in,
-                        android.R.animator.fade_out)
-                .replace(R.id.placeholder, new LocalFragment(), LocalFragment.TAG)
-                .commit();
+        MainActivity.switchFragment(getFragmentManager(), new LocalFragment(), true);
     }
 
     @OnClick(R.id.singleButton)
     public void onSingleButtonClick() {
-        getFragmentManager()
-                .beginTransaction()
-                .addToBackStack(null)
-                .setCustomAnimations(
-                        android.R.animator.fade_in,
-                        android.R.animator.fade_out,
-                        android.R.animator.fade_in,
-                        android.R.animator.fade_out)
-                .replace(R.id.placeholder, new SingleFragment(), SingleFragment.TAG)
-                .commit();
+        MainActivity.switchFragment(getFragmentManager(), new SingleFragment(), true);
     }
 
     @OnClick(R.id.onlineButton)
     public void onOnlineButtonClick() {
-        getFragmentManager()
-                .beginTransaction()
-                .addToBackStack(null)
-                .setCustomAnimations(
-                        android.R.animator.fade_in,
-                        android.R.animator.fade_out,
-                        android.R.animator.fade_in,
-                        android.R.animator.fade_out)
-                .replace(R.id.placeholder, new ConnectFragment(), ConnectFragment.TAG)
-                .commit();
+        startActivity(new Intent(getActivity(), OnlineActivity.class));
     }
 
     @OnClick(R.id.settingsButton)
     public void onSettingsButtonClick() {
-        getFragmentManager()
-                .beginTransaction()
-                .addToBackStack(null)
-                .setCustomAnimations(
-                        android.R.animator.fade_in,
-                        android.R.animator.fade_out,
-                        android.R.animator.fade_in,
-                        android.R.animator.fade_out)
-                .replace(R.id.placeholder, new SettingsFragment(), SettingsFragment.TAG)
-                .commit();
+        MainActivity.switchFragment(getFragmentManager(), new SettingsFragment(), true);
     }
 }

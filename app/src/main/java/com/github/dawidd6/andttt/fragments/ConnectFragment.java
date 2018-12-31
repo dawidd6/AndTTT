@@ -1,8 +1,10 @@
 package com.github.dawidd6.andttt.fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +16,16 @@ import butterknife.BindView;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import com.github.dawidd6.andttt.ClientService;
+import com.github.dawidd6.andttt.OnlineActivity;
+import com.github.dawidd6.andttt.OnlineActivity;
 import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.events.*;
 import com.github.dawidd6.andttt.proto.*;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import static com.github.dawidd6.andttt.OnlineActivity.*;
 
 
 public class ConnectFragment extends BaseFragment {
@@ -28,16 +34,9 @@ public class ConnectFragment extends BaseFragment {
     @BindView(R.id.serverCheck) CheckBox serverCheck;
     @BindView(R.id.addressText) TextView addressText;
     @BindView(R.id.addressEdit) EditText addressEdit;
-    private boolean isConnected;
     private boolean isCustomServer;
+    private boolean isRegistered;
     private String server = "srv02.mikr.us:20564";
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        isOnline = true;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -54,10 +53,24 @@ public class ConnectFragment extends BaseFragment {
         addressText.setVisibility(View.GONE);
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        bus.register(this);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        bus.unregister(this);
+    }
+
     @OnClick(R.id.okButton)
     public void onOkButtonClick() {
-        connect();
-        register();
+        if(!isConnected)
+            connect();
+        else if(!isRegistered)
+            register();
     }
 
     @OnCheckedChanged(R.id.serverCheck)
@@ -70,62 +83,60 @@ public class ConnectFragment extends BaseFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onRegisterName(RegisterNameResponse response) {
-        RoomsFragment roomsFragment = new RoomsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("name", response.getName());
-        roomsFragment.setArguments(bundle);
-        getFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(
-                        android.R.animator.fade_in,
-                        android.R.animator.fade_out,
-                        android.R.animator.fade_in,
-                        android.R.animator.fade_out)
-                .replace(R.id.placeholder, roomsFragment, RoomsFragment.TAG)
-                .commit();
+        isRegistered = true;
+        name = response.getName();
+        dialogManager.dismiss();
+        OnlineActivity.switchFragment(getFragmentManager(), new RoomsFragment(), false);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onConnectSuccess(ConnectSuccessEvent event) {
         isConnected = true;
-        register();
+        if(!isRegistered)
+            register();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onConnectFail(ConnectFailEvent event) {
-        showError(R.string.connection_failed, ((dialog, which) -> {
+        isConnected = false;
+
+        dialogManager.showError(getActivity(), R.string.connection_failed, ((dialog, which) -> {
             dialog.dismiss();
         }));
+    }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onConnectTimeout(ConnectTimeoutEvent event) {
         isConnected = false;
+
+        dialogManager.showError(getActivity(), R.string.connection_timeout, ((dialog, which) -> {
+            dialog.dismiss();
+        }));
     }
 
     private void connect() {
-        if(!isConnected) {
-            String address = isCustomServer ? addressEdit.getText().toString() : server;
-            String split[] = address.split(":");
-            String host = split[0];
-            try {
-                int port = Integer.valueOf(split[1]);
-                EventBus.getDefault().post(new ConnectEvent(host, port));
-            } catch(ArrayIndexOutOfBoundsException | NumberFormatException e) {
-                showError(R.string.wrong_format, ((dialog, which) -> {
-                    dialog.dismiss();
-                }));
-            }
+        dialogManager.showLoading(getActivity(), R.string.connecting);
+
+        String address = isCustomServer ? addressEdit.getText().toString() : server;
+        String split[] = address.split(":");
+        String host = split[0];
+        try {
+            int port = Integer.valueOf(split[1]);
+            bus.post(new ConnectEvent(host, port));
+        } catch(ArrayIndexOutOfBoundsException | NumberFormatException e) {
+            dialogManager.showError(getActivity(), R.string.wrong_format, ((dialog, which) -> {
+                dialog.dismiss();
+            }));
         }
     }
 
     private void register() {
-        if(isConnected) {
-            String name = nameEdit.getText().toString();
-            if (name.isEmpty())
-                name = nameEdit.getHint().toString();
-            Request request = Request.newBuilder()
-                    .setRegisterName(RegisterNameRequest.newBuilder()
-                            .setName(name))
-                    .build();
-            EventBus.getDefault().post(new SendEvent(request));
-        }
+        dialogManager.showLoading(getActivity(), R.string.registering);
+
+        Request request = Request.newBuilder()
+                .setRegisterName(RegisterNameRequest.newBuilder()
+                        .setName(nameEdit.getText().toString()))
+                .build();
+        bus.post(new SendEvent(request));
     }
 }

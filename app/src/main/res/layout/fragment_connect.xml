@@ -14,7 +14,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="nick"
         android:inputType="textPersonName"
         android:maxLength="@integer/name_max_length"
         app:layout_constraintEnd_toEndOf="parent"

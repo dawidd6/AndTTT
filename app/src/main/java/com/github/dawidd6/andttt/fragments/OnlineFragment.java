@@ -13,7 +13,7 @@ import android.util.Log;
 import android.view.View;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.dawidd6.andttt.ClientService;
-import com.github.dawidd6.andttt.MainActivity;
+import com.github.dawidd6.andttt.OnlineActivity;
 import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.events.DisconnectEvent;
 import com.github.dawidd6.andttt.events.SendEvent;
@@ -24,22 +24,19 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import static com.github.dawidd6.andttt.OnlineActivity.bus;
+import static com.github.dawidd6.andttt.OnlineActivity.dialogManager;
+import static com.github.dawidd6.andttt.OnlineActivity.name;
+
 public class OnlineFragment extends BaseGameFragment {
     public static final String TAG = "OnlineFragment";
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        isOnline = true;
-    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setAllTilesClickable(false);
 
-        player1.setName(getArguments().getString("name"));
+        player1.setName(name);
         player2.setName("");
 
         showConclusion(getString(R.string.waiting), Color.BLUE);
@@ -49,29 +46,24 @@ public class OnlineFragment extends BaseGameFragment {
         Request request = Request.newBuilder()
                 .setStarterPack(StarterPackRequest.newBuilder())
                 .build();
-        EventBus.getDefault().post(new SendEvent(request));
+        bus.post(new SendEvent(request));
+    }
 
-        ConnectivityManager connManager = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkRequest.Builder builder = new NetworkRequest.Builder();
-        assert connManager != null;
-        connManager.registerNetworkCallback(builder.build(), new ConnectivityManager.NetworkCallback() {
-            @Override
-            public void onLost(Network network) {
-                super.onLost(network);
-
-                onDisconnect(null);
-            }
-        });
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        bus.register(this);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        bus.unregister(this);
 
         Request request = Request.newBuilder()
                 .setLeaveRoom(LeaveRoomRequest.newBuilder())
                 .build();
-        EventBus.getDefault().post(new SendEvent(request));
+        bus.post(new SendEvent(request));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -99,7 +91,7 @@ public class OnlineFragment extends BaseGameFragment {
     }
 
     public void C_O_W_A_R_D_S() {
-        showYesNo(R.string.enemy_left, ((dialog, which) -> {
+        dialogManager.showYesNo(getActivity(), R.string.enemy_left, ((dialog, which) -> {
             dialog.dismiss();
 
             getFragmentManager()
@@ -128,20 +120,20 @@ public class OnlineFragment extends BaseGameFragment {
     public void onRestart(RestartResponse response) {
         switch (response.getRestart()) {
             case REQUESTED:
-                showYesNo(R.string.question_restart, ((dialog, which) -> {
+                dialogManager.showYesNo(getActivity(), R.string.question_restart, ((dialog, which) -> {
                     dialog.dismiss();
 
                     Request request = Request.newBuilder()
                             .setRestart(RestartRequest.newBuilder()
                                     .setRestart(Restart.APPROVED))
                             .build();
-                    EventBus.getDefault().post(new SendEvent(request));
+                    bus.post(new SendEvent(request));
 
 
                     Request request1 = Request.newBuilder()
                             .setStarterPack(StarterPackRequest.newBuilder())
                             .build();
-                    EventBus.getDefault().post(new SendEvent(request1));
+                    bus.post(new SendEvent(request1));
                 }), ((dialog, which) -> {
                     dialog.dismiss();
 
@@ -149,19 +141,18 @@ public class OnlineFragment extends BaseGameFragment {
                             .setRestart(RestartRequest.newBuilder()
                                     .setRestart(Restart.DENIED))
                             .build();
-                    EventBus.getDefault().post(new SendEvent(request));
+                    bus.post(new SendEvent(request));
                 }));
                 break;
             case APPROVED:
-                dismissLoading();
+                dialogManager.dismiss();
                 Request request = Request.newBuilder()
                         .setStarterPack(StarterPackRequest.newBuilder())
                         .build();
-                EventBus.getDefault().post(new SendEvent(request));
+                bus.post(new SendEvent(request));
                 break;
             case DENIED:
-                dismissLoading();
-                showError(R.string.denied_restart, ((dialog, which) -> {
+                dialogManager.showError(getActivity(), R.string.denied_restart, ((dialog, which) -> {
                     dialog.dismiss();
                 }));
                 break;
@@ -209,17 +200,17 @@ public class OnlineFragment extends BaseGameFragment {
                 .setMove(MoveRequest.newBuilder()
                         .setPosition(i))
                 .build();
-        EventBus.getDefault().post(new SendEvent(request));
+        bus.post(new SendEvent(request));
     }
 
     @Override
     public void onClickRestart(View view) {
-        showLoading(R.string.waiting_for_opponent);
+        dialogManager.showLoading(getActivity(), R.string.waiting_for_opponent);
 
         Request request = Request.newBuilder()
                 .setRestart(RestartRequest.newBuilder()
                         .setRestart(Restart.REQUESTED))
                 .build();
-        EventBus.getDefault().post(new SendEvent(request));
+        bus.post(new SendEvent(request));
     }
 }

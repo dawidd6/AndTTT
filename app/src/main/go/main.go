@@ -19,7 +19,7 @@ import (
 )
 
 var (
-	version string = "0.5.1"
+	version string = "0.5.1+git"
 	logger *log.Logger
 )
 

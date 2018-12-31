@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"github.com/gorilla/mux"
 	"io/ioutil"
 	"log"
 	"net"
@@ -9,7 +10,6 @@ import (
 	"os"
 	"os/signal"
 	"server/handlers"
-	"server/listeners"
 	"server/msg"
 	"server/proto"
 	"server/service"
@@ -26,10 +26,8 @@ func main() {
 	logger = log.New(os.Stdout, "", log.Lshortfile)
 
 	sig := make(chan os.Signal)
-	hostTCP := flag.String("host-tcp", "127.0.0.1", "ip address on which TCP service will listen")
-	hostHTTP := flag.String("host-http", "127.0.0.1", "ip address on which HTTP service will listen")
-	portTCP := flag.Int("port-tcp", 33333, "port on which TCP service will listen")
-	portHTTP := flag.Int("port-http", 33334, "port on which HTTP service will listen")
+	addrTCP := flag.String("addr-tcp", "127.0.0.1:33333", "ip address on which TCP service will listen")
+	addrHTTP := flag.String("addr-http", "127.0.0.1:33334", "ip address on which HTTP service will listen")
 	quiet := flag.Bool("quiet", false, "produce no output at all")
 	date := flag.Bool("date", false, "prepend output with date")
 	cleanInterval := flag.Duration("room-clean-interval", time.Minute*5, "interval between room cleaning")
@@ -43,39 +41,42 @@ func main() {
 		logger.SetFlags(log.LstdFlags | logger.Flags())
 	}
 
+	go listen(*addrHTTP, *addrTCP)
+	go clean(*cleanInterval)
+
+	logger.Println("version", version)
+	logger.Println("cleaning at interval", *cleanInterval)
+	logger.Println("listening TCP", *addrTCP)
+	logger.Println("listening HTTP", *addrHTTP)
+
+	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
+	<-sig
+}
+
+func listen(addrHTTP, addrTCP string) {
+	router := mux.NewRouter()
+
+	handlers.SetHandlers(router)
 	handlers.OnApiRequest = func(request *http.Request) {
 		logger.Println(request.Method, request.RequestURI, request.RemoteAddr)
 	}
 
-	listenerTCP, err := listeners.StartListeningTCP(*hostTCP, *portTCP)
+	addr, err := net.ResolveTCPAddr("tcp", addrTCP)
 	if err != nil {
-		logger.Fatal(err)
+		logger.Fatal("E/listen", err)
 	}
 
-	listenerHTTP, err := listeners.StartListeningHTTP(*hostHTTP, *portHTTP)
+	listener, err := net.ListenTCP("tcp", addr)
 	if err != nil {
-		logger.Fatal(err)
+		logger.Fatal("E/listen", err)
 	}
 
-	defer func() {
-		if err := listeners.StopListeningTCP(listenerTCP); err != nil {
-			logger.Fatal(err)
-		}
-		if err := listeners.StopListeningHTTP(listenerHTTP); err != nil {
-			logger.Fatal(err)
-		}
-	}()
+	go accept(listener)
 
-	logger.Println("version", version)
-	logger.Println("cleaning at interval", *cleanInterval)
-	logger.Println("listening TCP", *hostTCP, *portTCP)
-	logger.Println("listening HTTP", *hostHTTP, *portHTTP)
-
-	go accept(listenerTCP)
-	go clean(*cleanInterval)
-
-	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
-	<-sig
+	err = http.ListenAndServe(addrHTTP, router)
+	if err != nil {
+		logger.Fatal("E/listen", err)
+	}
 }
 
 func accept(listener *net.TCPListener) {

@@ -37,7 +37,8 @@ public abstract class BaseGameFragment extends BaseFragment {
     @BindView(R.id.player2Text) TextView player2Text;
     @BindView(R.id.player1View) ImageView player1View;
     @BindView(R.id.player2View) ImageView player2View;
-    @BindView(R.id.scoreText) TextView scoreText;
+    @BindView(R.id.player1Score) TextView player1Score;
+    @BindView(R.id.player2Score) TextView player2Score;
     @BindView(R.id.conclusionText) TextView conclusionText;
     @BindView(R.id.conclusionFrame) FrameLayout conclusionFrame;
     @BindView(R.id.boardView) ImageView boardView;
@@ -105,10 +106,10 @@ public abstract class BaseGameFragment extends BaseFragment {
         tilesView = tilesList.toArray(new ImageView[9]);
 
         // initialize players
-        player1 = new PlayerGui(player1View, player1Text, symbol_dimen);
+        player1 = new PlayerGui(player1View, player1Text, player1Score, symbol_dimen);
         player1.setColor(Color.GREEN);
         player1.setName(getString(R.string.player1));
-        player2 = new PlayerGui(player2View, player2Text, symbol_dimen);
+        player2 = new PlayerGui(player2View, player2Text, player2Score, symbol_dimen);
         player2.setColor(Color.RED);
         player2.setName(getString(R.string.player2));
 
@@ -313,9 +314,7 @@ public abstract class BaseGameFragment extends BaseFragment {
 
         // clear board
         boardBitmap.eraseColor(Color.TRANSPARENT);
-
-        // set score
-        scoreText.setText(getString(R.string.score, player1.getWins(), player2.getWins()));
+        boardView.clearAnimation();
 
         // enable all tiles
         setAllTilesClickable(true);
@@ -324,14 +323,14 @@ public abstract class BaseGameFragment extends BaseFragment {
     public void checkStatus() {
         if(game.isWin()) {
             if(player1.isTurn()) {
+                new PulseAnimation(player1Score, animation_duration);
                 player1.addWin();
                 showConclusion(getString(R.string.player_won, player1.getName()), player1.getColor());
             } else {
+                new PulseAnimation(player2Score, animation_duration);
                 player2.addWin();
                 showConclusion(getString(R.string.player_won, player2.getName()), player2.getColor());
             }
-            new PulseAnimation(scoreText, animation_duration);
-            scoreText.setText(getString(R.string.score, player1.getWins(), player2.getWins()));
             drawLine();
         } else if(game.isDraw()) {
             showConclusion(getString(R.string.nobody_won), Color.BLUE);

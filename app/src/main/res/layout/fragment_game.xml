@@ -8,6 +8,24 @@
     android:layout_centerVertical="false"
     android:paddingTop="20dp">
 
+    <TextView
+        android:id="@+id/player2Score"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/border"
+        android:gravity="center_horizontal"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="0"
+        android:textAlignment="center"
+        android:textColor="@color/color_green"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/restartButton"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <ImageView
         android:id="@+id/b0"
         android:layout_width="@dimen/tile_dimen"
@@ -162,6 +180,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:gravity="center_vertical|center_horizontal"
         android:text="@string/nobody_won"
         android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="@+id/conclusionFrame"
@@ -189,14 +208,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/player1"
         android:textAlignment="center"
         android:textColor="?android:attr/colorForeground"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/player1View"
-        app:layout_constraintEnd_toStartOf="@+id/player1View"
+        app:layout_constraintStart_toEndOf="@+id/player1View"
         app:layout_constraintTop_toTopOf="@+id/player1View" />
 
     <ImageView
@@ -204,41 +223,44 @@
         android:layout_width="@dimen/symbol_dimen"
         android:layout_height="@dimen/symbol_dimen"
         android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/border"
         android:padding="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/restartButton"
-        app:layout_constraintStart_toStartOf="@+id/scoreText" />
+        app:layout_constraintBottom_toBottomOf="@+id/player1Score"
+        app:layout_constraintStart_toEndOf="@+id/player1Score"
+        app:layout_constraintTop_toTopOf="@+id/player1Score" />
 
     <ImageView
         android:id="@+id/player2View"
         android:layout_width="@dimen/symbol_dimen"
         android:layout_height="@dimen/symbol_dimen"
         android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/border"
         android:padding="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/restartButton"
-        app:layout_constraintEnd_toEndOf="@+id/scoreText" />
+        app:layout_constraintBottom_toBottomOf="@+id/player2Score"
+        app:layout_constraintStart_toEndOf="@+id/player2Score"
+        app:layout_constraintTop_toTopOf="@+id/player2Score" />
 
 
     <TextView
-        android:id="@+id/scoreText"
-        android:layout_width="wrap_content"
+        android:id="@+id/player1Score"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:background="@drawable/border"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="5dp"
-        android:text="@string/score"
+        android:gravity="center_horizontal"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="0"
         android:textAlignment="center"
         android:textColor="@color/color_green"
-        android:textSize="36sp"
+        android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/player2View"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/player2Score"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button

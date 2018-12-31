@@ -3,11 +3,9 @@
 
 package proto
 
-import (
-	fmt "fmt"
-	proto "github.com/golang/protobuf/proto"
-	math "math"
-)
+import proto "github.com/golang/protobuf/proto"
+import fmt "fmt"
+import math "math"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -41,17 +39,16 @@ func (m *Request) Reset()         { *m = Request{} }
 func (m *Request) String() string { return proto.CompactTextString(m) }
 func (*Request) ProtoMessage()    {}
 func (*Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7f73548e33e655fe, []int{0}
+	return fileDescriptor_request_234ba1be9bd87954, []int{0}
 }
-
 func (m *Request) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Request.Unmarshal(m, b)
 }
 func (m *Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Request.Marshal(b, m, deterministic)
 }
-func (m *Request) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Request.Merge(m, src)
+func (dst *Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Request.Merge(dst, src)
 }
 func (m *Request) XXX_Size() int {
 	return xxx_messageInfo_Request.Size(m)
@@ -407,17 +404,16 @@ func (m *UnrecognizedRequest) Reset()         { *m = UnrecognizedRequest{} }
 func (m *UnrecognizedRequest) String() string { return proto.CompactTextString(m) }
 func (*UnrecognizedRequest) ProtoMessage()    {}
 func (*UnrecognizedRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7f73548e33e655fe, []int{1}
+	return fileDescriptor_request_234ba1be9bd87954, []int{1}
 }
-
 func (m *UnrecognizedRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_UnrecognizedRequest.Unmarshal(m, b)
 }
 func (m *UnrecognizedRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_UnrecognizedRequest.Marshal(b, m, deterministic)
 }
-func (m *UnrecognizedRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UnrecognizedRequest.Merge(m, src)
+func (dst *UnrecognizedRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UnrecognizedRequest.Merge(dst, src)
 }
 func (m *UnrecognizedRequest) XXX_Size() int {
 	return xxx_messageInfo_UnrecognizedRequest.Size(m)
@@ -439,17 +435,16 @@ func (m *RegisterNameRequest) Reset()         { *m = RegisterNameRequest{} }
 func (m *RegisterNameRequest) String() string { return proto.CompactTextString(m) }
 func (*RegisterNameRequest) ProtoMessage()    {}
 func (*RegisterNameRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7f73548e33e655fe, []int{2}
+	return fileDescriptor_request_234ba1be9bd87954, []int{2}
 }
-
 func (m *RegisterNameRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RegisterNameRequest.Unmarshal(m, b)
 }
 func (m *RegisterNameRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_RegisterNameRequest.Marshal(b, m, deterministic)
 }
-func (m *RegisterNameRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RegisterNameRequest.Merge(m, src)
+func (dst *RegisterNameRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RegisterNameRequest.Merge(dst, src)
 }
 func (m *RegisterNameRequest) XXX_Size() int {
 	return xxx_messageInfo_RegisterNameRequest.Size(m)
@@ -479,17 +474,16 @@ func (m *CreateRoomRequest) Reset()         { *m = CreateRoomRequest{} }
 func (m *CreateRoomRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateRoomRequest) ProtoMessage()    {}
 func (*CreateRoomRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7f73548e33e655fe, []int{3}
+	return fileDescriptor_request_234ba1be9bd87954, []int{3}
 }
-
 func (m *CreateRoomRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateRoomRequest.Unmarshal(m, b)
 }
 func (m *CreateRoomRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_CreateRoomRequest.Marshal(b, m, deterministic)
 }
-func (m *CreateRoomRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CreateRoomRequest.Merge(m, src)
+func (dst *CreateRoomRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CreateRoomRequest.Merge(dst, src)
 }
 func (m *CreateRoomRequest) XXX_Size() int {
 	return xxx_messageInfo_CreateRoomRequest.Size(m)
@@ -526,17 +520,16 @@ func (m *JoinRoomRequest) Reset()         { *m = JoinRoomRequest{} }
 func (m *JoinRoomRequest) String() string { return proto.CompactTextString(m) }
 func (*JoinRoomRequest) ProtoMessage()    {}
 func (*JoinRoomRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7f73548e33e655fe, []int{4}
+	return fileDescriptor_request_234ba1be9bd87954, []int{4}
 }
-
 func (m *JoinRoomRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_JoinRoomRequest.Unmarshal(m, b)
 }
 func (m *JoinRoomRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_JoinRoomRequest.Marshal(b, m, deterministic)
 }
-func (m *JoinRoomRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_JoinRoomRequest.Merge(m, src)
+func (dst *JoinRoomRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_JoinRoomRequest.Merge(dst, src)
 }
 func (m *JoinRoomRequest) XXX_Size() int {
 	return xxx_messageInfo_JoinRoomRequest.Size(m)
@@ -571,17 +564,16 @@ func (m *LeaveRoomRequest) Reset()         { *m = LeaveRoomRequest{} }
 func (m *LeaveRoomRequest) String() string { return proto.CompactTextString(m) }
 func (*LeaveRoomRequest) ProtoMessage()    {}
 func (*LeaveRoomRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7f73548e33e655fe, []int{5}
+	return fileDescriptor_request_234ba1be9bd87954, []int{5}
 }
-
 func (m *LeaveRoomRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_LeaveRoomRequest.Unmarshal(m, b)
 }
 func (m *LeaveRoomRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_LeaveRoomRequest.Marshal(b, m, deterministic)
 }
-func (m *LeaveRoomRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_LeaveRoomRequest.Merge(m, src)
+func (dst *LeaveRoomRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LeaveRoomRequest.Merge(dst, src)
 }
 func (m *LeaveRoomRequest) XXX_Size() int {
 	return xxx_messageInfo_LeaveRoomRequest.Size(m)
@@ -602,17 +594,16 @@ func (m *GetRoomsRequest) Reset()         { *m = GetRoomsRequest{} }
 func (m *GetRoomsRequest) String() string { return proto.CompactTextString(m) }
 func (*GetRoomsRequest) ProtoMessage()    {}
 func (*GetRoomsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7f73548e33e655fe, []int{6}
+	return fileDescriptor_request_234ba1be9bd87954, []int{6}
 }
-
 func (m *GetRoomsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetRoomsRequest.Unmarshal(m, b)
 }
 func (m *GetRoomsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetRoomsRequest.Marshal(b, m, deterministic)
 }
-func (m *GetRoomsRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetRoomsRequest.Merge(m, src)
+func (dst *GetRoomsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetRoomsRequest.Merge(dst, src)
 }
 func (m *GetRoomsRequest) XXX_Size() int {
 	return xxx_messageInfo_GetRoomsRequest.Size(m)
@@ -634,17 +625,16 @@ func (m *MoveRequest) Reset()         { *m = MoveRequest{} }
 func (m *MoveRequest) String() string { return proto.CompactTextString(m) }
 func (*MoveRequest) ProtoMessage()    {}
 func (*MoveRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7f73548e33e655fe, []int{7}
+	return fileDescriptor_request_234ba1be9bd87954, []int{7}
 }
-
 func (m *MoveRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_MoveRequest.Unmarshal(m, b)
 }
 func (m *MoveRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_MoveRequest.Marshal(b, m, deterministic)
 }
-func (m *MoveRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MoveRequest.Merge(m, src)
+func (dst *MoveRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MoveRequest.Merge(dst, src)
 }
 func (m *MoveRequest) XXX_Size() int {
 	return xxx_messageInfo_MoveRequest.Size(m)
@@ -673,17 +663,16 @@ func (m *RestartRequest) Reset()         { *m = RestartRequest{} }
 func (m *RestartRequest) String() string { return proto.CompactTextString(m) }
 func (*RestartRequest) ProtoMessage()    {}
 func (*RestartRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7f73548e33e655fe, []int{8}
+	return fileDescriptor_request_234ba1be9bd87954, []int{8}
 }
-
 func (m *RestartRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RestartRequest.Unmarshal(m, b)
 }
 func (m *RestartRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_RestartRequest.Marshal(b, m, deterministic)
 }
-func (m *RestartRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RestartRequest.Merge(m, src)
+func (dst *RestartRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RestartRequest.Merge(dst, src)
 }
 func (m *RestartRequest) XXX_Size() int {
 	return xxx_messageInfo_RestartRequest.Size(m)
@@ -711,17 +700,16 @@ func (m *StarterPackRequest) Reset()         { *m = StarterPackRequest{} }
 func (m *StarterPackRequest) String() string { return proto.CompactTextString(m) }
 func (*StarterPackRequest) ProtoMessage()    {}
 func (*StarterPackRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7f73548e33e655fe, []int{9}
+	return fileDescriptor_request_234ba1be9bd87954, []int{9}
 }
-
 func (m *StarterPackRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_StarterPackRequest.Unmarshal(m, b)
 }
 func (m *StarterPackRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_StarterPackRequest.Marshal(b, m, deterministic)
 }
-func (m *StarterPackRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_StarterPackRequest.Merge(m, src)
+func (dst *StarterPackRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StarterPackRequest.Merge(dst, src)
 }
 func (m *StarterPackRequest) XXX_Size() int {
 	return xxx_messageInfo_StarterPackRequest.Size(m)
@@ -745,9 +733,9 @@ func init() {
 	proto.RegisterType((*StarterPackRequest)(nil), "proto.StarterPackRequest")
 }
 
-func init() { proto.RegisterFile("request.proto", fileDescriptor_7f73548e33e655fe) }
+func init() { proto.RegisterFile("request.proto", fileDescriptor_request_234ba1be9bd87954) }
 
-var fileDescriptor_7f73548e33e655fe = []byte{
+var fileDescriptor_request_234ba1be9bd87954 = []byte{
 	// 447 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x93, 0x4f, 0x6f, 0xd3, 0x40,
 	0x10, 0xc5, 0x09, 0x38, 0xff, 0xc6, 0x25, 0xa5, 0x5b, 0x0a, 0x26, 0x17, 0xd0, 0x72, 0x49, 0x2f,

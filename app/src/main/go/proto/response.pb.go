@@ -3,11 +3,9 @@
 
 package proto
 
-import (
-	fmt "fmt"
-	proto "github.com/golang/protobuf/proto"
-	math "math"
-)
+import proto "github.com/golang/protobuf/proto"
+import fmt "fmt"
+import math "math"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -45,17 +43,16 @@ func (m *Response) Reset()         { *m = Response{} }
 func (m *Response) String() string { return proto.CompactTextString(m) }
 func (*Response) ProtoMessage()    {}
 func (*Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0fbc901015fa5021, []int{0}
+	return fileDescriptor_response_e7fe0db36a319882, []int{0}
 }
-
 func (m *Response) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Response.Unmarshal(m, b)
 }
 func (m *Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Response.Marshal(b, m, deterministic)
 }
-func (m *Response) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Response.Merge(m, src)
+func (dst *Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Response.Merge(dst, src)
 }
 func (m *Response) XXX_Size() int {
 	return xxx_messageInfo_Response.Size(m)
@@ -514,17 +511,16 @@ func (m *UnrecognizedResponse) Reset()         { *m = UnrecognizedResponse{} }
 func (m *UnrecognizedResponse) String() string { return proto.CompactTextString(m) }
 func (*UnrecognizedResponse) ProtoMessage()    {}
 func (*UnrecognizedResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0fbc901015fa5021, []int{1}
+	return fileDescriptor_response_e7fe0db36a319882, []int{1}
 }
-
 func (m *UnrecognizedResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_UnrecognizedResponse.Unmarshal(m, b)
 }
 func (m *UnrecognizedResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_UnrecognizedResponse.Marshal(b, m, deterministic)
 }
-func (m *UnrecognizedResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UnrecognizedResponse.Merge(m, src)
+func (dst *UnrecognizedResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UnrecognizedResponse.Merge(dst, src)
 }
 func (m *UnrecognizedResponse) XXX_Size() int {
 	return xxx_messageInfo_UnrecognizedResponse.Size(m)
@@ -546,17 +542,16 @@ func (m *RegisterNameResponse) Reset()         { *m = RegisterNameResponse{} }
 func (m *RegisterNameResponse) String() string { return proto.CompactTextString(m) }
 func (*RegisterNameResponse) ProtoMessage()    {}
 func (*RegisterNameResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0fbc901015fa5021, []int{2}
+	return fileDescriptor_response_e7fe0db36a319882, []int{2}
 }
-
 func (m *RegisterNameResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RegisterNameResponse.Unmarshal(m, b)
 }
 func (m *RegisterNameResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_RegisterNameResponse.Marshal(b, m, deterministic)
 }
-func (m *RegisterNameResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RegisterNameResponse.Merge(m, src)
+func (dst *RegisterNameResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RegisterNameResponse.Merge(dst, src)
 }
 func (m *RegisterNameResponse) XXX_Size() int {
 	return xxx_messageInfo_RegisterNameResponse.Size(m)
@@ -585,17 +580,16 @@ func (m *CreateRoomResponse) Reset()         { *m = CreateRoomResponse{} }
 func (m *CreateRoomResponse) String() string { return proto.CompactTextString(m) }
 func (*CreateRoomResponse) ProtoMessage()    {}
 func (*CreateRoomResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0fbc901015fa5021, []int{3}
+	return fileDescriptor_response_e7fe0db36a319882, []int{3}
 }
-
 func (m *CreateRoomResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateRoomResponse.Unmarshal(m, b)
 }
 func (m *CreateRoomResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_CreateRoomResponse.Marshal(b, m, deterministic)
 }
-func (m *CreateRoomResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CreateRoomResponse.Merge(m, src)
+func (dst *CreateRoomResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CreateRoomResponse.Merge(dst, src)
 }
 func (m *CreateRoomResponse) XXX_Size() int {
 	return xxx_messageInfo_CreateRoomResponse.Size(m)
@@ -624,17 +618,16 @@ func (m *JoinRoomResponse) Reset()         { *m = JoinRoomResponse{} }
 func (m *JoinRoomResponse) String() string { return proto.CompactTextString(m) }
 func (*JoinRoomResponse) ProtoMessage()    {}
 func (*JoinRoomResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0fbc901015fa5021, []int{4}
+	return fileDescriptor_response_e7fe0db36a319882, []int{4}
 }
-
 func (m *JoinRoomResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_JoinRoomResponse.Unmarshal(m, b)
 }
 func (m *JoinRoomResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_JoinRoomResponse.Marshal(b, m, deterministic)
 }
-func (m *JoinRoomResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_JoinRoomResponse.Merge(m, src)
+func (dst *JoinRoomResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_JoinRoomResponse.Merge(dst, src)
 }
 func (m *JoinRoomResponse) XXX_Size() int {
 	return xxx_messageInfo_JoinRoomResponse.Size(m)
@@ -662,17 +655,16 @@ func (m *LeaveRoomResponse) Reset()         { *m = LeaveRoomResponse{} }
 func (m *LeaveRoomResponse) String() string { return proto.CompactTextString(m) }
 func (*LeaveRoomResponse) ProtoMessage()    {}
 func (*LeaveRoomResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0fbc901015fa5021, []int{5}
+	return fileDescriptor_response_e7fe0db36a319882, []int{5}
 }
-
 func (m *LeaveRoomResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_LeaveRoomResponse.Unmarshal(m, b)
 }
 func (m *LeaveRoomResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_LeaveRoomResponse.Marshal(b, m, deterministic)
 }
-func (m *LeaveRoomResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_LeaveRoomResponse.Merge(m, src)
+func (dst *LeaveRoomResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LeaveRoomResponse.Merge(dst, src)
 }
 func (m *LeaveRoomResponse) XXX_Size() int {
 	return xxx_messageInfo_LeaveRoomResponse.Size(m)
@@ -694,17 +686,16 @@ func (m *GetRoomsResponse) Reset()         { *m = GetRoomsResponse{} }
 func (m *GetRoomsResponse) String() string { return proto.CompactTextString(m) }
 func (*GetRoomsResponse) ProtoMessage()    {}
 func (*GetRoomsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0fbc901015fa5021, []int{6}
+	return fileDescriptor_response_e7fe0db36a319882, []int{6}
 }
-
 func (m *GetRoomsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetRoomsResponse.Unmarshal(m, b)
 }
 func (m *GetRoomsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetRoomsResponse.Marshal(b, m, deterministic)
 }
-func (m *GetRoomsResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetRoomsResponse.Merge(m, src)
+func (dst *GetRoomsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetRoomsResponse.Merge(dst, src)
 }
 func (m *GetRoomsResponse) XXX_Size() int {
 	return xxx_messageInfo_GetRoomsResponse.Size(m)
@@ -733,17 +724,16 @@ func (m *MoveResponse) Reset()         { *m = MoveResponse{} }
 func (m *MoveResponse) String() string { return proto.CompactTextString(m) }
 func (*MoveResponse) ProtoMessage()    {}
 func (*MoveResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0fbc901015fa5021, []int{7}
+	return fileDescriptor_response_e7fe0db36a319882, []int{7}
 }
-
 func (m *MoveResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_MoveResponse.Unmarshal(m, b)
 }
 func (m *MoveResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_MoveResponse.Marshal(b, m, deterministic)
 }
-func (m *MoveResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MoveResponse.Merge(m, src)
+func (dst *MoveResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MoveResponse.Merge(dst, src)
 }
 func (m *MoveResponse) XXX_Size() int {
 	return xxx_messageInfo_MoveResponse.Size(m)
@@ -772,17 +762,16 @@ func (m *RestartResponse) Reset()         { *m = RestartResponse{} }
 func (m *RestartResponse) String() string { return proto.CompactTextString(m) }
 func (*RestartResponse) ProtoMessage()    {}
 func (*RestartResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0fbc901015fa5021, []int{8}
+	return fileDescriptor_response_e7fe0db36a319882, []int{8}
 }
-
 func (m *RestartResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RestartResponse.Unmarshal(m, b)
 }
 func (m *RestartResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_RestartResponse.Marshal(b, m, deterministic)
 }
-func (m *RestartResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RestartResponse.Merge(m, src)
+func (dst *RestartResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RestartResponse.Merge(dst, src)
 }
 func (m *RestartResponse) XXX_Size() int {
 	return xxx_messageInfo_RestartResponse.Size(m)
@@ -815,17 +804,16 @@ func (m *StarterPackResponse) Reset()         { *m = StarterPackResponse{} }
 func (m *StarterPackResponse) String() string { return proto.CompactTextString(m) }
 func (*StarterPackResponse) ProtoMessage()    {}
 func (*StarterPackResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0fbc901015fa5021, []int{9}
+	return fileDescriptor_response_e7fe0db36a319882, []int{9}
 }
-
 func (m *StarterPackResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_StarterPackResponse.Unmarshal(m, b)
 }
 func (m *StarterPackResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_StarterPackResponse.Marshal(b, m, deterministic)
 }
-func (m *StarterPackResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_StarterPackResponse.Merge(m, src)
+func (dst *StarterPackResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StarterPackResponse.Merge(dst, src)
 }
 func (m *StarterPackResponse) XXX_Size() int {
 	return xxx_messageInfo_StarterPackResponse.Size(m)
@@ -881,17 +869,16 @@ func (m *EnemyDisconnectedResponse) Reset()         { *m = EnemyDisconnectedResp
 func (m *EnemyDisconnectedResponse) String() string { return proto.CompactTextString(m) }
 func (*EnemyDisconnectedResponse) ProtoMessage()    {}
 func (*EnemyDisconnectedResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0fbc901015fa5021, []int{10}
+	return fileDescriptor_response_e7fe0db36a319882, []int{10}
 }
-
 func (m *EnemyDisconnectedResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_EnemyDisconnectedResponse.Unmarshal(m, b)
 }
 func (m *EnemyDisconnectedResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_EnemyDisconnectedResponse.Marshal(b, m, deterministic)
 }
-func (m *EnemyDisconnectedResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_EnemyDisconnectedResponse.Merge(m, src)
+func (dst *EnemyDisconnectedResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EnemyDisconnectedResponse.Merge(dst, src)
 }
 func (m *EnemyDisconnectedResponse) XXX_Size() int {
 	return xxx_messageInfo_EnemyDisconnectedResponse.Size(m)
@@ -912,17 +899,16 @@ func (m *EnemyLeftResponse) Reset()         { *m = EnemyLeftResponse{} }
 func (m *EnemyLeftResponse) String() string { return proto.CompactTextString(m) }
 func (*EnemyLeftResponse) ProtoMessage()    {}
 func (*EnemyLeftResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0fbc901015fa5021, []int{11}
+	return fileDescriptor_response_e7fe0db36a319882, []int{11}
 }
-
 func (m *EnemyLeftResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_EnemyLeftResponse.Unmarshal(m, b)
 }
 func (m *EnemyLeftResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_EnemyLeftResponse.Marshal(b, m, deterministic)
 }
-func (m *EnemyLeftResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_EnemyLeftResponse.Merge(m, src)
+func (dst *EnemyLeftResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EnemyLeftResponse.Merge(dst, src)
 }
 func (m *EnemyLeftResponse) XXX_Size() int {
 	return xxx_messageInfo_EnemyLeftResponse.Size(m)
@@ -944,17 +930,16 @@ func (m *EnemyMovedResponse) Reset()         { *m = EnemyMovedResponse{} }
 func (m *EnemyMovedResponse) String() string { return proto.CompactTextString(m) }
 func (*EnemyMovedResponse) ProtoMessage()    {}
 func (*EnemyMovedResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0fbc901015fa5021, []int{12}
+	return fileDescriptor_response_e7fe0db36a319882, []int{12}
 }
-
 func (m *EnemyMovedResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_EnemyMovedResponse.Unmarshal(m, b)
 }
 func (m *EnemyMovedResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_EnemyMovedResponse.Marshal(b, m, deterministic)
 }
-func (m *EnemyMovedResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_EnemyMovedResponse.Merge(m, src)
+func (dst *EnemyMovedResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EnemyMovedResponse.Merge(dst, src)
 }
 func (m *EnemyMovedResponse) XXX_Size() int {
 	return xxx_messageInfo_EnemyMovedResponse.Size(m)
@@ -988,9 +973,9 @@ func init() {
 	proto.RegisterType((*EnemyMovedResponse)(nil), "proto.EnemyMovedResponse")
 }
 
-func init() { proto.RegisterFile("response.proto", fileDescriptor_0fbc901015fa5021) }
+func init() { proto.RegisterFile("response.proto", fileDescriptor_response_e7fe0db36a319882) }
 
-var fileDescriptor_0fbc901015fa5021 = []byte{
+var fileDescriptor_response_e7fe0db36a319882 = []byte{
 	// 650 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x94, 0xdf, 0x6e, 0xd3, 0x4c,
 	0x10, 0xc5, 0x3f, 0xb7, 0xf9, 0x3b, 0x49, 0xfb, 0xb5, 0xdb, 0xaa, 0x75, 0x53, 0x21, 0x82, 0x2b,

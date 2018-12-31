@@ -3,12 +3,10 @@
 
 package proto
 
-import (
-	fmt "fmt"
-	proto "github.com/golang/protobuf/proto"
-	timestamp "github.com/golang/protobuf/ptypes/timestamp"
-	math "math"
-)
+import proto "github.com/golang/protobuf/proto"
+import fmt "fmt"
+import math "math"
+import timestamp "github.com/golang/protobuf/ptypes/timestamp"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -37,17 +35,16 @@ func (m *Room) Reset()         { *m = Room{} }
 func (m *Room) String() string { return proto.CompactTextString(m) }
 func (*Room) ProtoMessage()    {}
 func (*Room) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c5fd27dd97284ef4, []int{0}
+	return fileDescriptor_room_fac3405ece2e6340, []int{0}
 }
-
 func (m *Room) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Room.Unmarshal(m, b)
 }
 func (m *Room) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Room.Marshal(b, m, deterministic)
 }
-func (m *Room) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Room.Merge(m, src)
+func (dst *Room) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Room.Merge(dst, src)
 }
 func (m *Room) XXX_Size() int {
 	return xxx_messageInfo_Room.Size(m)
@@ -104,9 +101,9 @@ func init() {
 	proto.RegisterType((*Room)(nil), "proto.Room")
 }
 
-func init() { proto.RegisterFile("room.proto", fileDescriptor_c5fd27dd97284ef4) }
+func init() { proto.RegisterFile("room.proto", fileDescriptor_room_fac3405ece2e6340) }
 
-var fileDescriptor_c5fd27dd97284ef4 = []byte{
+var fileDescriptor_room_fac3405ece2e6340 = []byte{
 	// 259 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x6c, 0x90, 0xb1, 0x4e, 0xc3, 0x30,
 	0x10, 0x86, 0x65, 0x9a, 0x54, 0xe0, 0xa4, 0x0c, 0x9e, 0xa2, 0x2c, 0x0d, 0x74, 0xc9, 0xe4, 0x56,

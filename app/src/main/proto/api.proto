@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package proto;
+
+import "room.proto";
+import "client.proto";
+
+option java_package = "com.github.dawidd6.andttt.proto";
+option java_multiple_files = true;
+
+message ApiStatus {
+    int32 num_goroutines = 1;
+    int32 num_registered_clients = 2;
+    int32 num_unregistered_clients = 3;
+    int32 num_rooms = 4;
+}
+
+message ApiRooms {
+    int32 count = 1;
+    repeated Room rooms = 2;
+}
+
+message ApiRoom {
+    Room room = 1;
+}
+
+message ApiClients {
+    int32 count = 1;
+    repeated Client clients = 2;
+}
+
+message ApiClient {
+    Client client = 1;
+}

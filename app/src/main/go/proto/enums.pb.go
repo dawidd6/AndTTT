@@ -3,11 +3,9 @@
 
 package proto
 
-import (
-	fmt "fmt"
-	proto "github.com/golang/protobuf/proto"
-	math "math"
-)
+import proto "github.com/golang/protobuf/proto"
+import fmt "fmt"
+import math "math"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -77,7 +75,6 @@ var Error_name = map[int32]string{
 	18: "POSITION_OUT_OF_BOUND",
 	19: "THERE_IS_A_WINNER",
 }
-
 var Error_value = map[string]int32{
 	"NONE":                          0,
 	"UNDEFINED":                     1,
@@ -109,9 +106,8 @@ var Error_value = map[string]int32{
 func (x Error) String() string {
 	return proto.EnumName(Error_name, int32(x))
 }
-
 func (Error) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_888b6bd9597961ff, []int{0}
+	return fileDescriptor_enums_62d2914ff991fb5c, []int{0}
 }
 
 type Restart int32
@@ -129,7 +125,6 @@ var Restart_name = map[int32]string{
 	2: "APPROVED",
 	3: "DENIED",
 }
-
 var Restart_value = map[string]int32{
 	"UNSPECIFIED": 0,
 	"REQUESTED":   1,
@@ -140,9 +135,8 @@ var Restart_value = map[string]int32{
 func (x Restart) String() string {
 	return proto.EnumName(Restart_name, int32(x))
 }
-
 func (Restart) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_888b6bd9597961ff, []int{1}
+	return fileDescriptor_enums_62d2914ff991fb5c, []int{1}
 }
 
 type Symbol int32
@@ -158,7 +152,6 @@ var Symbol_name = map[int32]string{
 	1: "CROSS",
 	2: "CIRCLE",
 }
-
 var Symbol_value = map[string]int32{
 	"NO":     0,
 	"CROSS":  1,
@@ -168,9 +161,8 @@ var Symbol_value = map[string]int32{
 func (x Symbol) String() string {
 	return proto.EnumName(Symbol_name, int32(x))
 }
-
 func (Symbol) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_888b6bd9597961ff, []int{2}
+	return fileDescriptor_enums_62d2914ff991fb5c, []int{2}
 }
 
 func init() {
@@ -179,9 +171,9 @@ func init() {
 	proto.RegisterEnum("proto.Symbol", Symbol_name, Symbol_value)
 }
 
-func init() { proto.RegisterFile("enums.proto", fileDescriptor_888b6bd9597961ff) }
+func init() { proto.RegisterFile("enums.proto", fileDescriptor_enums_62d2914ff991fb5c) }
 
-var fileDescriptor_888b6bd9597961ff = []byte{
+var fileDescriptor_enums_62d2914ff991fb5c = []byte{
 	// 464 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x64, 0x92, 0x41, 0x6f, 0xda, 0x4e,
 	0x10, 0xc5, 0x03, 0x01, 0x02, 0x43, 0x12, 0x26, 0x13, 0x20, 0xe4, 0xff, 0x6f, 0x54, 0x55, 0x3d,

@@ -2,13 +2,14 @@ package main
 
 import (
 	"flag"
-	"github.com/gorilla/mux"
+	"github.com/husobee/vestigo"
 	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
 	"os"
 	"os/signal"
+	"server/api"
 	"server/handlers"
 	"server/msg"
 	"server/proto"
@@ -54,10 +55,10 @@ func main() {
 }
 
 func listen(addrHTTP, addrTCP string) {
-	router := mux.NewRouter()
+	router := vestigo.NewRouter()
 
-	handlers.SetHandlers(router)
-	handlers.OnApiRequest = func(request *http.Request) {
+	api.SetHandlers(router)
+	api.OnApiRequest = func(request *http.Request) {
 		logger.Println(request.Method, request.RequestURI, request.RemoteAddr)
 	}
 

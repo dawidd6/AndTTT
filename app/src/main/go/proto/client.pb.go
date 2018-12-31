@@ -3,12 +3,10 @@
 
 package proto
 
-import (
-	fmt "fmt"
-	proto "github.com/golang/protobuf/proto"
-	timestamp "github.com/golang/protobuf/ptypes/timestamp"
-	math "math"
-)
+import proto "github.com/golang/protobuf/proto"
+import fmt "fmt"
+import math "math"
+import timestamp "github.com/golang/protobuf/ptypes/timestamp"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -37,17 +35,16 @@ func (m *Client) Reset()         { *m = Client{} }
 func (m *Client) String() string { return proto.CompactTextString(m) }
 func (*Client) ProtoMessage()    {}
 func (*Client) Descriptor() ([]byte, []int) {
-	return fileDescriptor_014de31d7ac8c57c, []int{0}
+	return fileDescriptor_client_c6c23cde6e46ec79, []int{0}
 }
-
 func (m *Client) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Client.Unmarshal(m, b)
 }
 func (m *Client) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Client.Marshal(b, m, deterministic)
 }
-func (m *Client) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Client.Merge(m, src)
+func (dst *Client) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Client.Merge(dst, src)
 }
 func (m *Client) XXX_Size() int {
 	return xxx_messageInfo_Client.Size(m)
@@ -104,9 +101,9 @@ func init() {
 	proto.RegisterType((*Client)(nil), "proto.Client")
 }
 
-func init() { proto.RegisterFile("client.proto", fileDescriptor_014de31d7ac8c57c) }
+func init() { proto.RegisterFile("client.proto", fileDescriptor_client_c6c23cde6e46ec79) }
 
-var fileDescriptor_014de31d7ac8c57c = []byte{
+var fileDescriptor_client_c6c23cde6e46ec79 = []byte{
 	// 228 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x34, 0x90, 0x41, 0x4a, 0xc4, 0x30,
 	0x14, 0x86, 0x89, 0x4c, 0xab, 0x66, 0xd4, 0x45, 0x70, 0x11, 0xba, 0x99, 0xa2, 0x08, 0x5d, 0xbd,

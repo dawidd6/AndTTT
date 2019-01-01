@@ -20,7 +20,6 @@ public class SingleFragment extends BaseGameFragment {
 
         player1.setName(getString(R.string.player));
         player2.setName(getString(R.string.ai));
-        player2.setName("12345678900987654321");
 
         delay = getResources().getInteger(R.integer.ai_move_delay);
         delay = MainActivity.isAnimationEnabled ? delay : 0;

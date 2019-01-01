@@ -76,4 +76,12 @@
     <string name="registering">Rejestrowanie...</string>
     <string name="creating">Tworzenie...</string>
     <string name="joining">Dołączanie...</string>
+    <string name="created_day_ago">utworzony dzień temu</string>
+    <string name="created_days_ago">utworzony %1$d dni temu</string>
+    <string name="created_hour_ago">utworzony godzinę temu</string>
+    <string name="created_hours_ago">utworzony %1$d godzin temu</string>
+    <string name="created_minute_ago">utworzony minutę temu</string>
+    <string name="created_minutes_ago">utworzony %1$d minut temu</string>
+    <string name="created_second_ago">utworzony sekundę temu</string>
+    <string name="created_seconds_ago">utworzony %1$d sekund temu</string>
 </resources>

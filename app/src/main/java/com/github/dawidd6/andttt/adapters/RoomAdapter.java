@@ -1,10 +1,12 @@
 package com.github.dawidd6.andttt.adapters;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +39,6 @@ public class RoomAdapter extends ArrayAdapter<Room> {
             listItem = LayoutInflater.from(context).inflate(R.layout.room, parent, false);
 
         Room currentRoom = roomsList.get(position);
-        Date since = new Date(currentRoom.getSince().getSeconds()*1000);
         TextView nameText = listItem.findViewById(R.id.nameText);
         TextView countText = listItem.findViewById(R.id.countText);
         TextView sinceText = listItem.findViewById(R.id.sinceText);
@@ -58,8 +59,37 @@ public class RoomAdapter extends ArrayAdapter<Room> {
 
         nameText.setText(currentRoom.getName());
         countText.setText(count);
-        sinceText.setText(since.toString());
+        sinceText.setText(getCreatedAgo(listItem.getResources(), currentRoom.getSince().getSeconds()));
 
         return listItem;
+    }
+
+    public static String getCreatedAgo(Resources resources, long sinceSeconds) {
+        long deltaSecs = System.currentTimeMillis()/1000 - sinceSeconds;
+
+        // days
+        if(deltaSecs/60/60/24 > 1)
+            return resources.getString(R.string.created_days_ago, deltaSecs/60/60/24);
+        // day
+        else if(deltaSecs/60/60/24 == 1)
+            return resources.getString(R.string.created_day_ago);
+        // hours
+        else if(deltaSecs/60/60 > 1)
+            return resources.getString(R.string.created_hours_ago, deltaSecs/60/60);
+        // hour
+        else if(deltaSecs/60/60 == 1)
+            return resources.getString(R.string.created_hour_ago);
+        // minutes
+        else if(deltaSecs/60 > 1)
+            return resources.getString(R.string.created_minutes_ago, deltaSecs/60);
+        // minute
+        else if(deltaSecs/60 == 1)
+            return resources.getString(R.string.created_minute_ago);
+        // seconds
+        else if(deltaSecs > 1)
+            return resources.getString(R.string.created_seconds_ago, deltaSecs);
+        // second
+        else
+            return resources.getString(R.string.created_second_ago);
     }
 }

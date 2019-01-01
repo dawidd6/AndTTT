@@ -1,21 +1,14 @@
 package com.github.dawidd6.andttt.fragments;
 
 
-import android.app.ActivityOptions;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.github.dawidd6.andttt.MainActivity;
-import com.github.dawidd6.andttt.ClientService;
-import com.github.dawidd6.andttt.OnlineActivity;
+import com.github.dawidd6.andttt.activities.MainActivity;
+import com.github.dawidd6.andttt.activities.OnlineActivity;
 import com.github.dawidd6.andttt.R;
 
 public class MenuFragment extends BaseFragment {

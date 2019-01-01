@@ -1,4 +1,4 @@
-package com.github.dawidd6.andttt;
+package com.github.dawidd6.andttt.services;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -7,11 +7,10 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.util.Log;
+import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.events.*;
 import com.github.dawidd6.andttt.proto.Error;
 import com.github.dawidd6.andttt.proto.Response;
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -22,7 +21,7 @@ import java.net.SocketTimeoutException;
 import java.util.Arrays;
 import java.util.Objects;
 
-import static com.github.dawidd6.andttt.OnlineActivity.bus;
+import static com.github.dawidd6.andttt.activities.OnlineActivity.bus;
 
 public class ClientService extends Service {
     public static final String TAG = "Service";

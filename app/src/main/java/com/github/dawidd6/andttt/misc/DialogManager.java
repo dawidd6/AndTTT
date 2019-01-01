@@ -2,7 +2,6 @@ package com.github.dawidd6.andttt.misc;
 
 import android.content.Context;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.github.dawidd6.andttt.MainActivity;
 import com.github.dawidd6.andttt.R;
 
 public class DialogManager {

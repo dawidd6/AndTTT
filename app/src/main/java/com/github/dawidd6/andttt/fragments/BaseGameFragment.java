@@ -1,20 +1,18 @@
 package com.github.dawidd6.andttt.fragments;
 
-import android.app.Fragment;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import butterknife.*;
-import com.github.dawidd6.andttt.*;
 import com.github.dawidd6.andttt.R;
+import com.github.dawidd6.andttt.activities.MainActivity;
 import com.github.dawidd6.andttt.animations.DarkenAnimation;
 import com.github.dawidd6.andttt.animations.LightenAnimation;
 import com.github.dawidd6.andttt.animations.PulseAnimation;

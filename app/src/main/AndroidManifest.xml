@@ -13,7 +13,7 @@
         android:supportsRtl="false"
         android:theme="@style/theme_light">
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,12 +22,12 @@
         </activity>
 
         <activity
-            android:name=".OnlineActivity"
+            android:name=".activities.OnlineActivity"
             android:configChanges="orientation|screenSize">
         </activity>
 
         <service
-            android:name=".ClientService"
+            android:name=".services.ClientService"
             android:enabled="true"
             android:exported="false" />
     </application>

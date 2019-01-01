@@ -1,20 +1,15 @@
-package com.github.dawidd6.andttt;
+package com.github.dawidd6.andttt.activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkRequest;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
-import android.view.WindowManager;
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.github.dawidd6.andttt.services.ClientService;
+import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.events.DisconnectEvent;
 import com.github.dawidd6.andttt.fragments.ConnectFragment;
-import com.github.dawidd6.andttt.fragments.MenuFragment;
 import com.github.dawidd6.andttt.misc.DialogManager;
 import com.github.dawidd6.andttt.proto.Error;
 import org.greenrobot.eventbus.EventBus;

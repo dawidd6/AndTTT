@@ -1,18 +1,15 @@
-package com.github.dawidd6.andttt;
+package com.github.dawidd6.andttt.activities;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 import android.view.WindowManager;
-import com.github.dawidd6.andttt.fragments.LibrariesFragment;
+import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.fragments.MenuFragment;
-import com.github.dawidd6.andttt.proto.Error;
 
 public class MainActivity extends Activity {
     public static boolean isNightModeEnabled;

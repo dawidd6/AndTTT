@@ -3,7 +3,7 @@ package com.github.dawidd6.andttt.fragments;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import com.github.dawidd6.andttt.MainActivity;
+import com.github.dawidd6.andttt.activities.MainActivity;
 import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.proto.Symbol;
 

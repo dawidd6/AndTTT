@@ -12,19 +12,18 @@ import android.widget.*;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
-import com.github.dawidd6.andttt.OnlineActivity;
+import com.github.dawidd6.andttt.activities.OnlineActivity;
 import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.events.SendEvent;
 import com.github.dawidd6.andttt.adapters.RoomAdapter;
 import com.github.dawidd6.andttt.proto.*;
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
-import static com.github.dawidd6.andttt.OnlineActivity.bus;
-import static com.github.dawidd6.andttt.OnlineActivity.dialogManager;
+import static com.github.dawidd6.andttt.activities.OnlineActivity.bus;
+import static com.github.dawidd6.andttt.activities.OnlineActivity.dialogManager;
 
 
 public class RoomsFragment extends BaseFragment {

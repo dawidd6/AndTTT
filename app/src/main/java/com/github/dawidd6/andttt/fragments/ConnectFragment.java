@@ -4,7 +4,6 @@ package com.github.dawidd6.andttt.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,17 +14,15 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
-import com.github.dawidd6.andttt.ClientService;
-import com.github.dawidd6.andttt.OnlineActivity;
-import com.github.dawidd6.andttt.OnlineActivity;
+import com.github.dawidd6.andttt.services.ClientService;
+import com.github.dawidd6.andttt.activities.OnlineActivity;
 import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.events.*;
 import com.github.dawidd6.andttt.proto.*;
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import static com.github.dawidd6.andttt.OnlineActivity.*;
+import static com.github.dawidd6.andttt.activities.OnlineActivity.*;
 
 
 public class ConnectFragment extends BaseFragment {

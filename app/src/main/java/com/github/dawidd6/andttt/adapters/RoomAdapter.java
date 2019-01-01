@@ -2,35 +2,22 @@ package com.github.dawidd6.andttt.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.github.dawidd6.andttt.MainActivity;
+import com.github.dawidd6.andttt.activities.MainActivity;
 import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.proto.Room;
-import com.google.protobuf.Timestamp;
-import com.google.protobuf.TimestampOrBuilder;
-import com.google.protobuf.TimestampProto;
 
-import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class RoomAdapter extends ArrayAdapter<Room> {
     private Context context;

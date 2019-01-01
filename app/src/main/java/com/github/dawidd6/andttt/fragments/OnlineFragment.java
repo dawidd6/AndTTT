@@ -1,32 +1,19 @@
 package com.github.dawidd6.andttt.fragments;
 
-import android.app.DialogFragment;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkRequest;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.View;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.github.dawidd6.andttt.ClientService;
-import com.github.dawidd6.andttt.OnlineActivity;
 import com.github.dawidd6.andttt.R;
-import com.github.dawidd6.andttt.events.DisconnectEvent;
 import com.github.dawidd6.andttt.events.SendEvent;
 import com.github.dawidd6.andttt.game.Player;
 import com.github.dawidd6.andttt.proto.*;
-import com.github.dawidd6.andttt.proto.Error;
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import static com.github.dawidd6.andttt.OnlineActivity.bus;
-import static com.github.dawidd6.andttt.OnlineActivity.dialogManager;
-import static com.github.dawidd6.andttt.OnlineActivity.name;
+import static com.github.dawidd6.andttt.activities.OnlineActivity.bus;
+import static com.github.dawidd6.andttt.activities.OnlineActivity.dialogManager;
+import static com.github.dawidd6.andttt.activities.OnlineActivity.name;
 
 public class OnlineFragment extends BaseGameFragment {
     public static final String TAG = "OnlineFragment";

@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -69,8 +70,13 @@ public class ClientService extends Service {
         if(socket == null)
             return;
 
+        byte data[] = event.getRequest().toByteArray();
+        ByteBuffer buffer = ByteBuffer.allocate(4 + data.length);
+        buffer.putInt(data.length);
+        buffer.put(data);
+
         try {
-            socket.getOutputStream().write(event.getRequest().toByteArray());
+            socket.getOutputStream().write(buffer.array());
             socket.getOutputStream().flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -87,11 +93,18 @@ public class ClientService extends Service {
 
             while (true) {
                 try {
-                    byte buffer[] = new byte[BUFFER_SIZE];
-                    int length = socket.getInputStream().read(buffer);
-                    if (length < 0)
+                    ByteBuffer buffer;
+
+                    // read first 4 bytes to get the length of data
+                    buffer = ByteBuffer.allocate(4);
+                    if (socket.getInputStream().read(buffer.array()) < 0)
                         throw new IOException();
-                    buffer = Arrays.copyOfRange(buffer, 0, length);
+
+                    // read the rest of bytes to get data
+                    buffer = ByteBuffer.allocate(buffer.getInt());
+                    if (socket.getInputStream().read(buffer.array()) < 0)
+                        throw new IOException();
+
                     Response response = Response.parseFrom(buffer);
                     dispatch(response);
                 } catch (IOException e) {

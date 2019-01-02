@@ -1,44 +1,73 @@
 package msg
 
 import (
+	"encoding/binary"
 	pb "github.com/golang/protobuf/proto"
 	"net"
 	"server/proto"
 )
 
-// Send writes []byte to *net.TCPConn and returns error
 func Send(conn *net.TCPConn, data []byte) error {
-	_, err := conn.Write(data)
+	frame := make([]byte, 4)
+	binary.BigEndian.PutUint32(frame, uint32(len(data)))
+	frame = append(frame, data...)
+
+	_, err := conn.Write(frame)
 
 	return err
 }
 
-// Receive creates buffer, blocks the code flow one time with Read function
-// and returns read data
-// It's convenient to use this function in for loop with goroutine
-// to constantly check for available data to read
 func Receive(conn *net.TCPConn) ([]byte, error) {
-	buffer := make([]byte, 4096)
-	length, err := conn.Read(buffer)
+	// read first 4 bytes to get the length of data
+	buffer := make([]byte, 4)
 
+	_, err := conn.Read(buffer)
 	if err != nil {
-		return []byte(""), err
+		return nil, err
 	}
 
-	return buffer[:length], nil
+	// read the rest of bytes to get data
+	buffer = make([]byte, binary.BigEndian.Uint32(buffer))
+
+	_, err = conn.Read(buffer)
+	if err != nil {
+		return nil, err
+	}
+
+	return buffer, nil
 }
 
 func SendResponse(conn *net.TCPConn, message *proto.Response) error {
-	jason, err := pb.Marshal(message)
+	data, err := pb.Marshal(message)
 	if err != nil {
 		return err
 	}
 
-	return Send(conn, jason)
+	return Send(conn, data)
+}
+
+func SendRequest(conn *net.TCPConn, message *proto.Request) error {
+	data, err := pb.Marshal(message)
+	if err != nil {
+		return err
+	}
+
+	return Send(conn, data)
 }
 
 func ReceiveRequest(conn *net.TCPConn) (*proto.Request, error) {
 	message := new(proto.Request)
+	buffer, err := Receive(conn)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return message, pb.Unmarshal(buffer, message)
+}
+
+func ReceiveResponse(conn *net.TCPConn) (*proto.Response, error) {
+	message := new(proto.Response)
 	buffer, err := Receive(conn)
 
 	if err != nil {

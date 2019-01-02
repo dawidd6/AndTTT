@@ -26,7 +26,7 @@ public class MenuFragment extends BaseFragment {
 
     @OnClick(R.id.singleButton)
     public void onSingleButtonClick() {
-        MainActivity.switchFragment(getFragmentManager(), new SingleFragment(), true);
+        MainActivity.switchFragment(getFragmentManager(), new DifficultyFragment(), true);
     }
 
     @OnClick(R.id.onlineButton)

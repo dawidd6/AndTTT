@@ -84,4 +84,7 @@
     <string name="created_minutes_ago">utworzony %1$d minut temu</string>
     <string name="created_second_ago">utworzony sekundę temu</string>
     <string name="created_seconds_ago">utworzony %1$d sekund temu</string>
+    <string name="difficulty_low">łatwe</string>
+    <string name="difficulty_medium">wymagające</string>
+    <string name="difficulty_high">niepokonane</string>
 </resources>

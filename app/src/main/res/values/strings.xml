@@ -96,4 +96,7 @@
     <string name="created_minutes_ago">created %1$d minutes ago</string>
     <string name="created_second_ago">created a second ago</string>
     <string name="created_seconds_ago">created %1$d seconds ago</string>
+    <string name="difficulty_low">easy</string>
+    <string name="difficulty_medium">challenging</string>
+    <string name="difficulty_high">unbeatable</string>
 </resources>

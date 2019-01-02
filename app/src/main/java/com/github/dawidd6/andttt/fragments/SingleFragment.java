@@ -5,13 +5,11 @@ import android.os.Handler;
 import android.view.View;
 import com.github.dawidd6.andttt.activities.MainActivity;
 import com.github.dawidd6.andttt.R;
-import com.github.dawidd6.andttt.proto.Symbol;
-
-import java.util.Random;
-import java.util.Vector;
+import com.github.dawidd6.andttt.ai.AI;
 
 public class SingleFragment extends BaseGameFragment {
     public static final String TAG = "SingleFragment";
+    private AI ai;
     private int delay;
 
     @Override
@@ -19,7 +17,7 @@ public class SingleFragment extends BaseGameFragment {
         super.onViewCreated(view, savedInstanceState);
 
         player1.setName(getString(R.string.player));
-        player2.setName(getString(R.string.ai));
+        player2.setName(getString(R.string.ai) + " (" + getString(ai.getDifficulty()) + ")");
 
         delay = getResources().getInteger(R.integer.ai_move_delay);
         delay = MainActivity.isAnimationEnabled ? delay : 0;
@@ -39,41 +37,20 @@ public class SingleFragment extends BaseGameFragment {
         AIMove();
     }
 
+    public void setAI(AI ai) {
+        this.ai = ai;
+    }
+
     private void AIMove() {
         setAllTilesClickable(false);
 
         new Handler().postDelayed(() -> {
             if (player2.isTurn())
-                makeMove(player2, player1, computeMove());
+                makeMove(player2, player1, ai.getMove(game, player2, player1));
             if(player1.isTurn())
                 setAllTilesClickable(true);
         }, delay);
     }
 
-    public int computeMove() {
-        Vector<Integer> nonePositions = new Vector<>();
-        Random rand = new Random();
-        int counter = 0;
 
-        for(Symbol s : new Symbol[] {player2.getSymbol(), player1.getSymbol()}) {
-            nonePositions.removeAllElements();
-            for(int p[] : game.getPatterns()) {
-                for(int j = 0; j < 3; j++) {
-                    if(game.getTile(p[j]) == s)
-                        counter++;
-                    else if(game.getTile(p[j]) == Symbol.NO) {
-                        counter = counter + 8;
-                        nonePositions.add(p[j]);
-                    }
-                }
-
-                if(counter == 10)
-                    return nonePositions.lastElement();
-                else
-                    counter = 0;
-            }
-        }
-
-        return nonePositions.elementAt(rand.nextInt(nonePositions.size()));
-    }
 }

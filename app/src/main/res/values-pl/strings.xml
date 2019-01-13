@@ -15,7 +15,7 @@
     <string name="libraries">Biblioteki</string>
     <string name="libraries_summary">użyte w tym projekcie</string>
     <string name="player">Gracz</string>
-    <string name="ai">SI</string>
+    <string name="bot">Bot</string>
     <string name="board_maximization">Maksymalizacja planszy</string>
     <string name="board_maximization_summary">Dynamicznie powiększ planszę bazując na wielkości wyświetlacza</string>
     <string name="play_online">Zagraj online</string>
@@ -84,7 +84,7 @@
     <string name="created_minutes_ago">utworzony %1$d minut temu</string>
     <string name="created_second_ago">utworzony sekundę temu</string>
     <string name="created_seconds_ago">utworzony %1$d sekund temu</string>
-    <string name="difficulty_low">łatwe</string>
-    <string name="difficulty_medium">wymagające</string>
-    <string name="difficulty_high">niepokonane</string>
+    <string name="difficulty_easy">łatwe</string>
+    <string name="difficulty_medium">średnie</string>
+    <string name="difficulty_hard">trudne</string>
 </resources>

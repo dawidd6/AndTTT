@@ -6,12 +6,12 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/lowButton"
+        android:id="@+id/easyButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@drawable/rounded_button"
-        android:text="@string/difficulty_low"
+        android:text="@string/difficulty_easy"
         android:textColor="?android:attr/textColorTertiary"
         android:textSize="@dimen/rounded_button_text_size" />
 
@@ -26,12 +26,15 @@
         android:textSize="@dimen/rounded_button_text_size" />
 
     <Button
-        android:id="@+id/highButton"
+        android:id="@+id/hardButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:alpha="0.5"
+        android:clickable="false"
         android:background="@drawable/rounded_button"
-        android:text="@string/difficulty_high"
+        android:text="@string/difficulty_hard"
         android:textColor="?android:attr/textColorTertiary"
         android:textSize="@dimen/rounded_button_text_size" />
+
 </LinearLayout>

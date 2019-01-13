@@ -27,7 +27,7 @@
     <string name="libraries_summary">used by this project</string>
 
     <string name="player">Player</string>
-    <string name="ai">AI</string>
+    <string name="bot">Bot</string>
 
     <string name="board_maximization">Board maximization</string>
     <string name="board_maximization_summary">Dynamically maximize board basing on screen size</string>
@@ -96,7 +96,7 @@
     <string name="created_minutes_ago">created %1$d minutes ago</string>
     <string name="created_second_ago">created a second ago</string>
     <string name="created_seconds_ago">created %1$d seconds ago</string>
-    <string name="difficulty_low">easy</string>
-    <string name="difficulty_medium">challenging</string>
-    <string name="difficulty_high">unbeatable</string>
+    <string name="difficulty_easy">easy</string>
+    <string name="difficulty_medium">medium</string>
+    <string name="difficulty_hard">hard</string>
 </resources>

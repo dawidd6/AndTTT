@@ -4,6 +4,7 @@
     <integer name="activity_recreate_delay">600</integer>
     <integer name="animation_duration">600</integer>
     <integer name="bot_move_delay">500</integer>
+    <integer name="arena_move_delay">2000</integer>
     <integer name="name_max_length">20</integer>
     <integer name="room_max_length">20</integer>
 </resources>

@@ -99,4 +99,5 @@
     <string name="difficulty_easy">easy</string>
     <string name="difficulty_medium">medium</string>
     <string name="difficulty_hard">hard</string>
+    <string name="arena">Arena</string>
 </resources>

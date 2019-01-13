@@ -34,6 +34,11 @@ public class MenuFragment extends BaseFragment {
         startActivity(new Intent(getActivity(), OnlineActivity.class));
     }
 
+    @OnClick(R.id.arenaButton)
+    public void onArenaButtonClick() {
+        MainActivity.switchFragment(getFragmentManager(), new GladiatorsFragment(), true);
+    }
+
     @OnClick(R.id.settingsButton)
     public void onSettingsButtonClick() {
         MainActivity.switchFragment(getFragmentManager(), new SettingsFragment(), true);

@@ -87,4 +87,5 @@
     <string name="difficulty_easy">łatwe</string>
     <string name="difficulty_medium">średnie</string>
     <string name="difficulty_hard">trudne</string>
+    <string name="arena">Arena</string>
 </resources>

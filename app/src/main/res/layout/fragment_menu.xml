@@ -36,6 +36,16 @@
         android:textSize="@dimen/rounded_button_text_size" />
 
     <Button
+        android:id="@+id/arenaButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_button"
+        android:text="@string/arena"
+        android:textColor="?android:attr/textColorTertiary"
+        android:textSize="@dimen/rounded_button_text_size" />
+
+    <Button
         android:id="@+id/settingsButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="difficulties">
+        <item>@string/difficulty_easy</item>
+        <item>@string/difficulty_medium</item>
+        <!--<item>@string/difficulty_hard</item>-->
+    </string-array>
+</resources>

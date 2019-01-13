@@ -27,8 +27,7 @@ public class OnlineFragment extends BaseGameFragment {
         player2.setName("");
 
         showConclusion(getString(R.string.waiting), Color.BLUE);
-        restartButton.setClickable(false);
-        restartButton.setAlpha(0.5f);
+        setRestartButtonClickable(false);
 
         Request request = Request.newBuilder()
                 .setStarterPack(StarterPackRequest.newBuilder())
@@ -154,8 +153,6 @@ public class OnlineFragment extends BaseGameFragment {
         super.restartGame();
         
         setAllTilesClickable(player1.isTurn());
-        restartButton.setClickable(false);
-        restartButton.setAlpha(0.5f);
 
         if(player1.isTurn())
             hideConclusion();
@@ -172,9 +169,6 @@ public class OnlineFragment extends BaseGameFragment {
 
             if (player2.isTurn())
                 showConclusion(getString(R.string.waiting), Color.BLUE);
-        } else {
-            restartButton.setClickable(true);
-            restartButton.setAlpha(1.0f);
         }
     }
 

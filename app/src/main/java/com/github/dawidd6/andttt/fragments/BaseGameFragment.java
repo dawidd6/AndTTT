@@ -13,9 +13,7 @@ import android.widget.*;
 import butterknife.*;
 import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.activities.MainActivity;
-import com.github.dawidd6.andttt.animations.DarkenAnimation;
-import com.github.dawidd6.andttt.animations.LightenAnimation;
-import com.github.dawidd6.andttt.animations.PulseAnimation;
+import com.github.dawidd6.andttt.animations.*;
 import com.github.dawidd6.andttt.drawings.DrawCircle;
 import com.github.dawidd6.andttt.drawings.DrawCross;
 import com.github.dawidd6.andttt.drawings.DrawLine;
@@ -316,6 +314,9 @@ public abstract class BaseGameFragment extends BaseFragment {
 
         // enable all tiles
         setAllTilesClickable(true);
+
+        // set restart button not clickable
+        setRestartButtonClickable(false);
     }
 
     public void checkStatus() {
@@ -345,6 +346,14 @@ public abstract class BaseGameFragment extends BaseFragment {
                 tilesView[i].setClickable(clickable);
     }
 
+    protected void setRestartButtonClickable(boolean clickable) {
+        restartButton.setClickable(clickable);
+        if(clickable)
+            new ActiveAnimation(restartButton, animation_duration*2);
+        else
+            new InactiveAnimation(restartButton, animation_duration);
+    }
+
     protected void makeMove(Player playerWithTurn, Player playerWithoutTurn, int i) {
         game.setTile(i, playerWithTurn.getSymbol());
         tilesView[i].setClickable(false);
@@ -356,6 +365,8 @@ public abstract class BaseGameFragment extends BaseFragment {
         if(game.isPlaying()) {
             playerWithTurn.setTurn(false);
             playerWithoutTurn.setTurn(true);
+        } else {
+            setRestartButtonClickable(true);
         }
     }
 

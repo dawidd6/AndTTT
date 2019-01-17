@@ -16,7 +16,7 @@ public class MediumBot implements Bot {
 
         for(Symbol s : new Symbol[] {bot.getSymbol(), player.getSymbol()}) {
             nonePositions.removeAllElements();
-            for(int p[] : game.getPatterns()) {
+            for(int p[] : Game.getPatterns()) {
                 for(int j = 0; j < 3; j++) {
                     if(game.getTile(p[j]) == s)
                         counter++;

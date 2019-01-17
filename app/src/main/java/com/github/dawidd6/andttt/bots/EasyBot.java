@@ -12,11 +12,22 @@ public class EasyBot implements Bot {
     @Override
     public int getMove(Game game, Player bot, Player player) {
         Vector<Integer> nonePositions = new Vector<>();
+        int counter = 0;
 
-        for(int i = 0; i < 9; i++) {
-            if(game.getTile(i) == Symbol.NO) {
-                nonePositions.add(i);
+        for(int p[] : Game.getPatterns()) {
+            for(int j = 0; j < 3; j++) {
+                if(game.getTile(p[j]) == bot.getSymbol())
+                    counter++;
+                else if(game.getTile(p[j]) == Symbol.NO) {
+                    counter = counter + 8;
+                    nonePositions.add(p[j]);
+                }
             }
+
+            if(counter == 10)
+                return nonePositions.lastElement();
+            else
+                counter = 0;
         }
 
         return nonePositions.elementAt(new Random().nextInt(nonePositions.size()));

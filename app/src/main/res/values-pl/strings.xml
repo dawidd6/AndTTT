@@ -88,4 +88,5 @@
     <string name="difficulty_medium">średnie</string>
     <string name="difficulty_hard">trudne</string>
     <string name="arena">Arena</string>
+    <string name="tap_to_restart">Dotknij planszy aby zrestartować grę</string>
 </resources>

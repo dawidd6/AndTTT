@@ -35,6 +35,7 @@ public abstract class BaseGameFragment extends BaseFragment {
     @BindView(R.id.player2View) ImageView player2View;
     @BindView(R.id.player1Score) TextView player1Score;
     @BindView(R.id.player2Score) TextView player2Score;
+    @BindView(R.id.restartText) TextView restartText;
     @BindView(R.id.conclusionText) TextView conclusionText;
     @BindView(R.id.conclusionFrame) FrameLayout conclusionFrame;
     @BindView(R.id.boardView) ImageView boardView;
@@ -56,8 +57,6 @@ public abstract class BaseGameFragment extends BaseFragment {
     protected int animation_duration;
 
     protected Game game;
-
-    @BindView(R.id.restartButton) Button restartButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -149,6 +148,7 @@ public abstract class BaseGameFragment extends BaseFragment {
         boardView.setImageBitmap(boardBitmap);
 
         // hide conclusion stuff
+        restartText.setAlpha(0);
         conclusionText.setAlpha(0);
         conclusionFrame.setAlpha(0);
 
@@ -265,11 +265,15 @@ public abstract class BaseGameFragment extends BaseFragment {
     public void showConclusion(String text, int color) {
         conclusionText.setText(text);
         conclusionText.setTextColor(color);
+        if(!text.equals(getString(R.string.waiting)))
+            new DarkenAnimation(restartText, animation_duration*2);
         new DarkenAnimation(conclusionFrame, animation_duration*2);
         new DarkenAnimation(conclusionText, animation_duration*2);
     }
 
     public void hideConclusion() {
+        if(restartText.getAlpha() > 0)
+            new LightenAnimation(restartText, animation_duration);
         if(conclusionText.getAlpha() > 0)
             new LightenAnimation(conclusionText, animation_duration);
         if(conclusionFrame.getAlpha() > 0)
@@ -347,11 +351,7 @@ public abstract class BaseGameFragment extends BaseFragment {
     }
 
     protected void setRestartButtonClickable(boolean clickable) {
-        restartButton.setClickable(clickable);
-        if(clickable)
-            new ActiveAnimation(restartButton, animation_duration*2);
-        else
-            new InactiveAnimation(restartButton, animation_duration);
+        conclusionFrame.setClickable(clickable);
     }
 
     protected void makeMove(Player playerWithTurn, Player playerWithoutTurn, int i) {
@@ -378,7 +378,7 @@ public abstract class BaseGameFragment extends BaseFragment {
                 i);
     }
 
-    @OnClick(R.id.restartButton)
+    @OnClick(R.id.conclusionFrame)
     public void onClickRestart(View view) {
         restartGame();
     }

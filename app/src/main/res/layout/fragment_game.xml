@@ -12,7 +12,7 @@
         android:id="@+id/player2Score"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/symbol_dimen"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:background="@drawable/border"
         android:gravity="center_vertical|center_horizontal|center"
@@ -22,7 +22,7 @@
         android:textColor="@color/color_green"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/restartButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
@@ -257,19 +257,16 @@
         app:layout_constraintBottom_toTopOf="@+id/player2Score"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/restartButton"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/restartText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:background="@drawable/rounded_button"
-        android:text="@string/restart"
-        android:textColor="?android:attr/textColorTertiary"
-        android:textSize="@dimen/rounded_button_text_size"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="8dp"
+        android:text="@string/tap_to_restart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/conclusionText" />
 
 </android.support.constraint.ConstraintLayout>

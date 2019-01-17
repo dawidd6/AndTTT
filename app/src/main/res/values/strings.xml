@@ -100,4 +100,5 @@
     <string name="difficulty_medium">medium</string>
     <string name="difficulty_hard">hard</string>
     <string name="arena">Arena</string>
+    <string name="tap_to_restart">Tap board to restart the game</string>
 </resources>

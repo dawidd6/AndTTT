@@ -11,8 +11,6 @@ import java.util.Random;
 import java.util.Vector;
 
 public class HardBot implements Bot {
-    private final String TAG = "TAGGGGG";
-
     private Symbol[] board;
     private Symbol bot;
     private Symbol human;
@@ -44,12 +42,6 @@ public class HardBot implements Bot {
                 board[newMove] = Symbol.NO;
 
                 if(newValue > oldValue) {
-                    Log.i(TAG, "---------------------------");
-                    Log.i(TAG, "oldValue = " + oldValue);
-                    Log.i(TAG, "oldMove = " + oldMove);
-                    Log.i(TAG, "newValue = " + newValue);
-                    Log.i(TAG, "newMove = " + newMove);
-                    Log.i(TAG, "---------------------------");
                     oldValue = newValue;
                     oldMove = newMove;
                 }

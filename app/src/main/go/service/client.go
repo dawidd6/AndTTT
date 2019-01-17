@@ -1,7 +1,7 @@
 package service
 
 import (
-	"github.com/dawidd6/mmap"
+	"github.com/dawidd6/go-mmap"
 	"github.com/golang/protobuf/ptypes"
 	"net"
 	"server/proto"

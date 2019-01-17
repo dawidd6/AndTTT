@@ -2,6 +2,7 @@ package com.github.dawidd6.andttt.fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.activities.MainActivity;
@@ -9,7 +10,7 @@ import com.github.dawidd6.andttt.bots.Bot;
 import com.github.dawidd6.andttt.bots.MediumBot;
 
 public class ArenaFragment extends BaseGameFragment {
-    public static final String TAG = "SingleFragment";
+    public static final String TAG = "ArenaFragment";
     private Bot bot1;
     private Bot bot2;
     private int delay;
@@ -40,6 +41,10 @@ public class ArenaFragment extends BaseGameFragment {
 
     private void BotMove() {
         new Handler().postDelayed(() -> {
+            if(getActivity() == null) {
+                return;
+            }
+
             if(player1.isTurn())
                 makeMove(player1, player2, bot1.getMove(game, player1, player2));
             else if(player2.isTurn())

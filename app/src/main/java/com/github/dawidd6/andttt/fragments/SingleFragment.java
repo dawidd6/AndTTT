@@ -45,6 +45,10 @@ public class SingleFragment extends BaseGameFragment {
         setAllTilesClickable(false);
 
         new Handler().postDelayed(() -> {
+            if(getActivity() == null) {
+                return;
+            }
+
             if (player2.isTurn())
                 makeMove(player2, player1, bot.getMove(game, player2, player1));
             if(player1.isTurn())

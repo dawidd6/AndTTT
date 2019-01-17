@@ -4,12 +4,13 @@ import com.github.dawidd6.andttt.proto.Symbol;
 
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Vector;
 
 public class Game {
     private Status status;
     private Symbol tiles[];
     private int noneCounter;
-    private final int patterns[][] = {
+    private static final int patterns[][] = {
             {0,1,2}, // 0 horizontal up
             {3,4,5}, // 1 horizontal mid
             {6,7,8}, // 2 horizontal bottom
@@ -82,6 +83,10 @@ public class Game {
         return tiles[i];
     }
 
+    public Symbol[] getTiles() {
+        return tiles;
+    }
+
     public void resetTiles() {
         Arrays.fill(tiles, Symbol.NO);
     }
@@ -90,7 +95,7 @@ public class Game {
         return pattern;
     }
 
-    public int[][] getPatterns() {
+    public static int[][] getPatterns() {
         return patterns;
     }
 

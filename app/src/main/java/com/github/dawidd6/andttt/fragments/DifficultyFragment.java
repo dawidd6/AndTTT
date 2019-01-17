@@ -9,6 +9,7 @@ import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.activities.MainActivity;
 import com.github.dawidd6.andttt.bots.Bot;
 import com.github.dawidd6.andttt.bots.EasyBot;
+import com.github.dawidd6.andttt.bots.HardBot;
 import com.github.dawidd6.andttt.bots.MediumBot;
 
 public class DifficultyFragment extends BaseFragment {
@@ -27,6 +28,11 @@ public class DifficultyFragment extends BaseFragment {
     @OnClick(R.id.mediumButton)
     public void onMediumButtonClick() {
         launch(new MediumBot());
+    }
+
+    @OnClick(R.id.hardButton)
+    public void onHardButtonClick() {
+        launch(new HardBot());
     }
 
     private void launch(Bot bot) {

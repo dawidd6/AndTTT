@@ -3,6 +3,6 @@
     <string-array name="difficulties">
         <item>@string/difficulty_easy</item>
         <item>@string/difficulty_medium</item>
-        <!--<item>@string/difficulty_hard</item>-->
+        <item>@string/difficulty_hard</item>
     </string-array>
 </resources>

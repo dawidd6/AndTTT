@@ -17,6 +17,7 @@ import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.activities.MainActivity;
 import com.github.dawidd6.andttt.bots.Bot;
 import com.github.dawidd6.andttt.bots.EasyBot;
+import com.github.dawidd6.andttt.bots.HardBot;
 import com.github.dawidd6.andttt.bots.MediumBot;
 
 public class GladiatorsFragment extends BaseFragment {
@@ -43,6 +44,8 @@ public class GladiatorsFragment extends BaseFragment {
                 return new EasyBot();
             case 1:
                 return new MediumBot();
+            case 2:
+                return new HardBot();
         }
 
         return null;

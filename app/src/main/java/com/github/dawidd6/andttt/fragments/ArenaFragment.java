@@ -19,8 +19,6 @@ public class ArenaFragment extends BaseGameFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        setAllTilesClickable(false);
-
         player1.setName(getString(R.string.bot) + " 1 (" + getString(bot1.getDifficulty()) + ")");
         player2.setName(getString(R.string.bot) + " 2 (" + getString(bot2.getDifficulty()) + ")");
 
@@ -30,6 +28,8 @@ public class ArenaFragment extends BaseGameFragment {
     @Override
     public void restartGame() {
         super.restartGame();
+
+        setAllTilesClickable(false);
 
         BotMove();
     }

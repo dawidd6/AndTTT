@@ -20,7 +20,7 @@ import (
 )
 
 var (
-	version = "0.6.0+git"
+	version = "0.6.1"
 	sig = make(chan os.Signal)
 	logger = log.New(os.Stdout, "", log.Lshortfile)
 	network = "tcp4"

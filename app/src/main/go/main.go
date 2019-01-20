@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"github.com/husobee/vestigo"
 	"io/ioutil"
 	"log"
@@ -19,42 +20,70 @@ import (
 )
 
 var (
-	version string = "0.6.0+git"
-	logger *log.Logger
+	version = "0.6.0+git"
+	sig = make(chan os.Signal)
+	logger = log.New(os.Stdout, "", log.Lshortfile)
+	network = "tcp4"
+	keepAlivePeriod = time.Second * 30
+	addrTCP = "127.0.0.1:33333"
+	addrHTTP = "127.0.0.1:33334"
+	logQuiet = false
+	logDate = false
+	logMessages = false
+	onlyPrintVersion = false
+	cleanInterval = time.Minute * 5
 )
 
 func main() {
-	logger = log.New(os.Stdout, "", log.Lshortfile)
-
-	sig := make(chan os.Signal)
-	addrTCP := flag.String("addr-tcp", "127.0.0.1:33333", "ip address on which TCP service will listen")
-	addrHTTP := flag.String("addr-http", "127.0.0.1:33334", "ip address on which HTTP service will listen")
-	quiet := flag.Bool("quiet", false, "produce no output at all")
-	date := flag.Bool("date", false, "prepend output with date")
-	cleanInterval := flag.Duration("room-clean-interval", time.Minute*5, "interval between room cleaning")
+	flag.StringVar(&addrTCP, "addr-tcp", addrTCP, "ip address on which TCP service will listen")
+	flag.StringVar(&addrHTTP, "addr-http", addrHTTP, "ip address on which HTTP service will listen")
+	flag.BoolVar(&logQuiet, "log-quiet", logQuiet, "produce no output at all")
+	flag.BoolVar(&logDate, "log-date", logDate, "prepend output with date")
+	flag.BoolVar(&logMessages, "log-messages", logMessages, "log every request and response")
+	flag.BoolVar(&onlyPrintVersion, "version", onlyPrintVersion, "print version and exit")
+	flag.DurationVar(&cleanInterval, "room-clean-interval", cleanInterval, "interval between room cleaning")
 	flag.Parse()
 
-	if *quiet {
+	if onlyPrintVersion {
+		fmt.Println(version)
+		return
+	}
+
+	if logQuiet {
 		logger.SetOutput(ioutil.Discard)
 	}
 
-	if *date {
+	if logDate {
 		logger.SetFlags(log.LstdFlags | logger.Flags())
 	}
 
-	go listen(*addrHTTP, *addrTCP)
-	go clean(*cleanInterval)
+	logger.Println("AndTTT server version", version)
 
-	logger.Println("version", version)
-	logger.Println("cleaning at interval", *cleanInterval)
-	logger.Println("listening TCP", *addrTCP)
-	logger.Println("listening HTTP", *addrHTTP)
+	go listenTCP()
+	go listenHTTP()
+	go clean()
 
 	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
 	<-sig
 }
 
-func listen(addrHTTP, addrTCP string) {
+func listenTCP() {
+	addr, err := net.ResolveTCPAddr(network, addrTCP)
+	if err != nil {
+		logger.Fatalln("E/ResolveTCPAddr", err)
+	}
+	logger.Println("ResolveTCPAddr", addr)
+
+	listener, err := net.ListenTCP(network, addr)
+	if err != nil {
+		logger.Fatalln("E/ListenTCP", err)
+	}
+	logger.Println("ListenTCP", listener.Addr().String())
+
+	go accept(listener)
+}
+
+func listenHTTP() {
 	router := vestigo.NewRouter()
 
 	api.SetHandlers(router)
@@ -62,52 +91,61 @@ func listen(addrHTTP, addrTCP string) {
 		logger.Println(request.Method, request.RequestURI, request.RemoteAddr)
 	}
 
-	addr, err := net.ResolveTCPAddr("tcp", addrTCP)
+	listener, err := net.Listen(network, addrHTTP)
 	if err != nil {
-		logger.Fatal("E/listen", err)
+		logger.Fatalln("E/Listen", err)
 	}
+	logger.Println("Listen", listener.Addr().String())
 
-	listener, err := net.ListenTCP("tcp", addr)
+	err = http.Serve(listener, router)
 	if err != nil {
-		logger.Fatal("E/listen", err)
-	}
-
-	go accept(listener)
-
-	err = http.ListenAndServe(addrHTTP, router)
-	if err != nil {
-		logger.Fatal("E/listen", err)
+		logger.Fatalln("E/Serve", err)
 	}
 }
 
 func accept(listener *net.TCPListener) {
 	for {
 		conn, err := listener.AcceptTCP()
-
 		if conn == nil {
-			return
+			break
 		}
+		addr := conn.RemoteAddr().String()
 
 		if err != nil {
-			logger.Println("E/accept", conn.RemoteAddr())
+			logger.Println("E/AcceptTCP", addr, err)
 			continue
 		}
+		logger.Println("AcceptTCP", addr)
 
-		conn.SetKeepAlive(true)
-		conn.SetKeepAlivePeriod(time.Second * 30)
+		err = conn.SetKeepAlive(true)
+		if err != nil {
+			logger.Println("E/SetKeepAlive", addr, err)
+			continue
+		}
+		logger.Println("SetKeepAlive", addr)
 
-		logger.Println("accept", conn.RemoteAddr())
+		err = conn.SetKeepAlivePeriod(keepAlivePeriod)
+		if err != nil {
+			logger.Println("E/SetKeepAlivePeriod", addr, err)
+			continue
+		}
+		logger.Println("SetKeepAlivePeriod", addr, keepAlivePeriod)
+
 		go read(conn)
 	}
 }
 
 func read(conn *net.TCPConn) {
 	client := service.NewClient(conn)
+	addr := conn.RemoteAddr().String()
 
 	for {
 		request, err := msg.ReceiveRequest(conn)
 		if err != nil {
+			logger.Println("E/ReceiveRequest", addr)
 			break
+		} else if logMessages {
+			logger.Println("ReceiveRequest", addr, request.String())
 		}
 
 		go dispatch(client, conn, request)
@@ -116,27 +154,30 @@ func read(conn *net.TCPConn) {
 	disconnect(client, conn)
 }
 
-func clean(cleanInterval time.Duration) {
+func clean() {
 	for {
 		<-time.After(cleanInterval)
 
 		names, err := service.CleanRooms(cleanInterval)
 		if err != proto.Error_NONE {
-			logger.Println("E/clean", names)
+			logger.Println("E/CleanRooms", names)
 		} else if len(names) > 0 {
-			logger.Println("clean", names)
+			logger.Println("CleanRooms", names)
 		}
 	}
 }
 
 func disconnect(client *proto.Client, conn *net.TCPConn) {
-	logger.Println("disconnect", conn.RemoteAddr(), client.Name)
+	addr := conn.RemoteAddr().String()
+	name := client.Name
 
 	// notify enemy of disconnected client about this fact
 	enemy, connEnemy, err := service.GetEnemy(client)
 	if err != proto.Error_NONE {
-		logger.Println("E/disconnect", err)
+		logger.Println("E/GetEnemy", addr, err)
 	} else {
+		logger.Println("GetEnemy", addr, name)
+
 		enemy.Ready = true
 
 		response := &proto.Response{
@@ -144,19 +185,27 @@ func disconnect(client *proto.Client, conn *net.TCPConn) {
 				EnemyDisconnected: &proto.EnemyDisconnectedResponse{},
 			},
 		}
-		if err := msg.SendResponse(connEnemy, response); err != nil {
-			logger.Println("E/disconnect", err)
+
+		err := msg.SendResponse(connEnemy, response)
+		if err != nil {
+			logger.Println("E/SendResponse", err)
+		} else if logMessages {
+			logger.Println("SendResponse", addr, response.String())
 		}
 	}
 
 	// leave room
 	if err := service.LeaveRoom(client); err != proto.Error_NONE {
-		logger.Println("E/disconnect", err)
+		logger.Println("E/LeaveRoom", addr, name, err)
+	} else {
+		logger.Println("LeaveRoom", addr, name)
 	}
 
 	// finally remove client
 	if err := service.RemoveClient(client); err != proto.Error_NONE {
-		logger.Println("E/disconnect", err)
+		logger.Println("E/RemoveClient", addr, name, err)
+	} else {
+		logger.Println("RemoveClient", addr, name)
 	}
 }
 
@@ -195,7 +244,9 @@ func dispatch(client *proto.Client, conn *net.TCPConn, request *proto.Request) {
 		err := msg.SendResponse(dispatch.Conn, dispatch.Response)
 		addr := dispatch.Conn.RemoteAddr()
 		if err != nil {
-			logger.Println("E/dispatch", err, addr)
+			logger.Println("E/SendResponse", addr, err)
+		} else if logMessages {
+			logger.Println("SendResponse", addr, dispatch.Response.String())
 		}
 	}
 
@@ -203,7 +254,9 @@ func dispatch(client *proto.Client, conn *net.TCPConn, request *proto.Request) {
 		err := msg.SendResponse(dispatch.ConnEnemy, dispatch.ResponseEnemy)
 		addr := dispatch.ConnEnemy.RemoteAddr()
 		if err != nil {
-			logger.Println("E/dispatchEnemy", err, addr)
+			logger.Println("E/SendResponse", addr, err)
+		} else if logMessages {
+			logger.Println("SendResponse", addr, dispatch.ResponseEnemy.String())
 		}
 	}
 }

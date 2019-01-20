@@ -6,33 +6,41 @@
 
 Android tic-tac-toe game.
 
-### Features
+## Features
 
-- local player vs player
-- local player vs AI (just an algorithm, nothing to see here)
-- online player vs player with rooms (password protected or not)
-- light and black (night mode) theme
-- option to enable or disable animations
-- also it has animations
-- did i say it has animations?
+- 3 game modes: Local, Single, Online
+- 3 difficulty levels (easy, medium, hard)
+- arena where bots fight against each other
+- separate room for every online match
+- rooms protected with password or not
+- light and black (night mode) theme.
+- option to enable or disable animations.
+- also it has animations.
+- did I say it has animations?
+- let's not forget about animations.
 - option to show or hide Android's status bar
+- probably more that I forgot to mention
 
-### Current status
+## Current status
 
 It's mostly playable and usable now, but it is still in beta or maybe even alpha stage.
 
-### Screenshots (version 0.5.0)
+## Screenshots (version 0.6.1)
 
-<p align="center">
-<img src="screenshots/Screenshot_20181218-172029.png" width="300"> <img src="screenshots/Screenshot_20181218-172044.png" width="300">
-</p>
+<p align="center"><img src="screenshots/settings.png" width=300> <img src="screenshots/menu.png" width=300></p>
 
-<p align="center">
-<img src="screenshots/Screenshot_20181218-172057.png" width="300"> <img src="screenshots/Screenshot_20181218-172107.png" width="300">
-</p>
+<p align="center"><img src="screenshots/local.png" width=300> <img src="screenshots/single.png" width=300></p>
 
-### Public server instance
+## Public server instance
 
 | TCP | HTTP |
 |:---:|:---:|
 | `srv02.mikr.us:20564` | https://uw564.mikr.us |
+
+## Project structure
+
+| Path | Description |
+|:----:|:-----------:|
+| `app/src/main/java`<br>`app/src/main/res` | Java client code |
+| `app/src/main/go` | Go server code |
+| `app/src/main/proto` | Protocol Buffers code |

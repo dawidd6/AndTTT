@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/husobee/vestigo"
 	"io/ioutil"
 	"log"
 	"net"
@@ -17,21 +16,23 @@ import (
 	"server/service"
 	"syscall"
 	"time"
+
+	"github.com/husobee/vestigo"
 )
 
 var (
-	version = "0.6.1+git"
-	sig = make(chan os.Signal)
-	logger = log.New(os.Stdout, "", log.Lshortfile)
-	network = "tcp4"
-	keepAlivePeriod = time.Second * 30
-	addrTCP = "127.0.0.1:33333"
-	addrHTTP = "127.0.0.1:33334"
-	logQuiet = false
-	logDate = false
-	logMessages = false
+	version          = "0.6.1+git"
+	sig              = make(chan os.Signal)
+	logger           = log.New(os.Stdout, "", log.Lshortfile)
+	network          = "tcp4"
+	keepAlivePeriod  = time.Second * 30
+	addrTCP          = "127.0.0.1:33333"
+	addrHTTP         = "127.0.0.1:33334"
+	logQuiet         = false
+	logDate          = false
+	logMessages      = false
 	onlyPrintVersion = false
-	cleanInterval = time.Minute * 5
+	cleanInterval    = time.Minute * 5
 )
 
 func main() {

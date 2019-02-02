@@ -24,7 +24,7 @@ var (
 	version          = "0.6.1+git"
 	sig              = make(chan os.Signal)
 	logger           = log.New(os.Stdout, "", log.Lshortfile)
-	network          = "tcp4"
+	network          = "tcp"
 	keepAlivePeriod  = time.Second * 30
 	addrTCP          = "127.0.0.1:33333"
 	addrHTTP         = "127.0.0.1:33334"

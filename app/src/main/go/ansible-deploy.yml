@@ -1,0 +1,26 @@
+# > go build
+# > ansible-playbook -i mikrus, ansible-deploy.yml
+
+- hosts: all
+  become: yes
+  vars:
+    andttt_binary_src: server
+    andttt_binary_dest: andttt-server
+    andttt_service: andttt-server.service
+  tasks:
+    - name: upload binary
+      copy:
+        src: "./{{ andttt_binary_src }}"
+        dest: "/usr/local/bin/{{ andttt_binary_dest }}"
+        mode: 0755
+    - name: upload service
+      copy:
+        src: "./{{ andttt_service }}"
+        dest: "/etc/systemd/system/{{ andttt_service }}"
+    - name: configure service
+      systemd:
+        name: "{{ andttt_service }}"
+        enabled: yes
+        state: restarted
+        daemon_reload: yes
+

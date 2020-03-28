@@ -5,6 +5,8 @@ github.com/dawidd6/go-mmap v0.0.0-20190117214105-bbc5b2bc8878 h1:ggDBi0TV8j5kNYs
 github.com/dawidd6/go-mmap v0.0.0-20190117214105-bbc5b2bc8878/go.mod h1:vXLmWWY3g9iBcUkdyCSYA7jMrWC0yhYOJaseSt9MW9Q=
 github.com/golang/protobuf v1.2.0 h1:P3YflyNX/ehuJFLhxviNdFxQPkGK5cDcApsge1SqnvM=
 github.com/golang/protobuf v1.2.0/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
+github.com/golang/protobuf v1.3.5 h1:F768QJ1E9tib+q5Sc8MkdJi1RxLTbRcTf8LJV56aRls=
+github.com/golang/protobuf v1.3.5/go.mod h1:6O5/vntMXwX2lRkT1hjjk0nAC1IDOTvTlVgjlRvqsdk=
 github.com/husobee/vestigo v1.1.0 h1:HugdGUfco/gq7lfsQf3zUrPxAHpl7Be6xv79E57h4Es=
 github.com/husobee/vestigo v1.1.0/go.mod h1:JigD7C8lzUfpo1uzqYgefpyZLswrtJbAQxMw7ds7YCE=
 github.com/husobee/vestigo v1.1.1 h1:bsReVP78YhmHUn/nQ4AxIEfObmWMSLGLGXP1OwgFa9s=

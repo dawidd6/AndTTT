@@ -2,8 +2,6 @@
 
 # AndTTT
 
-[![Build Status](https://api.cirrus-ci.com/github/dawidd6/AndTTT.svg)](https://cirrus-ci.com/github/dawidd6/AndTTT)
-
 Android tic-tac-toe game.
 
 ## Features
@@ -33,9 +31,7 @@ It's mostly playable and usable now, but it is still in beta or maybe even alpha
 
 ## Public server instance
 
-| TCP | HTTP |
-|:---:|:---:|
-| `srv02.mikr.us:20564` | https://uw564.mikr.us |
+Not available at the moment.
 
 ## Project structure
 

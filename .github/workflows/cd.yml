@@ -31,6 +31,6 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         with:
           upload_url: ${{steps.release.outputs.upload_url}}
-          path: app/build/outputs/apk/debug/app-debug.apk
           asset_name: AndTTT.apk
+          asset_path: app/build/outputs/apk/debug/app-debug.apk
           asset_content_type: application/vnd.android.package-archive

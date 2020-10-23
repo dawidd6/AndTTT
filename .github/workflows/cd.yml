@@ -1,0 +1,36 @@
+name: CD
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  cd:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 8
+      - name: Build APK
+        run: ./gradlew assembleDebug
+      - name: Create Release
+        uses: actions/create-release@v1
+        id: release
+        env:
+          GITHUB_TOKEN: ${{github.token}}
+        with:
+          tag_name: ${{github.ref}}
+          release_name: ${{github.ref}}
+      - name: Upload APK
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        with:
+          upload_url: ${{steps.release.outputs.upload_url}}
+          path: app/build/outputs/apk/debug/app-debug.apk
+          asset_name: AndTTT.apk
+          asset_content_type: application/vnd.android.package-archive

@@ -1,6 +1,5 @@
-<img style="float: left;" src="app/src/main/ic_launcher-web.png" width="100">
-
-# AndTTT
+<img align="left" width="64" height="64" src="app/src/main/ic_launcher-web.png">
+<h1>AndTTT</h1>
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
     alt="Get it on F-Droid"

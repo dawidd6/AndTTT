@@ -26,8 +26,14 @@ func Receive(conn *net.TCPConn) ([]byte, error) {
 		return nil, err
 	}
 
+	// buffer length should never exceed 8 MB
+	length := binary.BigEndian.Uint32(buffer)
+	if length > 8*1024*1024 {
+		return nil, nil
+	}
+
 	// read the rest of bytes to get data
-	buffer = make([]byte, binary.BigEndian.Uint32(buffer))
+	buffer = make([]byte, length)
 
 	_, err = conn.Read(buffer)
 	if err != nil {

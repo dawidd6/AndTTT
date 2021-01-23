@@ -1,0 +1,7 @@
+task:
+  container:
+    image: golang:1.11
+  script:
+    - go build
+    - go test -v -count 5 -cover
+    - go run example/example.go

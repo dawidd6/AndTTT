@@ -26,8 +26,8 @@ var (
 	logger           = log.New(os.Stdout, "", log.Lshortfile)
 	network          = "tcp"
 	keepAlivePeriod  = time.Second * 30
-	addrTCP          = "127.0.0.1:33333"
-	addrHTTP         = "127.0.0.1:33334"
+	addrTCP          = "0.0.0.0:33333"
+	addrHTTP         = "0.0.0.0:33334"
 	logQuiet         = false
 	logDate          = false
 	logMessages      = false

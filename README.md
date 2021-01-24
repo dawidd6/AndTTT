@@ -14,11 +14,11 @@ Android tic-tac-toe game.
 - arena where bots fight against each other
 - separate room for every online match
 - rooms protected with password or not
-- light and black (night mode) theme.
-- option to enable or disable animations.
-- also it has animations.
+- light and black (night mode) theme
+- option to enable or disable animations
+- also it has animations
 - did I say it has animations?
-- let's not forget about animations.
+- let's not forget about animations
 - option to show or hide Android's status bar
 - probably more that I forgot to mention
 
@@ -26,7 +26,7 @@ Android tic-tac-toe game.
 
 It's mostly playable and usable now, but it is still in beta.
 
-## Screenshots (version 0.6.1)
+## Screenshots (version 0.6.3)
 
 <p align="center">
 <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width=300>

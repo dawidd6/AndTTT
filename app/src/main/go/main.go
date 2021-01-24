@@ -21,7 +21,7 @@ import (
 )
 
 var (
-	version          = "0.6.2"
+	version          = "0.6.3"
 	sig              = make(chan os.Signal)
 	logger           = log.New(os.Stdout, "", log.Lshortfile)
 	network          = "tcp"

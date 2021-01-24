@@ -24,7 +24,7 @@ Android tic-tac-toe game.
 
 ## Current status
 
-It's mostly playable and usable now, but it is still in beta or maybe even alpha stage.
+It's mostly playable and usable now, but it is still in beta.
 
 ## Screenshots (version 0.6.1)
 
@@ -34,10 +34,6 @@ It's mostly playable and usable now, but it is still in beta or maybe even alpha
 <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width=300>
 <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" width=300>
 </p>
-
-## Public server instance
-
-Not available at the moment.
 
 ## Project structure
 

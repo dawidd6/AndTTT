@@ -28,9 +28,12 @@ It's mostly playable and usable now, but it is still in beta or maybe even alpha
 
 ## Screenshots (version 0.6.1)
 
-<p align="center"><img src="screenshots/settings.png" width=300> <img src="screenshots/menu.png" width=300></p>
-
-<p align="center"><img src="screenshots/local.png" width=300> <img src="screenshots/single.png" width=300></p>
+<p align="center">
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width=300>
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width=300>
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width=300>
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" width=300>
+</p>
 
 ## Public server instance
 

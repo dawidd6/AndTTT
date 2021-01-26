@@ -134,7 +134,16 @@ public class ClientService extends Service {
 
         PendingIntent pendingIntent = PendingIntent.getActivity(ClientService.this, 0, i, 0);
 
-        Notification notification = new NotificationCompat.Builder(ClientService.this, "default")
+        String channelID = "channel-online";
+        String channelName = "Channel Online";
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channelID, channelName, importance);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        Notification notification = new NotificationCompat.Builder(ClientService.this, channelID)
                 .setContentIntent(pendingIntent)
                 .setContentTitle(getString(R.string.connected))
                 .setContentText(socket.getRemoteSocketAddress().toString())

@@ -2,6 +2,7 @@ package com.github.dawidd6.andttt.services;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
@@ -140,8 +141,9 @@ public class ClientService extends Service {
         int importance = NotificationManagerCompat.IMPORTANCE_LOW;
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationManager mgr = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
             NotificationChannel channel = new NotificationChannel(channelID, channelName, importance);
-            notificationManager.createNotificationChannel(channel);
+            mgr.createNotificationChannel(channel);
         }
 
         Notification notification = new NotificationCompat.Builder(ClientService.this, channelID)

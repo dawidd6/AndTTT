@@ -136,7 +136,7 @@ public class ClientService extends Service {
 
         String channelID = "channel-online";
         String channelName = "Channel Online";
-        int importance = NotificationManager.IMPORTANCE_HIGH;
+        int importance = NotificationManagerCompat.IMPORTANCE_LOW;
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(channelID, channelName, importance);

@@ -33,7 +33,7 @@ public class ConnectFragment extends BaseFragment {
     @BindView(R.id.addressEdit) EditText addressEdit;
     private boolean isCustomServer;
     private boolean isRegistered;
-    private String server = "andttt-server.awsmppl.com:80";
+    private String server = "andttt-server.awsmppl.com:33333";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {

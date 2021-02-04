@@ -1,22 +1,25 @@
 package com.github.dawidd6.andttt.activities;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkRequest;
 import android.os.Bundle;
-import com.github.dawidd6.andttt.services.ClientService;
+
 import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.events.DisconnectEvent;
-import com.github.dawidd6.andttt.fragments.ConnectFragment;
 import com.github.dawidd6.andttt.misc.DialogManager;
 import com.github.dawidd6.andttt.proto.Error;
+import com.github.dawidd6.andttt.services.ClientService;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-public class OnlineActivity extends MainActivity {
+public class OnlineActivity extends BaseActivity {
     public static EventBus bus;
     public static DialogManager dialogManager;
     public static boolean isConnected;
@@ -28,6 +31,16 @@ public class OnlineActivity extends MainActivity {
 
         if(savedInstanceState != null)
             return;
+
+        BroadcastReceiver leaveBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+               finish();
+            }
+        };
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("andttt-online-leave");
+        registerReceiver(leaveBroadcastReceiver, intentFilter);
 
         startService(new Intent(this, ClientService.class));
         bus = EventBus.builder()
@@ -50,6 +63,7 @@ public class OnlineActivity extends MainActivity {
                 bus.post(new DisconnectEvent());
             }
         });
+        setContentView(R.layout.activity_online);
     }
 
     @Override
@@ -83,11 +97,6 @@ public class OnlineActivity extends MainActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onError(Error error) {
         dialogManager.showError(this, OnlineActivity.getErrorStringRes(error), ((dialog, which) -> dialog.dismiss()));
-    }
-
-    @Override
-    protected void initialFragment() {
-        switchFragment(getFragmentManager(), new ConnectFragment(), false);
     }
 
     public static int getErrorStringRes(Error error) {

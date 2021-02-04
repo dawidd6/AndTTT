@@ -1,12 +1,10 @@
 package com.github.dawidd6.andttt.bots;
 
-import android.util.Log;
 import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.game.Game;
 import com.github.dawidd6.andttt.game.Player;
 import com.github.dawidd6.andttt.proto.Symbol;
 
-import java.util.HashMap;
 import java.util.Random;
 import java.util.Vector;
 

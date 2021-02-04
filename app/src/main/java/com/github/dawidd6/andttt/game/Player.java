@@ -1,6 +1,7 @@
 package com.github.dawidd6.andttt.game;
 
 import android.graphics.Color;
+
 import com.github.dawidd6.andttt.proto.Symbol;
 
 public class Player {

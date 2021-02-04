@@ -1,19 +1,28 @@
 package com.github.dawidd6.andttt.services;
 
-import android.content.Context;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+
 import com.github.dawidd6.andttt.R;
-import com.github.dawidd6.andttt.events.*;
+import com.github.dawidd6.andttt.events.ConnectEvent;
+import com.github.dawidd6.andttt.events.ConnectFailEvent;
+import com.github.dawidd6.andttt.events.ConnectSuccessEvent;
+import com.github.dawidd6.andttt.events.ConnectTimeoutEvent;
+import com.github.dawidd6.andttt.events.DisconnectEvent;
+import com.github.dawidd6.andttt.events.SendEvent;
 import com.github.dawidd6.andttt.proto.Error;
+import com.github.dawidd6.andttt.proto.RegisterNameResponse;
 import com.github.dawidd6.andttt.proto.Response;
+
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -28,8 +37,6 @@ import static com.github.dawidd6.andttt.activities.OnlineActivity.bus;
 
 public class ClientService extends Service {
     public static final String TAG = "Service";
-    private final int BUFFER_SIZE = 4096;
-    private final int timeout = 5000;
 
     private Socket socket;
     private NotificationManagerCompat notificationManager;
@@ -72,7 +79,7 @@ public class ClientService extends Service {
         if(socket == null)
             return;
 
-        byte data[] = event.getRequest().toByteArray();
+        byte[] data = event.getRequest().toByteArray();
         ByteBuffer buffer = ByteBuffer.allocate(4 + data.length);
         buffer.putInt(data.length);
         buffer.put(data);
@@ -85,13 +92,18 @@ public class ClientService extends Service {
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onRegisterName(RegisterNameResponse response) {
+        showNotification();
+    }
+
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onConnect(ConnectEvent event) {
         try {
+            int timeout = 5000;
             socket = new Socket();
             socket.connect(new InetSocketAddress(event.getHost(), event.getPort()), timeout);
             bus.post(new ConnectSuccessEvent(socket.getRemoteSocketAddress().toString()));
-            showNotification();
 
             while (true) {
                 try {
@@ -134,20 +146,23 @@ public class ClientService extends Service {
                 .setPackage(null)
                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(ClientService.this, 0, i, 0);
+        PendingIntent defaultPendingIntent = PendingIntent.getActivity(this, 0, i, 0);
 
         String channelID = "channel-online";
         String channelName = "Channel Online";
-        int importance = NotificationManagerCompat.IMPORTANCE_LOW;
+
+        Intent intentAction = new Intent("andttt-online-leave");
+        PendingIntent leavePendingIntent = PendingIntent.getBroadcast(this,1, intentAction, PendingIntent.FLAG_ONE_SHOT);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationManager mgr = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-            NotificationChannel channel = new NotificationChannel(channelID, channelName, importance);
-            mgr.createNotificationChannel(channel);
+            NotificationChannel channel = new NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_LOW);
+            Objects.requireNonNull(mgr).createNotificationChannel(channel);
         }
 
         Notification notification = new NotificationCompat.Builder(ClientService.this, channelID)
-                .setContentIntent(pendingIntent)
+                .addAction(R.drawable.ic_status_icon, getString(R.string.leave), leavePendingIntent)
+                .setContentIntent(defaultPendingIntent)
                 .setContentTitle(getString(R.string.connected))
                 .setContentText(socket.getRemoteSocketAddress().toString())
                 .setSmallIcon(R.drawable.ic_status_icon)

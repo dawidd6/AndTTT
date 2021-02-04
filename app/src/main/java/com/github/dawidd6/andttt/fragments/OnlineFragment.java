@@ -4,10 +4,25 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.navigation.Navigation;
+
 import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.events.SendEvent;
 import com.github.dawidd6.andttt.game.Player;
-import com.github.dawidd6.andttt.proto.*;
+import com.github.dawidd6.andttt.proto.EnemyDisconnectedResponse;
+import com.github.dawidd6.andttt.proto.EnemyLeftResponse;
+import com.github.dawidd6.andttt.proto.EnemyMovedResponse;
+import com.github.dawidd6.andttt.proto.LeaveRoomRequest;
+import com.github.dawidd6.andttt.proto.MoveRequest;
+import com.github.dawidd6.andttt.proto.MoveResponse;
+import com.github.dawidd6.andttt.proto.Request;
+import com.github.dawidd6.andttt.proto.Restart;
+import com.github.dawidd6.andttt.proto.RestartRequest;
+import com.github.dawidd6.andttt.proto.RestartResponse;
+import com.github.dawidd6.andttt.proto.StarterPackRequest;
+import com.github.dawidd6.andttt.proto.StarterPackResponse;
+
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -80,15 +95,11 @@ public class OnlineFragment extends BaseGameFragment {
         dialogManager.showYesNo(getActivity(), R.string.enemy_left, ((dialog, which) -> {
             dialog.dismiss();
 
-            getFragmentManager()
-                    .beginTransaction()
-                    .detach(this)
-                    .attach(this)
-                    .commit();
+            getParentFragmentManager().beginTransaction().detach(this).attach(this).commit();
         }), ((dialog, which) -> {
             dialog.dismiss();
 
-            getActivity().onBackPressed();
+            Navigation.findNavController(requireActivity(), R.id.navigation_host_online).navigateUp();
         }));
     }
 

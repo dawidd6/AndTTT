@@ -9,11 +9,15 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
-import butterknife.*;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.activities.MainActivity;
-import com.github.dawidd6.andttt.animations.*;
+import com.github.dawidd6.andttt.animations.DarkenAnimation;
+import com.github.dawidd6.andttt.animations.LightenAnimation;
+import com.github.dawidd6.andttt.animations.PulseAnimation;
 import com.github.dawidd6.andttt.drawings.DrawCircle;
 import com.github.dawidd6.andttt.drawings.DrawCross;
 import com.github.dawidd6.andttt.drawings.DrawLine;
@@ -23,6 +27,11 @@ import com.github.dawidd6.andttt.misc.PlayerGui;
 import com.github.dawidd6.andttt.proto.Symbol;
 
 import java.util.List;
+
+import butterknife.BindDimen;
+import butterknife.BindView;
+import butterknife.BindViews;
+import butterknife.OnClick;
 
 public abstract class BaseGameFragment extends BaseFragment {
     private ImageView tilesView[];

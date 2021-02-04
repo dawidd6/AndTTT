@@ -2,20 +2,22 @@ package com.github.dawidd6.andttt.fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
-import com.github.dawidd6.andttt.activities.MainActivity;
-import com.github.dawidd6.andttt.R;
 
-public class SettingsFragment extends PreferenceFragment {
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
+
+import com.github.dawidd6.andttt.R;
+import com.github.dawidd6.andttt.activities.MainActivity;
+
+public class SettingsFragment extends PreferenceFragmentCompat {
     public static final String TAG = "SettingsFragment";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        addPreferencesFromResource(R.xml.settings);
 
         int delay = getResources().getInteger(R.integer.activity_recreate_delay);
 
@@ -34,7 +36,7 @@ public class SettingsFragment extends PreferenceFragment {
 
         assert status_bar != null;
         status_bar.setOnPreferenceChangeListener((preference, newValue) -> {
-            new Handler().postDelayed(() -> getActivity().recreate(), delay);
+            new Handler().postDelayed(() -> requireActivity().recreate(), delay);
             return true;
         });
 
@@ -52,8 +54,14 @@ public class SettingsFragment extends PreferenceFragment {
 
         assert libraries != null;
         libraries.setOnPreferenceClickListener(preference -> {
-            MainActivity.switchFragment(getFragmentManager(), new LibrariesFragment(), true);
+            NavController navigation = Navigation.findNavController(requireActivity(), R.id.navigation_host_main);
+            navigation.navigate(R.id.action_settingsFragment_to_librariesFragment);
             return true;
         });
+    }
+
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        setPreferencesFromResource(R.xml.settings, rootKey);
     }
 }

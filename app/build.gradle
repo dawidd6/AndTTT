@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion '27.0.3'
+    buildToolsVersion '29.0.3'
     defaultConfig {
         applicationId "com.github.dawidd6.andttt"
         minSdkVersion 21
@@ -33,10 +33,15 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.google.protobuf:protobuf-java:3.14.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'org.greenrobot:eventbus:3.1.1'
-    annotationProcessor 'com.jakewharton:butterknife:10.2.1'
+    implementation 'androidx.navigation:navigation-fragment:2.3.3'
+    implementation 'androidx.navigation:navigation-ui:2.3.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.preference:preference:1.1.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    //noinspection AnnotationProcessorOnCompilePath
+    implementation 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
 }

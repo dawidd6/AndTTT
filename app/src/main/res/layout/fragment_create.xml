@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/windowBackground">
+    android:background="?android:attr/windowBackground"
+    tools:context=".fragments.CreateFragment">
 
     <TextView
         android:id="@+id/passwordText"

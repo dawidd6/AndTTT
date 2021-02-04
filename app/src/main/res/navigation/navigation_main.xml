@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_host_main"
+    app:startDestination="@id/menuFragment">
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.github.dawidd6.andttt.fragments.MenuFragment"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" >
+        <action
+            android:id="@+id/action_menuFragment_to_localFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:destination="@id/localFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_difficultyFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:destination="@id/difficultyFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_settingsFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_gladiatorsFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:destination="@id/gladiatorsFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_onlineActivity"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:destination="@id/onlineActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/localFragment"
+        android:name="com.github.dawidd6.andttt.fragments.LocalFragment"
+        android:label="LocalFragment" />
+    <fragment
+        android:id="@+id/difficultyFragment"
+        android:name="com.github.dawidd6.andttt.fragments.DifficultyFragment"
+        android:label="fragment_difficulty"
+        tools:layout="@layout/fragment_difficulty" >
+        <action
+            android:id="@+id/action_difficultyFragment_to_singleFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:destination="@id/singleFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.github.dawidd6.andttt.fragments.SettingsFragment"
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_librariesFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:destination="@id/librariesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/librariesFragment"
+        android:name="com.github.dawidd6.andttt.fragments.LibrariesFragment"
+        android:label="fragment_libraries"
+        tools:layout="@layout/fragment_libraries" />
+    <fragment
+        android:id="@+id/gladiatorsFragment"
+        android:name="com.github.dawidd6.andttt.fragments.GladiatorsFragment"
+        android:label="fragment_gladiators"
+        tools:layout="@layout/fragment_gladiators" >
+        <action
+            android:id="@+id/action_gladiatorsFragment_to_arenaFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:destination="@id/arenaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/singleFragment"
+        android:name="com.github.dawidd6.andttt.fragments.SingleFragment"
+        android:label="SingleFragment" />
+    <fragment
+        android:id="@+id/arenaFragment"
+        android:name="com.github.dawidd6.andttt.fragments.ArenaFragment"
+        android:label="ArenaFragment" />
+    <activity
+        android:id="@+id/onlineActivity"
+        android:name="com.github.dawidd6.andttt.activities.OnlineActivity"
+        android:label="OnlineActivity" />
+</navigation>

@@ -2,11 +2,12 @@ package com.github.dawidd6.andttt.fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
+
 import com.github.dawidd6.andttt.R;
-import com.github.dawidd6.andttt.activities.MainActivity;
 import com.github.dawidd6.andttt.bots.Bot;
+import com.github.dawidd6.andttt.bots.EasyBot;
+import com.github.dawidd6.andttt.bots.HardBot;
 import com.github.dawidd6.andttt.bots.MediumBot;
 
 public class ArenaFragment extends BaseGameFragment {
@@ -18,6 +19,32 @@ public class ArenaFragment extends BaseGameFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        int firstBotSpinnerID = requireArguments().getInt("first-bot-spinner-id");
+        switch(firstBotSpinnerID) {
+            case 0:
+                bot1 = new EasyBot();
+                break;
+            case 1:
+                bot1 = new MediumBot();
+                break;
+            case 2:
+                bot1 = new HardBot();
+                break;
+        }
+
+        int secondBotSpinnerID = requireArguments().getInt("second-bot-spinner-id");
+        switch(secondBotSpinnerID) {
+            case 0:
+                bot2 = new EasyBot();
+                break;
+            case 1:
+                bot2 = new MediumBot();
+                break;
+            case 2:
+                bot2 = new HardBot();
+                break;
+        }
 
         player1.setName(getString(R.string.bot) + " 1 (" + getString(bot1.getDifficulty()) + ")");
         player2.setName(getString(R.string.bot) + " 2 (" + getString(bot2.getDifficulty()) + ")");
@@ -32,11 +59,6 @@ public class ArenaFragment extends BaseGameFragment {
         setAllTilesClickable(false);
 
         BotMove();
-    }
-
-    public void setBots(Bot bot1, Bot bot2) {
-        this.bot1 = bot1;
-        this.bot2 = bot2;
     }
 
     private void BotMove() {

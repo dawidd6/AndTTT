@@ -3,9 +3,13 @@ package com.github.dawidd6.andttt.fragments;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import com.github.dawidd6.andttt.activities.MainActivity;
+
 import com.github.dawidd6.andttt.R;
+import com.github.dawidd6.andttt.activities.MainActivity;
 import com.github.dawidd6.andttt.bots.Bot;
+import com.github.dawidd6.andttt.bots.EasyBot;
+import com.github.dawidd6.andttt.bots.HardBot;
+import com.github.dawidd6.andttt.bots.MediumBot;
 
 public class SingleFragment extends BaseGameFragment {
     public static final String TAG = "SingleFragment";
@@ -15,6 +19,19 @@ public class SingleFragment extends BaseGameFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        int botButtonID = requireArguments().getInt("bot-button-id");
+        switch (botButtonID) {
+            case R.id.easyButton:
+                bot = new EasyBot();
+                break;
+            case R.id.mediumButton:
+                bot = new MediumBot();
+                break;
+            case R.id.hardButton:
+                bot = new HardBot();
+                break;
+        }
 
         player1.setName(getString(R.string.player));
         player2.setName(getString(R.string.bot) + " (" + getString(bot.getDifficulty()) + ")");
@@ -35,10 +52,6 @@ public class SingleFragment extends BaseGameFragment {
         super.onClickTile(view);
 
         BotMove();
-    }
-
-    public void setBot(Bot bot) {
-        this.bot = bot;
     }
 
     private void BotMove() {

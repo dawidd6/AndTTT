@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:layout_centerHorizontal="false"
     android:layout_centerVertical="false"
-    android:paddingTop="20dp">
+    android:paddingTop="20dp"
+    tools:context=".fragments.BaseGameFragment">
 
     <TextView
         android:id="@+id/player2Score"

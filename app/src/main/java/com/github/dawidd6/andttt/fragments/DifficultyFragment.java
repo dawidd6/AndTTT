@@ -4,13 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.OnClick;
+
+import androidx.navigation.Navigation;
+
 import com.github.dawidd6.andttt.R;
-import com.github.dawidd6.andttt.activities.MainActivity;
-import com.github.dawidd6.andttt.bots.Bot;
-import com.github.dawidd6.andttt.bots.EasyBot;
-import com.github.dawidd6.andttt.bots.HardBot;
-import com.github.dawidd6.andttt.bots.MediumBot;
+
+import butterknife.OnClick;
 
 public class DifficultyFragment extends BaseFragment {
     public static final String TAG = "DifficultyFragment";
@@ -22,22 +21,22 @@ public class DifficultyFragment extends BaseFragment {
 
     @OnClick(R.id.easyButton)
     public void onEasyButtonClick() {
-        launch(new EasyBot());
+        launch(R.id.easyButton);
     }
 
     @OnClick(R.id.mediumButton)
     public void onMediumButtonClick() {
-        launch(new MediumBot());
+        launch(R.id.mediumButton);
     }
 
     @OnClick(R.id.hardButton)
     public void onHardButtonClick() {
-        launch(new HardBot());
+        launch(R.id.hardButton);
     }
 
-    private void launch(Bot bot) {
-        SingleFragment singleFragment = new SingleFragment();
-        singleFragment.setBot(bot);
-        MainActivity.switchFragment(getFragmentManager(), singleFragment, true);
+    private void launch(int botButtonID) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("bot-button-id", botButtonID);
+        Navigation.findNavController(requireActivity(), R.id.navigation_host_main).navigate(R.id.action_difficultyFragment_to_singleFragment, bundle);
     }
 }

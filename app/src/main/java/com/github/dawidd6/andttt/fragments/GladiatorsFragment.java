@@ -1,30 +1,24 @@
 package com.github.dawidd6.andttt.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
+
+import androidx.navigation.Navigation;
+
+import com.github.dawidd6.andttt.R;
+
 import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.OnItemSelected;
-import com.github.dawidd6.andttt.R;
-import com.github.dawidd6.andttt.activities.MainActivity;
-import com.github.dawidd6.andttt.bots.Bot;
-import com.github.dawidd6.andttt.bots.EasyBot;
-import com.github.dawidd6.andttt.bots.HardBot;
-import com.github.dawidd6.andttt.bots.MediumBot;
 
 public class GladiatorsFragment extends BaseFragment {
     public static final String TAG = "GladiatorsFragment";
     @BindView(R.id.firstSpinner) Spinner firstSpinner;
     @BindView(R.id.secondSpinner) Spinner secondSpinner;
-    @BindArray(R.array.difficulties) String difficulties[];
+    @BindArray(R.array.difficulties) String[] difficulties;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -33,21 +27,13 @@ public class GladiatorsFragment extends BaseFragment {
 
     @OnClick(R.id.okButton)
     public void onOkButtonClick() {
-        ArenaFragment fragment = new ArenaFragment();
-        fragment.setBots(getSelectedBot(firstSpinner), getSelectedBot(secondSpinner));
-        MainActivity.switchFragment(getFragmentManager(), fragment, true);
+        launch(firstSpinner.getSelectedItemPosition(), secondSpinner.getSelectedItemPosition());
     }
 
-    private Bot getSelectedBot(Spinner spinner) {
-        switch(spinner.getSelectedItemPosition()) {
-            case 0:
-                return new EasyBot();
-            case 1:
-                return new MediumBot();
-            case 2:
-                return new HardBot();
-        }
-
-        return null;
+    private void launch(int firstBotSpinnerID, int secondBotSpinnerID) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("first-bot-spinner-id", firstBotSpinnerID);
+        bundle.putInt("second-bot-spinner-id", secondBotSpinnerID);
+        Navigation.findNavController(requireActivity(), R.id.navigation_host_main).navigate(R.id.action_gladiatorsFragment_to_arenaFragment, bundle);
     }
 }

@@ -9,14 +9,21 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.navigation.Navigation;
+
+import com.github.dawidd6.andttt.R;
+import com.github.dawidd6.andttt.events.SendEvent;
+import com.github.dawidd6.andttt.proto.CreateRoomRequest;
+import com.github.dawidd6.andttt.proto.CreateRoomResponse;
+import com.github.dawidd6.andttt.proto.Request;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import butterknife.BindView;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
-import com.github.dawidd6.andttt.R;
-import com.github.dawidd6.andttt.events.SendEvent;
-import com.github.dawidd6.andttt.proto.*;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import static com.github.dawidd6.andttt.activities.OnlineActivity.bus;
 import static com.github.dawidd6.andttt.activities.OnlineActivity.dialogManager;
@@ -78,6 +85,6 @@ public class CreateFragment extends BaseFragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onCreateRoom(CreateRoomResponse response) {
         dialogManager.dismiss();
-        getActivity().onBackPressed();
+        Navigation.findNavController(requireActivity(), R.id.navigation_host_online).popBackStack();
     }
 }

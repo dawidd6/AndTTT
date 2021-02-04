@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_host_online"
+    app:startDestination="@id/connectFragment">
+    <fragment
+        android:id="@+id/connectFragment"
+        android:name="com.github.dawidd6.andttt.fragments.ConnectFragment"
+        android:label="fragment_connect"
+        tools:layout="@layout/fragment_connect" >
+        <action
+            android:id="@+id/action_connectFragment_to_roomsFragment"
+            app:destination="@id/roomsFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/createFragment"
+        android:name="com.github.dawidd6.andttt.fragments.CreateFragment"
+        android:label="fragment_create"
+        tools:layout="@layout/fragment_create" />
+    <fragment
+        android:id="@+id/roomsFragment"
+        android:name="com.github.dawidd6.andttt.fragments.RoomsFragment"
+        android:label="fragment_rooms"
+        tools:layout="@layout/fragment_rooms" >
+        <action
+            android:id="@+id/action_roomsFragment_to_createFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:destination="@id/createFragment" />
+        <action
+            android:id="@+id/action_roomsFragment_to_onlineFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:destination="@id/onlineFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/onlineFragment"
+        android:name="com.github.dawidd6.andttt.fragments.OnlineFragment"
+        android:label="OnlineFragment" />
+</navigation>

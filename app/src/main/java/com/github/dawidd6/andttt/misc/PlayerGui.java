@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.github.dawidd6.andttt.game.Player;
 
 public class PlayerGui extends Player {

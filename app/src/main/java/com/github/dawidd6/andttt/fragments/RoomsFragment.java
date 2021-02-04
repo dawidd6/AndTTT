@@ -3,55 +3,45 @@ package com.github.dawidd6.andttt.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.*;
-import butterknife.BindView;
-import butterknife.OnClick;
-import butterknife.OnItemClick;
-import com.github.dawidd6.andttt.activities.OnlineActivity;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import androidx.activity.OnBackPressedCallback;
+import androidx.navigation.Navigation;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.github.dawidd6.andttt.R;
-import com.github.dawidd6.andttt.events.SendEvent;
 import com.github.dawidd6.andttt.adapters.RoomAdapter;
-import com.github.dawidd6.andttt.proto.*;
+import com.github.dawidd6.andttt.events.SendEvent;
+import com.github.dawidd6.andttt.proto.GetRoomsRequest;
+import com.github.dawidd6.andttt.proto.GetRoomsResponse;
+import com.github.dawidd6.andttt.proto.JoinRoomRequest;
+import com.github.dawidd6.andttt.proto.JoinRoomResponse;
+import com.github.dawidd6.andttt.proto.Request;
+import com.github.dawidd6.andttt.proto.Room;
+
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.OnClick;
+import butterknife.OnItemClick;
+
 import static com.github.dawidd6.andttt.activities.OnlineActivity.bus;
 import static com.github.dawidd6.andttt.activities.OnlineActivity.dialogManager;
 
-
-public class RoomsFragment extends BaseFragment {
+public class RoomsFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
     public static final String TAG = "RoomsFragment";
     @BindView(R.id.noRoomsText) TextView noRoomsText;
     @BindView(R.id.roomList) ListView roomList;
     @BindView(R.id.swiperefresh) SwipeRefreshLayout layout;
-    private long lastRefreshed;
-    private Thread periodicRefreshThread = new Thread() {
-        @Override
-        public void run() {
-            setName("periodic-refresh-thread");
-
-            long refreshInterval = 10 * 1000;
-
-            while(!isInterrupted()) {
-                try {
-                    Thread.sleep(refreshInterval);
-                    if(System.currentTimeMillis()-lastRefreshed > refreshInterval) {
-                        getActivity().runOnUiThread(RoomsFragment.this::refresh);
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                    break;
-                }
-            }
-        }
-    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,8 +52,15 @@ public class RoomsFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        layout.setOnRefreshListener(this::refresh);
+        layout.setOnRefreshListener(this);
         noRoomsText.setVisibility(View.GONE);
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                requireActivity().finish();
+            }
+        });
     }
 
     @Override
@@ -80,7 +77,7 @@ public class RoomsFragment extends BaseFragment {
 
     @OnClick(R.id.createButton)
     public void onCreateButtonClick() {
-        OnlineActivity.switchFragment(getFragmentManager(), new CreateFragment(), true);
+        Navigation.findNavController(requireActivity(), R.id.navigation_host_online).navigate(R.id.action_roomsFragment_to_createFragment);
     }
 
     @OnItemClick(R.id.roomList)
@@ -114,22 +111,17 @@ public class RoomsFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
 
-        refresh();
-
-        periodicRefreshThread.start();
+        onRefresh();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-
-        periodicRefreshThread.interrupt();
     }
 
-    private void refresh() {
+    @Override
+    public void onRefresh() {
         layout.setRefreshing(true);
-
-        lastRefreshed = System.currentTimeMillis();
 
         Request request = Request.newBuilder()
                 .setGetRooms(GetRoomsRequest.newBuilder())
@@ -140,7 +132,7 @@ public class RoomsFragment extends BaseFragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onJoinRoom(JoinRoomResponse response) {
         dialogManager.dismiss();
-        OnlineActivity.switchFragment(getFragmentManager(), new OnlineFragment(), true);
+        Navigation.findNavController(requireActivity(), R.id.navigation_host_online).navigate(R.id.action_roomsFragment_to_onlineFragment);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -152,7 +144,7 @@ public class RoomsFragment extends BaseFragment {
             noRoomsText.setVisibility(View.GONE);
             roomList.setVisibility(View.VISIBLE);
             ArrayList<Room> array = new ArrayList<>(response.getRoomsList());
-            RoomAdapter adapter = new RoomAdapter(getActivity(), array);
+            RoomAdapter adapter = new RoomAdapter(requireContext(), array);
             roomList.setAdapter(adapter);
         }
 

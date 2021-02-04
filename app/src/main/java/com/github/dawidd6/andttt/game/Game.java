@@ -4,7 +4,6 @@ import com.github.dawidd6.andttt.proto.Symbol;
 
 import java.util.Arrays;
 import java.util.Random;
-import java.util.Vector;
 
 public class Game {
     private Status status;

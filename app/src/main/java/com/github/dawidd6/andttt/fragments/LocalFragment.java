@@ -2,6 +2,7 @@ package com.github.dawidd6.andttt.fragments;
 
 import android.os.Bundle;
 import android.view.View;
+
 import com.github.dawidd6.andttt.R;
 
 public class LocalFragment extends BaseGameFragment {

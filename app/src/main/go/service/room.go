@@ -7,6 +7,7 @@ import (
 	"server/game"
 	"server/proto"
 	"time"
+	"strings"
 )
 
 var (
@@ -25,7 +26,7 @@ func CreateRoom(name, password string) proto.Error {
 		return proto.Error_ROOM_NAME_TOO_LONG
 	}
 
-	if name == "" {
+	if strings.TrimSpace(name) == "" {
 		return proto.Error_ROOM_NAME_EMPTY
 	}
 

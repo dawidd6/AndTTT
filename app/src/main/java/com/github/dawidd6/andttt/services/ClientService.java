@@ -8,8 +8,8 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import com.github.dawidd6.andttt.R;
 import com.github.dawidd6.andttt.events.*;
 import com.github.dawidd6.andttt.proto.Error;
@@ -22,7 +22,6 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
-import java.util.Arrays;
 import java.util.Objects;
 
 import static com.github.dawidd6.andttt.activities.OnlineActivity.bus;

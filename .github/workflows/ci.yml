@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  ci:
+  java:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -16,6 +16,18 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 8
+      - name: Build APK
+        run: ./gradlew assembleDebug
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: apk
+          path: app/build/outputs/apk/debug/app-debug.apk
+  go:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Setup Go
         uses: actions/setup-go@v2
         with:
@@ -26,10 +38,8 @@ jobs:
       - name: Test server
         working-directory: app/src/main/go
         run: go test ./...
-      - name: Build APK
-        run: ./gradlew assembleDebug
-      - name: Upload APK
+      - name: Upload server
         uses: actions/upload-artifact@v2
         with:
-          name: apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: server
+          path: app/src/main/go/server

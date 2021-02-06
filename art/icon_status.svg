@@ -10,7 +10,7 @@
    viewBox="0 0 69.551382 69.333092"
    id="svg2"
    version="1.1"
-   inkscape:version="0.91 r13725"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
    sodipodi:docname="icon_status.svg"
    width="69.551384"
    height="69.333092">
@@ -22,7 +22,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -39,9 +39,9 @@
      inkscape:window-height="1056"
      id="namedview12"
      showgrid="false"
-     inkscape:zoom="2.6074563"
-     inkscape:cx="-28.120865"
-     inkscape:cy="40.516411"
+     inkscape:zoom="12.336537"
+     inkscape:cx="37.239673"
+     inkscape:cy="29.806615"
      inkscape:window-x="0"
      inkscape:window-y="24"
      inkscape:window-maximized="1"
@@ -50,7 +50,8 @@
      fit-margin-top="5"
      fit-margin-left="5"
      fit-margin-right="5"
-     fit-margin-bottom="5" />
+     fit-margin-bottom="5"
+     inkscape:document-rotation="0" />
   <defs
      id="defs4">
     <style
@@ -75,26 +76,26 @@
        r="29.616066" />
     <g
        id="g4159"
-       transform="matrix(0.92758977,0,0,0.92758977,52.175845,-79.796431)"
-       style="fill:#00b75b;fill-opacity:1;stroke:none;stroke-opacity:1">
+       transform="matrix(0.70785259,0,0,0.70785259,70.137866,-30.571436)"
+       style="fill:#00b75b;fill-opacity:1;stroke:#00b75b;stroke-opacity:1;stroke-width:2.40274236;stroke-miterlimit:4;stroke-dasharray:none">
       <rect
-         transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,0,0)"
+         transform="rotate(-45)"
          ry="5.4451537"
          y="172.37621"
          x="-104.51999"
          height="87.825058"
          width="8"
          id="rect4142"
-         style="opacity:1;fill:#00b75b;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:8;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+         style="opacity:1;fill:#00b75b;fill-opacity:1;fill-rule:nonzero;stroke:#00b75b;stroke-width:2.40274236;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <rect
-         transform="matrix(-0.70710678,-0.70710678,0.70710678,-0.70710678,0,0)"
+         transform="rotate(-135)"
          ry="5.4451537"
          y="-144.59892"
          x="-220.12233"
          height="87.825058"
          width="8"
          id="rect4142-3"
-         style="opacity:1;fill:#00b75b;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:8;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+         style="opacity:1;fill:#00b75b;fill-opacity:1;fill-rule:nonzero;stroke:#00b75b;stroke-width:2.40274236;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     </g>
   </g>
 </svg>

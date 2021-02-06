@@ -21,7 +21,6 @@ import (
 )
 
 var (
-	version          = "0.6.4"
 	sig              = make(chan os.Signal)
 	logger           = log.New(os.Stdout, "", log.Lshortfile)
 	network          = "tcp"
@@ -41,14 +40,8 @@ func main() {
 	flag.BoolVar(&logQuiet, "log-quiet", logQuiet, "produce no output at all")
 	flag.BoolVar(&logDate, "log-date", logDate, "prepend output with date")
 	flag.BoolVar(&logMessages, "log-messages", logMessages, "log every request and response")
-	flag.BoolVar(&onlyPrintVersion, "version", onlyPrintVersion, "print version and exit")
 	flag.DurationVar(&cleanInterval, "room-clean-interval", cleanInterval, "interval between room cleaning")
 	flag.Parse()
-
-	if onlyPrintVersion {
-		fmt.Println(version)
-		return
-	}
 
 	if logQuiet {
 		logger.SetOutput(ioutil.Discard)

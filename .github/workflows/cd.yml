@@ -17,20 +17,11 @@ jobs:
           java-version: 8
       - name: Build APK
         run: ./gradlew assembleDebug
-      - name: Create Release
-        uses: actions/create-release@v1
-        id: release
-        env:
-          GITHUB_TOKEN: ${{github.token}}
+      - name: Create release
+        uses: svenstaro/upload-release-action@v2
         with:
-          tag_name: ${{github.ref}}
-          release_name: ${{github.ref}}
-      - name: Upload APK
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        with:
-          upload_url: ${{steps.release.outputs.upload_url}}
+          repo_token: ${{github.token}}
+          tag: ${{github.ref}}
+          file: app/build/outputs/apk/debug/app-debug.apk
           asset_name: AndTTT.apk
-          asset_path: app/build/outputs/apk/debug/app-debug.apk
-          asset_content_type: application/vnd.android.package-archive
+          overwrite: true

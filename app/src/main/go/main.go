@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net"
@@ -50,8 +49,6 @@ func main() {
 	if logDate {
 		logger.SetFlags(log.LstdFlags | logger.Flags())
 	}
-
-	logger.Println("AndTTT server version", version)
 
 	go listenTCP()
 	go listenHTTP()

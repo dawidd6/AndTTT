@@ -8,4 +8,4 @@ FROM alpine:3 as runner
 COPY --from=builder /app/andttt /bin/andttt
 EXPOSE 33333/tcp
 EXPOSE 33334/tcp
-ENTRYPOINT ["andttt"]
+ENTRYPOINT ["andttt", "-log-messages", "-log-date"]

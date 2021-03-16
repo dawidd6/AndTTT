@@ -113,14 +113,12 @@ func accept(listener *net.TCPListener) {
 			logger.Println("E/SetKeepAlive", addr, err)
 			continue
 		}
-		logger.Println("SetKeepAlive", addr)
 
 		err = conn.SetKeepAlivePeriod(keepAlivePeriod)
 		if err != nil {
 			logger.Println("E/SetKeepAlivePeriod", addr, err)
 			continue
 		}
-		logger.Println("SetKeepAlivePeriod", addr, keepAlivePeriod)
 
 		go read(conn)
 	}

@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"io"
 	"io/ioutil"
 	"log"
 	"net"
@@ -130,6 +131,9 @@ func read(conn *net.TCPConn) {
 
 	for {
 		request, err := msg.ReceiveRequest(conn)
+		if err == io.EOF {
+			break
+		}
 		if err != nil {
 			logger.Println("E/ReceiveRequest", addr)
 			break
@@ -160,34 +164,36 @@ func disconnect(client *proto.Client, conn *net.TCPConn) {
 	addr := conn.RemoteAddr().String()
 	name := client.Name
 
-	// notify enemy of disconnected client about this fact
-	enemy, connEnemy, err := service.GetEnemy(client)
-	if err != proto.Error_NONE {
-		logger.Println("E/GetEnemy", addr, err)
-	} else {
-		logger.Println("GetEnemy", addr, name)
+	if client.Room != "" {
+		// notify enemy of disconnected client about this fact
+		enemy, connEnemy, err := service.GetEnemy(client)
+		if err != proto.Error_NONE {
+			logger.Println("E/GetEnemy", addr, err)
+		} else {
+			logger.Println("GetEnemy", addr, name)
 
-		enemy.Ready = true
+			enemy.Ready = true
 
-		response := &proto.Response{
-			Type: &proto.Response_EnemyDisconnected{
-				EnemyDisconnected: &proto.EnemyDisconnectedResponse{},
-			},
+			response := &proto.Response{
+				Type: &proto.Response_EnemyDisconnected{
+					EnemyDisconnected: &proto.EnemyDisconnectedResponse{},
+				},
+			}
+
+			err := msg.SendResponse(connEnemy, response)
+			if err != nil {
+				logger.Println("E/SendResponse", err)
+			} else if logMessages {
+				logger.Println("SendResponse", addr, response.String())
+			}
 		}
 
-		err := msg.SendResponse(connEnemy, response)
-		if err != nil {
-			logger.Println("E/SendResponse", err)
-		} else if logMessages {
-			logger.Println("SendResponse", addr, response.String())
+		// leave room
+		if err := service.LeaveRoom(client); err != proto.Error_NONE {
+			logger.Println("E/LeaveRoom", addr, name, err)
+		} else {
+			logger.Println("LeaveRoom", addr, name)
 		}
-	}
-
-	// leave room
-	if err := service.LeaveRoom(client); err != proto.Error_NONE {
-		logger.Println("E/LeaveRoom", addr, name, err)
-	} else {
-		logger.Println("LeaveRoom", addr, name)
 	}
 
 	// finally remove client

@@ -1,0 +1,19 @@
+name: CD (tag)
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  cd:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Publish image
+        uses: matootie/github-docker@v3.1.0
+        with:
+          accessToken: ${{github.token}}  
+          context: app/src/main/go
+          containerRegistry: true

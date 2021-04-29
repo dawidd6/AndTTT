@@ -43,5 +43,5 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     //noinspection AnnotationProcessorOnCompilePath
     implementation 'com.jakewharton:butterknife:10.2.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
 }

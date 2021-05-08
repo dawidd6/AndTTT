@@ -8,6 +8,7 @@ on:
 jobs:
   cd:
     runs-on: ubuntu-latest
+    concurrency: deployment
     steps:
       - name: Checkout code
         uses: actions/checkout@v2

@@ -35,13 +35,18 @@ var (
 )
 
 func main() {
+    port := os.Getenv("PORT")
+    if port != "" {
+        addrTCP = "0.0.0.0:" + port
+    }
+
 	flag.StringVar(&addrTCP, "addr-tcp", addrTCP, "ip address on which TCP service will listen")
 	flag.StringVar(&addrHTTP, "addr-http", addrHTTP, "ip address on which HTTP service will listen")
 	flag.BoolVar(&logQuiet, "log-quiet", logQuiet, "produce no output at all")
 	flag.BoolVar(&logDate, "log-date", logDate, "prepend output with date")
 	flag.BoolVar(&logMessages, "log-messages", logMessages, "log every request and response")
 	flag.DurationVar(&cleanInterval, "room-clean-interval", cleanInterval, "interval between room cleaning")
-	flag.Parse()
+    flag.Parse()
 
 	if logQuiet {
 		logger.SetOutput(ioutil.Discard)

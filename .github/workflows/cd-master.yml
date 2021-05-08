@@ -25,3 +25,4 @@ jobs:
           heroku_app_name: andttt
           heroku_email: ${{github.event.pusher.email}}
           usedocker: true
+          appdir: app/src/main/go

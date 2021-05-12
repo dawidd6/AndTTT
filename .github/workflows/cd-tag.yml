@@ -18,7 +18,7 @@ jobs:
       - name: Build APK
         run: ./gradlew assembleDebug
       - name: Create release
-        uses: svenstaro/upload-release-action@v2
+        uses: svenstaro/upload-release-action@2.2.1
         with:
           repo_token: ${{github.token}}
           tag: ${{github.ref}}

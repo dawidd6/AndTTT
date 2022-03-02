@@ -11,7 +11,7 @@ jobs:
     concurrency: deployment
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Publish image
         uses: matootie/github-docker@v3.1.0
         with:

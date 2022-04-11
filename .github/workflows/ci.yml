@@ -19,7 +19,7 @@ jobs:
       - name: Build APK
         run: ./gradlew assembleDebug
       - name: Upload APK
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: apk
           path: app/build/outputs/apk/debug/app-debug.apk
@@ -39,7 +39,7 @@ jobs:
         working-directory: app/src/main/go
         run: go test ./...
       - name: Upload server
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: server
           path: app/src/main/go/server
